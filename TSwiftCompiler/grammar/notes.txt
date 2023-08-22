@@ -1,0 +1,11 @@
+# Antlr options (The ANTLR tool generates recursive-descent parsers)
+    -no-listener
+    -visitor
+# Test grammar
+    You can optionally test your grammar using a little utility named TestRig ( you need to generate a Java parser).
+    ANTLR TEST
+    antlr4-parse <grammar-name> <rule-to-test> -gui g<input-filename(s)>
+
+#GO options
+    go mod tidy //importar las librerias que toca
+
