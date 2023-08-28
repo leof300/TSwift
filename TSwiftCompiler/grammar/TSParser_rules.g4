@@ -1,21 +1,24 @@
 grammar TSParser_rules;
 import TSLexer_rules;
 
-start : (   sent
-        |   NL
-        )* EOF
+start : lsents;
+
+lsents : sents+ EOF
         ;
 
-sent : expr (NL)+
+sents : expr NL #SentExpr
+      |   NL    #SentNL
      ;
 
-expr :  |   expr '%' expr
-        |   expr ('*'|'/')expr
-        |   expr ('+'|'-') expr
-        |   '(' expr ')'
-        |   expr '=' expr
-        |   VSTRING
-        |   VINTEGER
-        |   VFLOAT
-        |   ID
+expr :      expr '%' expr           #EModule
+        |   expr ('*'|'/')expr      #EMulDiv
+        |   expr ('+'|'-') expr     #EAddSub
+        |   '(' expr ')'            #EParent
+        |   expr '=' expr           #EAssign
+        |   VSTRING                 #EVString
+        |   VINTEGER                #EVInteger
+        |   VFLOAT                  #EVFloat
+        |   VBOOL                   #EVBOOL
+        |   ID                      #EID
+
         ;

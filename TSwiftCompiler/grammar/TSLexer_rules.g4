@@ -11,8 +11,6 @@ VAR: 'var';
 LET: 'let';
 
 NIL: 'nil';
-TRUE:'true';
-FALSE:'false';
 
 STRING: 'String';
 INT: 'Int';
@@ -48,12 +46,19 @@ COUNT:'count';
 
 fragment DIGIT : [0-9] /*{System.out.println("found an end");}*/ ;
 
-VSTRING : '"' .*? '"';
+VBOOL:   'true'|'false' ;
+VSTRING : '"' (ESC|.)*? '"';
 VFLOAT:   [0-9]+ '.' [0-9]+ ;
 VINTEGER: [0-9]+ ;
+
 //SINGLE : '\'' .*? '\'' -> type(STRING) ;
 ID: [a-zA-Z_] [a-zA-Z0-9_]* ; // match usual identifier spec
 
 
-SL_COMMENT: '//' .*?  '\r'? '\n' -> type(NL);
+//SL_COMMENT: '//' .*?  '\r'? '\n' -> type(NL);
+SL_COMMENT: '//' .*?  ~[\r\n]* -> skip;
 ML_COMMENT: '/*' .*? '*/' -> skip;
+
+fragment ESC : '\\"' | '\\\\' ; // 2-char sequences \" and \\
+
+//LINE_ESCAPE : '\\' '\r'? '\n' -> skip;

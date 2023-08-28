@@ -1,0 +1,64 @@
+// Code generated from TSParser_rules.g4 by ANTLR 4.13.0. DO NOT EDIT.
+
+package TSVisitor // TSParser_rules
+import "github.com/antlr4-go/antlr/v4"
+
+type BaseTSParser_rulesVisitor struct {
+	*antlr.BaseParseTreeVisitor
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitStart(ctx *StartContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitLsents(ctx *LsentsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitSentExpr(ctx *SentExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitSentNL(ctx *SentNLContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitEVFloat(ctx *EVFloatContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitEVString(ctx *EVStringContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitEID(ctx *EIDContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitEParent(ctx *EParentContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitEVBOOL(ctx *EVBOOLContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitEMulDiv(ctx *EMulDivContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitEAssign(ctx *EAssignContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitEVInteger(ctx *EVIntegerContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitEAddSub(ctx *EAddSubContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitEModule(ctx *EModuleContext) interface{} {
+	return v.VisitChildren(ctx)
+}
