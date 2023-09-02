@@ -1,28 +1,25 @@
 package TSExceptions
 
-import "TSwiftCompiler/ast"
-
 // intefaz en Go
 type TSException struct {
-	ast.TSExpression
 	message  string
 	value    string
 	line     int
 	position int
 }
 
-type TSSemanticE struct {
-	TSException
+func NewTSException(message string, line int, position int) *TSException {
+	return &TSException{line: line, position: position, message: message}
 }
 
-func NewTSSemanticE(message string, line int, position int) *TSSemanticE {
-	return &TSSemanticE{TSException{line: line, position: position, message: message}}
-}
-
-type TSSintacticE struct {
-	TSException
-}
-
-type TSLexicalE struct {
-	TSException
-}
+//type TSSemanticE struct {
+//	TSException
+//}
+//
+//type TSSintacticE struct {
+//	TSException
+//}
+//
+//type TSLexicalE struct {
+//	TSException
+//}

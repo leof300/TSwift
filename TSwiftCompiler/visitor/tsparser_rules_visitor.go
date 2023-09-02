@@ -19,6 +19,12 @@ type TSParser_rulesVisitor interface {
 	// Visit a parse tree produced by TSParser_rulesParser#SentNL.
 	VisitSentNL(ctx *SentNLContext) interface{}
 
+	// Visit a parse tree produced by TSParser_rulesParser#SDecl.
+	VisitSDecl(ctx *SDeclContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#SDeclAsig.
+	VisitSDeclAsig(ctx *SDeclAsigContext) interface{}
+
 	// Visit a parse tree produced by TSParser_rulesParser#EVFloat.
 	VisitEVFloat(ctx *EVFloatContext) interface{}
 
@@ -48,4 +54,19 @@ type TSParser_rulesVisitor interface {
 
 	// Visit a parse tree produced by TSParser_rulesParser#EModule.
 	VisitEModule(ctx *EModuleContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#SDStr.
+	VisitSDStr(ctx *SDStrContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#SDInt.
+	VisitSDInt(ctx *SDIntContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#SDFlt.
+	VisitSDFlt(ctx *SDFltContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#SDBool.
+	VisitSDBool(ctx *SDBoolContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#SDChr.
+	VisitSDChr(ctx *SDChrContext) interface{}
 }

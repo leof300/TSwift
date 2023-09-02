@@ -23,6 +23,14 @@ func (v *BaseTSParser_rulesVisitor) VisitSentNL(ctx *SentNLContext) interface{} 
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseTSParser_rulesVisitor) VisitSDecl(ctx *SDeclContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitSDeclAsig(ctx *SDeclAsigContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseTSParser_rulesVisitor) VisitEVFloat(ctx *EVFloatContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -60,5 +68,25 @@ func (v *BaseTSParser_rulesVisitor) VisitEAddSub(ctx *EAddSubContext) interface{
 }
 
 func (v *BaseTSParser_rulesVisitor) VisitEModule(ctx *EModuleContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitSDStr(ctx *SDStrContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitSDInt(ctx *SDIntContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitSDFlt(ctx *SDFltContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitSDBool(ctx *SDBoolContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitSDChr(ctx *SDChrContext) interface{} {
 	return v.VisitChildren(ctx)
 }

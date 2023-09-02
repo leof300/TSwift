@@ -1,9 +1,12 @@
-2
-4.5
-"hola"
 
+var a:String
+a = "texto"+" texto"
 
-"p"
-true
-false
-"hola\\n \\ \t"
+var b:Int
+b = 4+4+4  //12
+
+var c:Float
+c = 1.2+2.8+3.0 //7
+c = c + b  //19
+
+var d:Bool = true

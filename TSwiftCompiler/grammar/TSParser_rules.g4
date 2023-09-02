@@ -6,19 +6,29 @@ start : lsents;
 lsents : sents+ EOF
         ;
 
-sents : expr NL #SentExpr
-      |   NL    #SentNL
+sents : expr NL         #SentExpr
+      |   NL            #SentNL
+      | declar          #SDecl
+      | declar op='=' expr #SDeclAsig
+
      ;
 
 expr :      expr '%' expr           #EModule
-        |   expr ('*'|'/')expr      #EMulDiv
-        |   expr ('+'|'-') expr     #EAddSub
+        |   expr op=('*'|'/')expr   #EMulDiv
+        |   expr op=('+'|'-') expr  #EAddSub
         |   '(' expr ')'            #EParent
-        |   expr '=' expr           #EAssign
+        |   expr op='=' expr           #EAssign
         |   VSTRING                 #EVString
         |   VINTEGER                #EVInteger
         |   VFLOAT                  #EVFloat
         |   VBOOL                   #EVBOOL
         |   ID                      #EID
-
         ;
+
+
+declar : 'var' ID ':' STRING    #SDStr
+        |'var' ID ':' INT       #SDInt
+        |'var' ID ':' FLOAT     #SDFlt
+        |'var' ID ':' BOOL      #SDBool
+        |'var' ID ':' CHARACTER #SDChr
+       ;
