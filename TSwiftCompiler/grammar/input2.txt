@@ -3,10 +3,17 @@ var a:String
 a = "texto"+" texto"
 
 var b:Int
-b = 4+4+4  //12
+b = 4+4+4*3  //20
 
 var c:Float
 c = 1.2+2.8+3.0 //7
-c = c + b  //19
+c = c + b  //27
 
 var d:Bool = true
+
+var e:Int = 48-8
+e = e / 20
+
+var f:Float
+f = 5 % 2 - 1 + 10 * 2 //20
+f = 5--1 //esto se puede

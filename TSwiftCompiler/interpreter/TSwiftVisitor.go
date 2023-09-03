@@ -17,6 +17,7 @@ type TSwiftVisitor struct {
 	Start TSStructs.TSExpressioner
 }
 
+
 func (T TSwiftVisitor) VisitSDecl(ctx *TSVisitor.SDeclContext) interface{} {
 	return ctx.Declar().Accept(T).(TSStructs.TSExpressioner)
 }
@@ -134,7 +135,6 @@ func (T TSwiftVisitor) VisitEParent(ctx *TSVisitor.EParentContext) interface{} {
 
  */
 
-
 func (T TSwiftVisitor) VisitEAssign(ctx *TSVisitor.EAssignContext) interface{} {
 	variable := ctx.Expr(0).Accept(T).(TSStructs.TSExpressioner)
 	content := ctx.Expr(1).Accept(T).(TSStructs.TSExpressioner)
@@ -142,32 +142,55 @@ func (T TSwiftVisitor) VisitEAssign(ctx *TSVisitor.EAssignContext) interface{} {
 
 }
 
-/*************** OPERACIONES ****************
-
- */
-func (T TSwiftVisitor) VisitEMulDiv(ctx *TSVisitor.EMulDivContext) interface{} {
+func (T TSwiftVisitor) VisitESubAdd(ctx *TSVisitor.ESubAddContext) interface{} {
 	//TODO implement me
-	var _ = TSVisitor.TSParser_rulesParserVSTRING //accedemos a las constantes de los lexers
 	panic("implement me")
 }
 
+func (T TSwiftVisitor) VisitENeg(ctx *TSVisitor.ENegContext) interface{} {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (T TSwiftVisitor) VisitEAsAdd(ctx *TSVisitor.EAsAddContext) interface{} {
+	//TODO implement me
+	panic("implement me")
+}
+
+/*
+************** OPERACIONES ****************
+ */
+func (T TSwiftVisitor) VisitEMulDiv(ctx *TSVisitor.EMulDivContext) interface{} {
+
+	e1 := ctx.Expr(0).Accept(T).(TSStructs.TSExpressioner)
+	e2 := ctx.Expr(1).Accept(T).(TSStructs.TSExpressioner)
+	if ctx.GetOp().GetText() == "*" {
+		return NTExpression.NewIMultiplication(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), e1, e2)
+	}
+
+	return NTExpression.NewIDivision(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), e1, e2)
+
+}
 
 func (T TSwiftVisitor) VisitEAddSub(ctx *TSVisitor.EAddSubContext) interface{} {
-	//TODO implement me
+
 	e1 := ctx.Expr(0).Accept(T).(TSStructs.TSExpressioner)
 	e2 := ctx.Expr(1).Accept(T).(TSStructs.TSExpressioner)
 	if ctx.GetOp().GetText() == "+" {
 		return NTExpression.NewIAdd(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), e1, e2)
 	}
-	return TSExceptions.NewTSException("NO SE QUE PUTAS", 0, 0)
+
+	return NTExpression.NewISubtraction(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), e1, e2)
 }
 
 func (T TSwiftVisitor) VisitEModule(ctx *TSVisitor.EModuleContext) interface{} {
-	//TODO implement me
-	panic("implement me")
+
+	e1 := ctx.Expr(0).Accept(T).(TSStructs.TSExpressioner)
+	e2 := ctx.Expr(1).Accept(T).(TSStructs.TSExpressioner)
+	return NTExpression.NewIModulo(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), e1, e2)
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////
 func NewTSwiftVisitor() TSVisitor.TSParser_rulesVisitor {
 	return &TSwiftVisitor{ParseTreeVisitor: &TSVisitor.BaseTSParser_rulesVisitor{}}
 }

@@ -6,21 +6,21 @@ import (
 	"fmt"
 )
 
-type IBoxCreation struct {
+type ITSBoxCreation struct {
 	TSStructs.TSExpression
 	BKey       string
 	BInitValue TSStructs.TSExpressioner
 	BType      TExpression.TSPTYPES
 }
 
-func NewIBoxCreation(Line int, Position int, initValue TSStructs.TSExpressioner, btype TExpression.TSPTYPES, key string) *IBoxCreation {
-	return &IBoxCreation{
+func NewIBoxCreation(Line int, Position int, initValue TSStructs.TSExpressioner, btype TExpression.TSPTYPES, key string) *ITSBoxCreation {
+	return &ITSBoxCreation{
 		TSStructs.TSExpression{Line, Position, make([]string, 0)},
 		key, initValue, btype,
 	}
 }
 
-func (I IBoxCreation) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
+func (I ITSBoxCreation) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
 
 	ivalue := TExpression.NewTNil()
 

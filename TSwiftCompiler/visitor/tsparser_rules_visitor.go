@@ -25,17 +25,11 @@ type TSParser_rulesVisitor interface {
 	// Visit a parse tree produced by TSParser_rulesParser#SDeclAsig.
 	VisitSDeclAsig(ctx *SDeclAsigContext) interface{}
 
-	// Visit a parse tree produced by TSParser_rulesParser#EVFloat.
-	VisitEVFloat(ctx *EVFloatContext) interface{}
-
 	// Visit a parse tree produced by TSParser_rulesParser#EVString.
 	VisitEVString(ctx *EVStringContext) interface{}
 
 	// Visit a parse tree produced by TSParser_rulesParser#EID.
 	VisitEID(ctx *EIDContext) interface{}
-
-	// Visit a parse tree produced by TSParser_rulesParser#EParent.
-	VisitEParent(ctx *EParentContext) interface{}
 
 	// Visit a parse tree produced by TSParser_rulesParser#EVBOOL.
 	VisitEVBOOL(ctx *EVBOOLContext) interface{}
@@ -43,17 +37,32 @@ type TSParser_rulesVisitor interface {
 	// Visit a parse tree produced by TSParser_rulesParser#EMulDiv.
 	VisitEMulDiv(ctx *EMulDivContext) interface{}
 
-	// Visit a parse tree produced by TSParser_rulesParser#EAssign.
-	VisitEAssign(ctx *EAssignContext) interface{}
-
 	// Visit a parse tree produced by TSParser_rulesParser#EVInteger.
 	VisitEVInteger(ctx *EVIntegerContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#ESubAdd.
+	VisitESubAdd(ctx *ESubAddContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#ENeg.
+	VisitENeg(ctx *ENegContext) interface{}
 
 	// Visit a parse tree produced by TSParser_rulesParser#EAddSub.
 	VisitEAddSub(ctx *EAddSubContext) interface{}
 
+	// Visit a parse tree produced by TSParser_rulesParser#EAsAdd.
+	VisitEAsAdd(ctx *EAsAddContext) interface{}
+
 	// Visit a parse tree produced by TSParser_rulesParser#EModule.
 	VisitEModule(ctx *EModuleContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#EVFloat.
+	VisitEVFloat(ctx *EVFloatContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#EParent.
+	VisitEParent(ctx *EParentContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#EAssign.
+	VisitEAssign(ctx *EAssignContext) interface{}
 
 	// Visit a parse tree produced by TSParser_rulesParser#SDStr.
 	VisitSDStr(ctx *SDStrContext) interface{}

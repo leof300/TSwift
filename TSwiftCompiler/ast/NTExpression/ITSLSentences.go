@@ -5,16 +5,16 @@ import (
 	"TSwiftCompiler/ast/TSStructs"
 )
 
-type ILSentences struct {
+type ITSLSentences struct {
 	TSStructs.TSExpression
 	Sentences []TSStructs.TSExpressioner
 }
 
-func NewILSentences() *ILSentences {
-	return &ILSentences{Sentences: make([]TSStructs.TSExpressioner, 0)}
+func NewILSentences() *ITSLSentences {
+	return &ITSLSentences{Sentences: make([]TSStructs.TSExpressioner, 0)}
 }
 
-func (I ILSentences) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
+func (I ITSLSentences) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
 
 	for _, sentence := range I.Sentences {
 		sentence.Interpret(ctx)

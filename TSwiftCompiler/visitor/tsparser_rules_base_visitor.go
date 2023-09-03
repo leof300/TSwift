@@ -31,19 +31,11 @@ func (v *BaseTSParser_rulesVisitor) VisitSDeclAsig(ctx *SDeclAsigContext) interf
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseTSParser_rulesVisitor) VisitEVFloat(ctx *EVFloatContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BaseTSParser_rulesVisitor) VisitEVString(ctx *EVStringContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
 func (v *BaseTSParser_rulesVisitor) VisitEID(ctx *EIDContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseTSParser_rulesVisitor) VisitEParent(ctx *EParentContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -55,11 +47,15 @@ func (v *BaseTSParser_rulesVisitor) VisitEMulDiv(ctx *EMulDivContext) interface{
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseTSParser_rulesVisitor) VisitEAssign(ctx *EAssignContext) interface{} {
+func (v *BaseTSParser_rulesVisitor) VisitEVInteger(ctx *EVIntegerContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseTSParser_rulesVisitor) VisitEVInteger(ctx *EVIntegerContext) interface{} {
+func (v *BaseTSParser_rulesVisitor) VisitESubAdd(ctx *ESubAddContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitENeg(ctx *ENegContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -67,7 +63,23 @@ func (v *BaseTSParser_rulesVisitor) VisitEAddSub(ctx *EAddSubContext) interface{
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseTSParser_rulesVisitor) VisitEAsAdd(ctx *EAsAddContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseTSParser_rulesVisitor) VisitEModule(ctx *EModuleContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitEVFloat(ctx *EVFloatContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitEParent(ctx *EParentContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitEAssign(ctx *EAssignContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

@@ -43,7 +43,7 @@ func executeInterpreter(input antlr.CharStream) bool {
 
 	result := root.Interpret(ctx)
 
-	fmt.Print(ctx.Console)
+	fmt.Print(ctx.Log)
 	fmt.Print(result)
 
 	return true

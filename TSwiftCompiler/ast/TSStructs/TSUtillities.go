@@ -9,10 +9,11 @@ import (
 //}
 
 func Unbox(tvalue *TExpression.TSValue) *TExpression.TSValue {
-
-	if !tvalue.IsBox {
-		return tvalue
-	}
-
-	return tvalue.BoxContent
+	//
+	//if !tvalue.IsBox {
+	//	return tvalue
+	//}
+	//
+	//return tvalue.BoxContent
+	return tvalue
 }
