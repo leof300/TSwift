@@ -37,6 +37,9 @@ type TSParser_rulesVisitor interface {
 	// Visit a parse tree produced by TSParser_rulesParser#EMulDiv.
 	VisitEMulDiv(ctx *EMulDivContext) interface{}
 
+	// Visit a parse tree produced by TSParser_rulesParser#ERelOr.
+	VisitERelOr(ctx *ERelOrContext) interface{}
+
 	// Visit a parse tree produced by TSParser_rulesParser#EVInteger.
 	VisitEVInteger(ctx *EVIntegerContext) interface{}
 
@@ -52,6 +55,9 @@ type TSParser_rulesVisitor interface {
 	// Visit a parse tree produced by TSParser_rulesParser#EAsAdd.
 	VisitEAsAdd(ctx *EAsAddContext) interface{}
 
+	// Visit a parse tree produced by TSParser_rulesParser#ENot.
+	VisitENot(ctx *ENotContext) interface{}
+
 	// Visit a parse tree produced by TSParser_rulesParser#EModule.
 	VisitEModule(ctx *EModuleContext) interface{}
 
@@ -61,8 +67,14 @@ type TSParser_rulesVisitor interface {
 	// Visit a parse tree produced by TSParser_rulesParser#EParent.
 	VisitEParent(ctx *EParentContext) interface{}
 
+	// Visit a parse tree produced by TSParser_rulesParser#ERel.
+	VisitERel(ctx *ERelContext) interface{}
+
 	// Visit a parse tree produced by TSParser_rulesParser#EAssign.
 	VisitEAssign(ctx *EAssignContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#ERelAnd.
+	VisitERelAnd(ctx *ERelAndContext) interface{}
 
 	// Visit a parse tree produced by TSParser_rulesParser#SDStr.
 	VisitSDStr(ctx *SDStrContext) interface{}

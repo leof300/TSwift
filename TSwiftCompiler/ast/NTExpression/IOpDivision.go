@@ -11,7 +11,7 @@ type IOpDivision struct {
 	op2 TSStructs.TSExpressioner
 }
 
-func NewIDivision(Line int, Position int, op1 TSStructs.TSExpressioner, op2 TSStructs.TSExpressioner) *IOpDivision {
+func NewIOpDivision(Line int, Position int, op1 TSStructs.TSExpressioner, op2 TSStructs.TSExpressioner) *IOpDivision {
 	return &IOpDivision{
 		TSStructs.TSExpression{Line, Position, make([]string, 0)},
 		op1, op2,

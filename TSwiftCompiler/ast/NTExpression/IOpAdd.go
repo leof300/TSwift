@@ -26,7 +26,7 @@ func (I IOpAdd) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
 	ctx.Log += "SUMA: {" + addend1.ToString() + "} + {" + addend2.ToString() + "}\n"
 
 	if addend1.IsNil || addend2.IsNil {
-		ctx.AddException("No se puede realizar suma, tipos incompatibles.", I.Line, I.Position)
+		ctx.AddException("Suma: No se puede realizar suma, tipos incompatibles.", I.Line, I.Position)
 		return TExpression.NewTNil()
 	}
 
@@ -51,6 +51,6 @@ func (I IOpAdd) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
 		}
 	}
 
-	ctx.AddException("No se puede realizar suma, tipos incompatibles.", I.Line, I.Position)
+	ctx.AddException("Suma: No se puede realizar suma, tipos incompatibles.", I.Line, I.Position)
 	return TExpression.NewTNil()
 }

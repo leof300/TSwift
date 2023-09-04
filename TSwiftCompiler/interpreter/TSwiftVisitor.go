@@ -17,7 +17,6 @@ type TSwiftVisitor struct {
 	Start TSStructs.TSExpressioner
 }
 
-
 func (T TSwiftVisitor) VisitSDecl(ctx *TSVisitor.SDeclContext) interface{} {
 	return ctx.Declar().Accept(T).(TSStructs.TSExpressioner)
 }
@@ -25,7 +24,7 @@ func (T TSwiftVisitor) VisitSDecl(ctx *TSVisitor.SDeclContext) interface{} {
 func (T TSwiftVisitor) VisitSDeclAsig(ctx *TSVisitor.SDeclAsigContext) interface{} {
 	variable := ctx.Declar().Accept(T).(TSStructs.TSExpressioner)
 	content := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
-	return NTExpression.NewISentAsign(ctx.GetOp().GetLine(), 0, variable, content)
+	return NTExpression.NewIAssignation(ctx.GetOp().GetLine(), 0, variable, content)
 }
 
 func (T TSwiftVisitor) VisitSDStr(ctx *TSVisitor.SDStrContext) interface{} {
@@ -93,8 +92,9 @@ func (T TSwiftVisitor) VisitStart(ctx *TSVisitor.StartContext) interface{} {
 	return T.Start
 }
 
-/*********************************************************************************************************************/
+/*//////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
+/************* VALUES *****************/
 // expr ->  VFLOAT
 func (T TSwiftVisitor) VisitEVFloat(ctx *TSVisitor.EVFloatContext) interface{} {
 	//todo: errores de conversion de datos
@@ -127,8 +127,7 @@ func (T TSwiftVisitor) VisitEID(ctx *TSVisitor.EIDContext) interface{} {
 }
 
 func (T TSwiftVisitor) VisitEParent(ctx *TSVisitor.EParentContext) interface{} {
-	//TODO implement me
-	panic("implement me")
+	return ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
 }
 
 /************* ASIGNACION ****************
@@ -138,23 +137,24 @@ func (T TSwiftVisitor) VisitEParent(ctx *TSVisitor.EParentContext) interface{} {
 func (T TSwiftVisitor) VisitEAssign(ctx *TSVisitor.EAssignContext) interface{} {
 	variable := ctx.Expr(0).Accept(T).(TSStructs.TSExpressioner)
 	content := ctx.Expr(1).Accept(T).(TSStructs.TSExpressioner)
-	return NTExpression.NewISentAsign(ctx.GetOp().GetLine(), 0, variable, content)
-
+	return NTExpression.NewIAssignation(ctx.GetOp().GetLine(), 0, variable, content)
 }
 
 func (T TSwiftVisitor) VisitESubAdd(ctx *TSVisitor.ESubAddContext) interface{} {
-	//TODO implement me
-	panic("implement me")
+	variable := ctx.Expr(0).Accept(T).(TSStructs.TSExpressioner)
+	content := ctx.Expr(1).Accept(T).(TSStructs.TSExpressioner)
+	return NTExpression.NewIAssignSub(ctx.GetOp().GetLine(), 0, variable, content)
 }
 
 func (T TSwiftVisitor) VisitENeg(ctx *TSVisitor.ENegContext) interface{} {
-	//TODO implement me
-	panic("implement me")
+	e := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
+	return NTExpression.NewIOpNegation(ctx.GetOp().GetLine(), 0, e)
 }
 
 func (T TSwiftVisitor) VisitEAsAdd(ctx *TSVisitor.EAsAddContext) interface{} {
-	//TODO implement me
-	panic("implement me")
+	variable := ctx.Expr(0).Accept(T).(TSStructs.TSExpressioner)
+	content := ctx.Expr(1).Accept(T).(TSStructs.TSExpressioner)
+	return NTExpression.NewIAssignAdd(ctx.GetOp().GetLine(), 0, variable, content)
 }
 
 /*
@@ -168,8 +168,7 @@ func (T TSwiftVisitor) VisitEMulDiv(ctx *TSVisitor.EMulDivContext) interface{} {
 		return NTExpression.NewIMultiplication(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), e1, e2)
 	}
 
-	return NTExpression.NewIDivision(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), e1, e2)
-
+	return NTExpression.NewIOpDivision(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), e1, e2)
 }
 
 func (T TSwiftVisitor) VisitEAddSub(ctx *TSVisitor.EAddSubContext) interface{} {
@@ -188,6 +187,51 @@ func (T TSwiftVisitor) VisitEModule(ctx *TSVisitor.EModuleContext) interface{} {
 	e1 := ctx.Expr(0).Accept(T).(TSStructs.TSExpressioner)
 	e2 := ctx.Expr(1).Accept(T).(TSStructs.TSExpressioner)
 	return NTExpression.NewIModulo(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), e1, e2)
+}
+
+/**
+************** OPERACIONES RELACIONALES ****************
+ */
+
+func (T TSwiftVisitor) VisitERel(ctx *TSVisitor.ERelContext) interface{} {
+	e1 := ctx.Expr(0).Accept(T).(TSStructs.TSExpressioner)
+	e2 := ctx.Expr(1).Accept(T).(TSStructs.TSExpressioner)
+	if ctx.GetOp().GetText() == "<" {
+		return NTExpression.NewIRelLess(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), e1, e2)
+	}
+	if ctx.GetOp().GetText() == ">" {
+		return NTExpression.NewIRelGreater(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), e1, e2)
+	}
+	if ctx.GetOp().GetText() == "<=" {
+		return NTExpression.NewIRelLessEqual(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), e1, e2)
+	}
+	if ctx.GetOp().GetText() == ">=" {
+		return NTExpression.NewIRelGreaterEqual(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), e1, e2)
+	}
+	if ctx.GetOp().GetText() == "==" {
+		return NTExpression.NewIRelEqual(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), e1, e2)
+	}
+	if ctx.GetOp().GetText() == "!=" {
+		return NTExpression.NewIRelNotEqual(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), e1, e2)
+	}
+	return NTExpression.NewIRelLess(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), e1, e2)
+}
+
+func (T TSwiftVisitor) VisitENot(ctx *TSVisitor.ENotContext) interface{} {
+	e1 := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
+	return NTExpression.NewIBitNot(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), e1)
+}
+
+func (T TSwiftVisitor) VisitERelOr(ctx *TSVisitor.ERelOrContext) interface{} {
+	e1 := ctx.Expr(0).Accept(T).(TSStructs.TSExpressioner)
+	e2 := ctx.Expr(1).Accept(T).(TSStructs.TSExpressioner)
+	return NTExpression.NewIBitOr(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), e1, e2)
+}
+
+func (T TSwiftVisitor) VisitERelAnd(ctx *TSVisitor.ERelAndContext) interface{} {
+	e1 := ctx.Expr(0).Accept(T).(TSStructs.TSExpressioner)
+	e2 := ctx.Expr(1).Accept(T).(TSStructs.TSExpressioner)
+	return NTExpression.NewIBitAnd(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), e1, e2)
 }
 
 // ////////////////////////////////////////////////////////////////////////////////////

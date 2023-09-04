@@ -6,20 +6,20 @@ import (
 	"fmt"
 )
 
-type ISentAsign struct {
+type IAssignation struct {
 	TSStructs.TSExpression
 	box     TSStructs.TSExpressioner
 	content TSStructs.TSExpressioner
 }
 
-func NewISentAsign(Line int, Position int, box TSStructs.TSExpressioner, content TSStructs.TSExpressioner) *ISentAsign {
-	return &ISentAsign{
+func NewIAssignation(Line int, Position int, box TSStructs.TSExpressioner, content TSStructs.TSExpressioner) *IAssignation {
+	return &IAssignation{
 		TSStructs.TSExpression{Line, Position, make([]string, 0)},
 		box, content,
 	}
 }
 
-func (I ISentAsign) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
+func (I IAssignation) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
 	var box *TExpression.TSValue = I.box.Interpret(ctx)
 	content := I.content.Interpret(ctx)
 
@@ -37,6 +37,11 @@ func (I ISentAsign) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
 
 	//si el contenido es nulo
 	if content.IsNil {
+		box.Svalue = ""
+		box.Ivalue = 0
+		box.Fvalue = 0
+		box.Bvalue = false
+		box.IsNil = true
 		return TExpression.NewTNil()
 	}
 
@@ -69,6 +74,7 @@ func (I ISentAsign) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
 	case TExpression.BOOL:
 		box.Bvalue = content.Bvalue
 	case TExpression.CHARACTER:
+		//TODO: VALIDAR SI EL CONTENIDO DE LA CADENA ES MAYOR A UN CARACTER
 		box.Svalue = content.Svalue
 	}
 

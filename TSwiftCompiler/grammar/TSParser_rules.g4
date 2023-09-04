@@ -13,14 +13,18 @@ sents : expr NL         #SentExpr
 
      ;
 
-expr :      expr op='%' expr        #EModule
+expr :      <assoc=right> op='-' expr  #ENeg
+        |   <assoc=right> op='!' expr  #ENot
+        |   expr op='%' expr        #EModule
         |   expr op=('*'|'/')expr   #EMulDiv
         |   expr op=('+'|'-') expr  #EAddSub
+        |   expr op=('=='|'!='|'>'|'<'|'>='|'<=') expr  #ERel
         |   '(' expr ')'            #EParent
-        |   expr op='=' expr        #EAssign
-        |   expr op='+=' expr       #EAsAdd
-        |   expr op='-=' expr       #ESubAdd
-        |   <assoc=right> '-' expr  #ENeg
+        |   expr op='&&' expr       #ERelAnd
+        |   expr op='||' expr       #ERelOr
+        |   <assoc=right> expr op='=' expr        #EAssign
+        |   <assoc=right> expr op='+=' expr       #EAsAdd
+        |   <assoc=right> expr op='-=' expr       #ESubAdd
         |   VSTRING                 #EVString
         |   VINTEGER                #EVInteger
         |   VFLOAT                  #EVFloat

@@ -10,10 +10,23 @@ c = 1.2+2.8+3.0 //7
 c = c + b  //27
 
 var d:Bool = true
+var d1:Bool
+var d2:Bool
 
 var e:Int = 48-8
-e = e / 20
+e = e / 20 //2
 
 var f:Float
-f = 5 % 2 - 1 + 10 * 2 //20
-f = 5--1 //esto se puede
+f = 5 % -2 - 1 + 10 * 2 //20
+f += 5--1 //26
+e -= 5*0+1  //1
+
+d= !d
+d1 = e < 1 || true || f!=0
+
+var g1:Int = 10
+var g2:Int = 5
+var g3:Int = 3
+
+d2 = (g1 > g2) && ((g2 > g3) || (g1 == 10))
+var g4:Int = ((g1 + g2) * (g1 - g3)) / (g2 % g3)
