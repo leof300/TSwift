@@ -8,7 +8,6 @@ import (
 	"TSwiftCompiler/visitor"
 	"fmt"
 	"github.com/antlr4-go/antlr/v4"
-	"reflect"
 	"strconv"
 )
 
@@ -17,47 +16,9 @@ type TSwiftVisitor struct {
 	Start TSStructs.TSExpressioner
 }
 
-func (T TSwiftVisitor) VisitSDecl(ctx *TSVisitor.SDeclContext) interface{} {
-	return ctx.Declar().Accept(T).(TSStructs.TSExpressioner)
-}
-
-func (T TSwiftVisitor) VisitSDeclAsig(ctx *TSVisitor.SDeclAsigContext) interface{} {
-	variable := ctx.Declar().Accept(T).(TSStructs.TSExpressioner)
-	content := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
-	return NTExpression.NewIAssignation(ctx.GetOp().GetLine(), 0, variable, content)
-}
-
-func (T TSwiftVisitor) VisitSDStr(ctx *TSVisitor.SDStrContext) interface{} {
-	return NTExpression.NewIBoxCreation(ctx.ID().GetSymbol().GetLine(), 0, nil, TExpression.STRING, ctx.ID().GetText())
-}
-
-func (T TSwiftVisitor) VisitSDInt(ctx *TSVisitor.SDIntContext) interface{} {
-	return NTExpression.NewIBoxCreation(ctx.ID().GetSymbol().GetLine(), 0, nil, TExpression.INTEGER, ctx.ID().GetText())
-
-}
-
-func (T TSwiftVisitor) VisitSDFlt(ctx *TSVisitor.SDFltContext) interface{} {
-	return NTExpression.NewIBoxCreation(ctx.ID().GetSymbol().GetLine(), 0, nil, TExpression.FLOAT, ctx.ID().GetText())
-
-}
-
-func (T TSwiftVisitor) VisitSDBool(ctx *TSVisitor.SDBoolContext) interface{} {
-	return NTExpression.NewIBoxCreation(ctx.ID().GetSymbol().GetLine(), 0, nil, TExpression.BOOL, ctx.ID().GetText())
-
-}
-
-func (T TSwiftVisitor) VisitSDChr(ctx *TSVisitor.SDChrContext) interface{} {
-	//TODO CAMBIAR LO DEL CHAR, NO ES STRING
-	return NTExpression.NewIBoxCreation(ctx.ID().GetSymbol().GetLine(), 0, nil, TExpression.STRING, ctx.ID().GetText())
-}
-
-// expr : VBOOL
-func (T TSwiftVisitor) VisitEVBOOL(ctx *TSVisitor.EVBOOLContext) interface{} {
-	//todo: errores de conversion de datos
-	bvalue, _ := strconv.ParseBool(ctx.VBOOL().GetText())
-	return NTExpression.NewIBooleanCreation(ctx.VBOOL().GetSymbol().GetLine(),
-		ctx.VBOOL().GetSymbol().GetColumn(),
-		bvalue)
+func (T TSwiftVisitor) VisitBlock(ctx *TSVisitor.BlockContext) interface{} {
+	sentences := ctx.Lsents().Accept(T).(TSStructs.TSExpressioner)
+	return NTExpression.NewITSBlock(ctx.GetTerm().GetLine(), 0, sentences)
 }
 
 // start : sents+ EOF
@@ -68,10 +29,9 @@ func (T TSwiftVisitor) VisitLsents(ctx *TSVisitor.LsentsContext) interface{} {
 		//fmt.Println(reflect.TypeOf(sentence).String())
 		//reflect.TypeOf(sentence).Key() != TSVisitor.T
 		//No vamos a visitar los nodos que vienen vacios NLContext
-		if reflect.TypeOf(sentence).String() != "*TSVisitor.SentNLContext" {
-			nSentence := sentence.Accept(T).(TSStructs.TSExpressioner)
-			lsentences.Sentences = append(lsentences.Sentences, nSentence)
-		}
+		//if reflect.TypeOf(sentence).String() != "*TSVisitor.SentNLContext" {
+		nSentence := sentence.Accept(T).(TSStructs.TSExpressioner)
+		lsentences.Sentences = append(lsentences.Sentences, nSentence)
 	}
 	return lsentences
 }
@@ -81,9 +41,9 @@ func (T TSwiftVisitor) VisitSentExpr(ctx *TSVisitor.SentExprContext) interface{}
 	return ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
 }
 
-func (T TSwiftVisitor) VisitSentNL(ctx *TSVisitor.SentNLContext) interface{} {
-	return nil
-}
+//func (T TSwiftVisitor) VisitSentNL(ctx *TSVisitor.SentNLContext) interface{} {
+//	return nil
+//}
 
 // //////////////////////////////// START////////////////////////////////////////////////////////////////////
 
@@ -120,6 +80,15 @@ func (T TSwiftVisitor) VisitEVInteger(ctx *TSVisitor.EVIntegerContext) interface
 		ivalue)
 }
 
+// expr : VBOOL
+func (T TSwiftVisitor) VisitEVBOOL(ctx *TSVisitor.EVBOOLContext) interface{} {
+	//todo: errores de conversion de datos
+	bvalue, _ := strconv.ParseBool(ctx.VBOOL().GetText())
+	return NTExpression.NewIBooleanCreation(ctx.VBOOL().GetSymbol().GetLine(),
+		ctx.VBOOL().GetSymbol().GetColumn(),
+		bvalue)
+}
+
 // expr -> ID
 func (T TSwiftVisitor) VisitEID(ctx *TSVisitor.EIDContext) interface{} {
 	//return NTExpression.NewIBox(ctx.ID().GetSymbol().GetLine(), ctx.ID().GetSymbol().GetColumn(), ctx.ID().GetText())
@@ -128,6 +97,43 @@ func (T TSwiftVisitor) VisitEID(ctx *TSVisitor.EIDContext) interface{} {
 
 func (T TSwiftVisitor) VisitEParent(ctx *TSVisitor.EParentContext) interface{} {
 	return ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
+}
+
+/*
+************ DECLARATIONS ******************
+ */
+func (T TSwiftVisitor) VisitSDStr(ctx *TSVisitor.SDStrContext) interface{} {
+	return NTExpression.NewIBoxCreation(ctx.ID().GetSymbol().GetLine(), 0, nil, TExpression.STRING, ctx.ID().GetText())
+}
+
+func (T TSwiftVisitor) VisitSDInt(ctx *TSVisitor.SDIntContext) interface{} {
+	return NTExpression.NewIBoxCreation(ctx.ID().GetSymbol().GetLine(), 0, nil, TExpression.INTEGER, ctx.ID().GetText())
+
+}
+
+func (T TSwiftVisitor) VisitSDFlt(ctx *TSVisitor.SDFltContext) interface{} {
+	return NTExpression.NewIBoxCreation(ctx.ID().GetSymbol().GetLine(), 0, nil, TExpression.FLOAT, ctx.ID().GetText())
+
+}
+
+func (T TSwiftVisitor) VisitSDBool(ctx *TSVisitor.SDBoolContext) interface{} {
+	return NTExpression.NewIBoxCreation(ctx.ID().GetSymbol().GetLine(), 0, nil, TExpression.BOOL, ctx.ID().GetText())
+
+}
+
+func (T TSwiftVisitor) VisitSDChr(ctx *TSVisitor.SDChrContext) interface{} {
+	//TODO CAMBIAR LO DEL CHAR, NO ES STRING
+	return NTExpression.NewIBoxCreation(ctx.ID().GetSymbol().GetLine(), 0, nil, TExpression.STRING, ctx.ID().GetText())
+}
+
+func (T TSwiftVisitor) VisitSDecl(ctx *TSVisitor.SDeclContext) interface{} {
+	return ctx.Declar().Accept(T).(TSStructs.TSExpressioner)
+}
+
+func (T TSwiftVisitor) VisitSDeclAsig(ctx *TSVisitor.SDeclAsigContext) interface{} {
+	variable := ctx.Declar().Accept(T).(TSStructs.TSExpressioner)
+	content := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
+	return NTExpression.NewIAssignation(ctx.GetOp().GetLine(), 0, variable, content)
 }
 
 /************* ASIGNACION ****************
@@ -232,6 +238,93 @@ func (T TSwiftVisitor) VisitERelAnd(ctx *TSVisitor.ERelAndContext) interface{} {
 	e1 := ctx.Expr(0).Accept(T).(TSStructs.TSExpressioner)
 	e2 := ctx.Expr(1).Accept(T).(TSStructs.TSExpressioner)
 	return NTExpression.NewIBitAnd(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), e1, e2)
+}
+
+/**
+************** ESTRUCTURAS CONDICIONALES IF ****************
+ */
+
+func (T TSwiftVisitor) VisitSIf(ctx *TSVisitor.SIfContext) interface{} {
+	return ctx.If_().Accept(T).(TSStructs.TSExpressioner)
+}
+
+func (T TSwiftVisitor) VisitRIf(ctx *TSVisitor.RIfContext) interface{} {
+	condition := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
+	block := ctx.Block().Accept(T).(TSStructs.TSExpressioner)
+	return NTExpression.NewITSIf(ctx.IF().GetSymbol().GetLine(), 0, condition, block)
+}
+
+func (T TSwiftVisitor) VisitRIfElse(ctx *TSVisitor.RIfElseContext) interface{} {
+	condition := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
+	blockIf := ctx.Block(0).Accept(T).(TSStructs.TSExpressioner)
+	blockElse := ctx.Block(1).Accept(T).(TSStructs.TSExpressioner)
+	return NTExpression.NewITSIfElse(ctx.IF().GetSymbol().GetLine(), 0, condition, blockIf, blockElse)
+}
+
+func (T TSwiftVisitor) VisitRIfEIf(ctx *TSVisitor.RIfEIfContext) interface{} {
+	condition := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
+	blockIf := ctx.Block().Accept(T).(TSStructs.TSExpressioner)
+	blockElse := ctx.If_().Accept(T).(TSStructs.TSExpressioner)
+	return NTExpression.NewITSIfElseIf(ctx.IF().GetSymbol().GetLine(), 0, condition, blockIf, blockElse)
+
+}
+
+/**
+************** ESTRUCTURAS CONDICIONALES SWITCH ****************
+ */
+func (T TSwiftVisitor) VisitSSwitch(ctx *TSVisitor.SSwitchContext) interface{} {
+	return ctx.Switch_().Accept(T).(TSStructs.TSExpressioner)
+}
+
+func (T TSwiftVisitor) VisitSwitch(ctx *TSVisitor.SwitchContext) interface{} {
+
+	expr := ctx.GetInput().Accept(T).(TSStructs.TSExpressioner)
+
+	var cdefault TSStructs.TSExpressioner
+
+	if ctx.Default_() != nil {
+		cdefault = ctx.Default_().Accept(T).(TSStructs.TSExpressioner)
+	}
+
+	nswitch := NTExpression.NewISwitch(ctx.SWITCH().GetSymbol().GetLine(), ctx.SWITCH().GetSymbol().GetColumn(), expr, cdefault)
+
+	d := ctx.AllCASE()
+	for i := 0; i < len(d); i++ {
+		gline := ctx.AllCASE()[i].GetSymbol().GetLine()
+		gcolumn := ctx.AllCASE()[i].GetSymbol().GetLine()
+		cexpr := ctx.Expr(i + 1).Accept(T).(TSStructs.TSExpressioner) //se ignora la expresion a comparar
+		csents := ctx.Expr(i + 1).Accept(T).(TSStructs.TSExpressioner)
+
+		ccase := NTExpression.NewICase(gline, gcolumn, cexpr, csents)
+
+		nswitch.Icases = append(nswitch.Icases, *ccase)
+	}
+
+	return nswitch
+
+}
+
+func (T TSwiftVisitor) VisitDefault(ctx *TSVisitor.DefaultContext) interface{} {
+	sentences := ctx.Lsents().Accept(T).(TSStructs.TSExpressioner)
+	return NTExpression.NewIDefault(ctx.DEFAULT().GetSymbol().GetLine(), ctx.DEFAULT().GetSymbol().GetColumn(), sentences)
+}
+
+/**
+************** FUNCIONES DE TSWIFT ****************
+ */
+
+func (T TSwiftVisitor) VisitSPrint(ctx *TSVisitor.SPrintContext) interface{} {
+	return ctx.Print_().Accept(T).(TSStructs.TSExpressioner)
+}
+
+func (T TSwiftVisitor) VisitPrint(ctx *TSVisitor.PrintContext) interface{} {
+	expressions := ctx.AllExpr()
+	sPrint := NTExpression.NewIFPrint(ctx.PRINT().GetSymbol().GetLine(), ctx.PRINT().GetSymbol().GetColumn())
+	for _, expr := range expressions {
+		nExpr := expr.Accept(T).(TSStructs.TSExpressioner)
+		sPrint.Exprs = append(sPrint.Exprs, nExpr)
+	}
+	return sPrint
 }
 
 // ////////////////////////////////////////////////////////////////////////////////////

@@ -20,19 +20,19 @@ func NewSymbol(key string, value *TExpression.TSValue, line int, position int) *
 	}
 }
 
-type TSMemory struct {
-	variables    map[string]*Symbol //map / diccionario
-	ParentMemory *TSMemory          //anterior
+type TSScope struct {
+	variables   map[string]*Symbol //map / diccionario
+	ParentScope *TSScope           //anterior
 }
 
-func NewTSMemory(parent *TSMemory) *TSMemory {
-	return &TSMemory{
-		variables:    make(map[string]*Symbol),
-		ParentMemory: parent,
+func NewTSScope(parent *TSScope) *TSScope {
+	return &TSScope{
+		variables:   make(map[string]*Symbol),
+		ParentScope: parent,
 	}
 }
 
-func (T *TSMemory) AddSymbol(key string, value *TExpression.TSValue, line int, position int) bool {
+func (T *TSScope) AddSymbol(key string, value *TExpression.TSValue, line int, position int) bool {
 	_, ok := T.variables[key]
 	if ok {
 		//ya existe la variable
@@ -42,7 +42,7 @@ func (T *TSMemory) AddSymbol(key string, value *TExpression.TSValue, line int, p
 	return true
 }
 
-func (T *TSMemory) UpdateSymbol(key string, value *TExpression.TSValue) bool {
+func (T *TSScope) UpdateSymbol(key string, value *TExpression.TSValue) bool {
 	symbol, ok := T.variables[key]
 	if !ok {
 		// no existe la variable
@@ -52,12 +52,12 @@ func (T *TSMemory) UpdateSymbol(key string, value *TExpression.TSValue) bool {
 	return true
 }
 
-func (T *TSMemory) Exist(key string) bool {
+func (T *TSScope) Exist(key string) bool {
 	_, ok := T.variables[key]
 	return ok
 }
 
-func (T *TSMemory) GetSymbolValue(key string) *TExpression.TSValue {
+func (T *TSScope) GetSymbolValue(key string) *TExpression.TSValue {
 	symbol, ok := T.variables[key]
 	if ok {
 		return symbol.Value

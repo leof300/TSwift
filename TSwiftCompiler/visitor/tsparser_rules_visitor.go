@@ -1,4 +1,4 @@
-// Code generated from TSParser_rules.g4 by ANTLR 4.13.0. DO NOT EDIT.
+// Code generated from TSParser_rules.g4 by ANTLR 4.13.1. DO NOT EDIT.
 
 package TSVisitor // TSParser_rules
 import "github.com/antlr4-go/antlr/v4"
@@ -13,17 +13,23 @@ type TSParser_rulesVisitor interface {
 	// Visit a parse tree produced by TSParser_rulesParser#lsents.
 	VisitLsents(ctx *LsentsContext) interface{}
 
-	// Visit a parse tree produced by TSParser_rulesParser#SentExpr.
-	VisitSentExpr(ctx *SentExprContext) interface{}
+	// Visit a parse tree produced by TSParser_rulesParser#SIf.
+	VisitSIf(ctx *SIfContext) interface{}
 
-	// Visit a parse tree produced by TSParser_rulesParser#SentNL.
-	VisitSentNL(ctx *SentNLContext) interface{}
+	// Visit a parse tree produced by TSParser_rulesParser#SSwitch.
+	VisitSSwitch(ctx *SSwitchContext) interface{}
 
 	// Visit a parse tree produced by TSParser_rulesParser#SDecl.
 	VisitSDecl(ctx *SDeclContext) interface{}
 
 	// Visit a parse tree produced by TSParser_rulesParser#SDeclAsig.
 	VisitSDeclAsig(ctx *SDeclAsigContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#SPrint.
+	VisitSPrint(ctx *SPrintContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#SentExpr.
+	VisitSentExpr(ctx *SentExprContext) interface{}
 
 	// Visit a parse tree produced by TSParser_rulesParser#EVString.
 	VisitEVString(ctx *EVStringContext) interface{}
@@ -90,4 +96,25 @@ type TSParser_rulesVisitor interface {
 
 	// Visit a parse tree produced by TSParser_rulesParser#SDChr.
 	VisitSDChr(ctx *SDChrContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#block.
+	VisitBlock(ctx *BlockContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#RIf.
+	VisitRIf(ctx *RIfContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#RIfElse.
+	VisitRIfElse(ctx *RIfElseContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#RIfEIf.
+	VisitRIfEIf(ctx *RIfEIfContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#switch.
+	VisitSwitch(ctx *SwitchContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#default.
+	VisitDefault(ctx *DefaultContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#print.
+	VisitPrint(ctx *PrintContext) interface{}
 }

@@ -3,19 +3,22 @@ package TSStructs
 import (
 	"TSwiftCompiler/ast/Exceptions"
 	"TSwiftCompiler/ast/TExpression"
+	"fmt"
 )
 
 type TSContext struct {
 	Log        string
+	Console    []string
 	Exceptions []*TSExceptions.TSException
-	Memory     *TSMemory
+	Scope      *TSScope
 }
 
 func NewContext() *TSContext {
 	c := &TSContext{
 		Log:        "",
 		Exceptions: make([]*TSExceptions.TSException, 0),
-		Memory:     NewTSMemory(nil),
+		Scope:      NewTSScope(nil),
+		Console:    make([]string, 0),
 	}
 	return c
 }
@@ -29,13 +32,40 @@ func (c *TSContext) AddException(s string, line int, position int) bool {
 }
 
 /*
+* crea un nuevo ámbito
+ */
+func (c *TSContext) AddScope() {
+	//la referencia del padre la tiene el scope original
+	c.Scope = NewTSScope(c.Scope)
+}
+
+/*
+* elimina el ámbito actual
+ */
+func (c *TSContext) RemoveScope() {
+	if c.Scope != nil {
+		c.Scope = c.Scope.ParentScope
+	} else {
+		fmt.Print("erro con scopes")
+	}
+}
+
+/*
+*
+Agregar una variable al contexto
+*/
+func (c *TSContext) AddConsole(msg string) bool {
+	c.Console = append(c.Console, msg)
+	return true
+}
+
+/*
 *
 Agregar una variable al contexto
 */
 func (c *TSContext) AddVariable(key string, value *TExpression.TSValue, line int, position int) bool {
 	//TODO AGREGAR A LA TABLA DE SIMBOLOS AQUI
-
-	ok := c.Memory.AddSymbol(key, value, line, position)
+	ok := c.Scope.AddSymbol(key, value, line, position)
 
 	return ok
 }
@@ -44,15 +74,15 @@ func (c *TSContext) AddVariable(key string, value *TExpression.TSValue, line int
 *Buscar una variable
  */
 func (c *TSContext) GetVariable(key string) *TExpression.TSValue {
-	variable := c.Memory.GetSymbolValue(key)
+	variable := c.Scope.GetSymbolValue(key)
 	if variable == nil {
-		auxMem := c.Memory.ParentMemory
-		for auxMem != nil {
-			variable = c.Memory.GetSymbolValue(key)
+		scopeAux := c.Scope.ParentScope
+		for scopeAux != nil {
+			variable = scopeAux.GetSymbolValue(key)
 			if variable != nil {
 				return variable
 			}
-			auxMem = auxMem.ParentMemory
+			scopeAux = scopeAux.ParentScope
 		}
 	} else {
 		return variable

@@ -1,4 +1,4 @@
-// Code generated from TSParser_rules.g4 by ANTLR 4.13.0. DO NOT EDIT.
+// Code generated from TSParser_rules.g4 by ANTLR 4.13.1. DO NOT EDIT.
 
 package TSVisitor // TSParser_rules
 import (
@@ -34,68 +34,98 @@ func tsparser_rulesParserInit() {
 	staticData.LiteralNames = []string{
 		"", "'='", "'-'", "'!'", "'%'", "'*'", "'/'", "'+'", "'=='", "'!='",
 		"'>'", "'<'", "'>='", "'<='", "'('", "')'", "'&&'", "'||'", "'+='",
-		"'-='", "':'", "", "", "'var'", "'let'", "'nil'", "'String'", "'Int'",
-		"'Float'", "'Bool'", "'Character'", "'if'", "'else'", "'switch'", "'default'",
-		"'case'", "'while'", "'in'", "'for'", "'guard'", "'continue'", "'break'",
-		"'return'", "'struct'", "'self'", "'mutating'", "'func'", "'inout'",
+		"'-='", "':'", "'{'", "'}'", "','", "", "", "'var'", "'let'", "'nil'",
+		"'String'", "'Int'", "'Float'", "'Bool'", "'Character'", "'if'", "'else'",
+		"'switch'", "'default'", "'case'", "'while'", "'in'", "'for'", "'guard'",
+		"'continue'", "'break'", "'return'", "'print'", "'struct'", "'self'",
+		"'mutating'", "'func'", "'inout'",
 	}
 	staticData.SymbolicNames = []string{
 		"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-		"", "", "", "", "NL", "WS", "VAR", "LET", "NIL", "STRING", "INT", "FLOAT",
-		"BOOL", "CHARACTER", "IF", "ELSE", "SWITCH", "DEFAULT", "CASE", "WHILE",
-		"IN", "FOR", "GUARD", "CONTINUE", "BREAK", "RETURN", "STRUCT", "SELF",
-		"MUTATING", "FUNC", "INOUT", "VBOOL", "VSTRING", "VFLOAT", "VINTEGER",
-		"ID", "SL_COMMENT", "ML_COMMENT",
+		"", "", "", "", "", "", "", "NL", "WS", "VAR", "LET", "NIL", "STRING",
+		"INT", "FLOAT", "BOOL", "CHARACTER", "IF", "ELSE", "SWITCH", "DEFAULT",
+		"CASE", "WHILE", "IN", "FOR", "GUARD", "CONTINUE", "BREAK", "RETURN",
+		"PRINT", "STRUCT", "SELF", "MUTATING", "FUNC", "INOUT", "VBOOL", "VSTRING",
+		"VFLOAT", "VINTEGER", "ID", "SL_COMMENT", "ML_COMMENT",
 	}
 	staticData.RuleNames = []string{
-		"start", "lsents", "sents", "expr", "declar",
+		"start", "lsents", "sents", "expr", "declar", "block", "if", "switch",
+		"default", "print",
 	}
 	staticData.PredictionContextCache = antlr.NewPredictionContextCache()
 	staticData.serializedATN = []int32{
-		4, 1, 54, 101, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7,
-		4, 1, 0, 1, 0, 1, 1, 4, 1, 14, 8, 1, 11, 1, 12, 1, 15, 1, 1, 1, 1, 1, 2,
-		1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 3, 2, 29, 8, 2, 1, 3, 1,
-		3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1,
-		3, 3, 3, 45, 8, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3,
+		4, 1, 58, 166, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7,
+		4, 2, 5, 7, 5, 2, 6, 7, 6, 2, 7, 7, 7, 2, 8, 7, 8, 2, 9, 7, 9, 1, 0, 1,
+		0, 1, 0, 1, 1, 5, 1, 25, 8, 1, 10, 1, 12, 1, 28, 9, 1, 1, 2, 1, 2, 1, 2,
+		1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 3, 2, 39, 8, 2, 1, 3, 1, 3, 1, 3, 1,
+		3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 3, 3, 55,
+		8, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3,
 		1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3,
-		1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 5, 3, 74, 8, 3, 10, 3, 12, 3, 77, 9,
-		3, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1,
-		4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 3, 4, 99, 8, 4, 1, 4,
-		0, 1, 6, 5, 0, 2, 4, 6, 8, 0, 3, 1, 0, 5, 6, 2, 0, 2, 2, 7, 7, 1, 0, 8,
-		13, 119, 0, 10, 1, 0, 0, 0, 2, 13, 1, 0, 0, 0, 4, 28, 1, 0, 0, 0, 6, 44,
-		1, 0, 0, 0, 8, 98, 1, 0, 0, 0, 10, 11, 3, 2, 1, 0, 11, 1, 1, 0, 0, 0, 12,
-		14, 3, 4, 2, 0, 13, 12, 1, 0, 0, 0, 14, 15, 1, 0, 0, 0, 15, 13, 1, 0, 0,
-		0, 15, 16, 1, 0, 0, 0, 16, 17, 1, 0, 0, 0, 17, 18, 5, 0, 0, 1, 18, 3, 1,
-		0, 0, 0, 19, 20, 3, 6, 3, 0, 20, 21, 5, 21, 0, 0, 21, 29, 1, 0, 0, 0, 22,
-		29, 5, 21, 0, 0, 23, 29, 3, 8, 4, 0, 24, 25, 3, 8, 4, 0, 25, 26, 5, 1,
-		0, 0, 26, 27, 3, 6, 3, 0, 27, 29, 1, 0, 0, 0, 28, 19, 1, 0, 0, 0, 28, 22,
-		1, 0, 0, 0, 28, 23, 1, 0, 0, 0, 28, 24, 1, 0, 0, 0, 29, 5, 1, 0, 0, 0,
-		30, 31, 6, 3, -1, 0, 31, 32, 5, 2, 0, 0, 32, 45, 3, 6, 3, 17, 33, 34, 5,
-		3, 0, 0, 34, 45, 3, 6, 3, 16, 35, 36, 5, 14, 0, 0, 36, 37, 3, 6, 3, 0,
-		37, 38, 5, 15, 0, 0, 38, 45, 1, 0, 0, 0, 39, 45, 5, 49, 0, 0, 40, 45, 5,
-		51, 0, 0, 41, 45, 5, 50, 0, 0, 42, 45, 5, 48, 0, 0, 43, 45, 5, 52, 0, 0,
-		44, 30, 1, 0, 0, 0, 44, 33, 1, 0, 0, 0, 44, 35, 1, 0, 0, 0, 44, 39, 1,
-		0, 0, 0, 44, 40, 1, 0, 0, 0, 44, 41, 1, 0, 0, 0, 44, 42, 1, 0, 0, 0, 44,
-		43, 1, 0, 0, 0, 45, 75, 1, 0, 0, 0, 46, 47, 10, 15, 0, 0, 47, 48, 5, 4,
-		0, 0, 48, 74, 3, 6, 3, 16, 49, 50, 10, 14, 0, 0, 50, 51, 7, 0, 0, 0, 51,
-		74, 3, 6, 3, 15, 52, 53, 10, 13, 0, 0, 53, 54, 7, 1, 0, 0, 54, 74, 3, 6,
-		3, 14, 55, 56, 10, 12, 0, 0, 56, 57, 7, 2, 0, 0, 57, 74, 3, 6, 3, 13, 58,
-		59, 10, 10, 0, 0, 59, 60, 5, 16, 0, 0, 60, 74, 3, 6, 3, 11, 61, 62, 10,
-		9, 0, 0, 62, 63, 5, 17, 0, 0, 63, 74, 3, 6, 3, 10, 64, 65, 10, 8, 0, 0,
-		65, 66, 5, 1, 0, 0, 66, 74, 3, 6, 3, 8, 67, 68, 10, 7, 0, 0, 68, 69, 5,
-		18, 0, 0, 69, 74, 3, 6, 3, 7, 70, 71, 10, 6, 0, 0, 71, 72, 5, 19, 0, 0,
-		72, 74, 3, 6, 3, 6, 73, 46, 1, 0, 0, 0, 73, 49, 1, 0, 0, 0, 73, 52, 1,
-		0, 0, 0, 73, 55, 1, 0, 0, 0, 73, 58, 1, 0, 0, 0, 73, 61, 1, 0, 0, 0, 73,
-		64, 1, 0, 0, 0, 73, 67, 1, 0, 0, 0, 73, 70, 1, 0, 0, 0, 74, 77, 1, 0, 0,
-		0, 75, 73, 1, 0, 0, 0, 75, 76, 1, 0, 0, 0, 76, 7, 1, 0, 0, 0, 77, 75, 1,
-		0, 0, 0, 78, 79, 5, 23, 0, 0, 79, 80, 5, 52, 0, 0, 80, 81, 5, 20, 0, 0,
-		81, 99, 5, 26, 0, 0, 82, 83, 5, 23, 0, 0, 83, 84, 5, 52, 0, 0, 84, 85,
-		5, 20, 0, 0, 85, 99, 5, 27, 0, 0, 86, 87, 5, 23, 0, 0, 87, 88, 5, 52, 0,
-		0, 88, 89, 5, 20, 0, 0, 89, 99, 5, 28, 0, 0, 90, 91, 5, 23, 0, 0, 91, 92,
-		5, 52, 0, 0, 92, 93, 5, 20, 0, 0, 93, 99, 5, 29, 0, 0, 94, 95, 5, 23, 0,
-		0, 95, 96, 5, 52, 0, 0, 96, 97, 5, 20, 0, 0, 97, 99, 5, 30, 0, 0, 98, 78,
-		1, 0, 0, 0, 98, 82, 1, 0, 0, 0, 98, 86, 1, 0, 0, 0, 98, 90, 1, 0, 0, 0,
-		98, 94, 1, 0, 0, 0, 99, 9, 1, 0, 0, 0, 6, 15, 28, 44, 73, 75, 98,
+		1, 3, 1, 3, 1, 3, 1, 3, 5, 3, 84, 8, 3, 10, 3, 12, 3, 87, 9, 3, 1, 4, 1,
+		4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1,
+		4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 3, 4, 109, 8, 4, 1, 5, 1, 5, 1,
+		5, 1, 5, 1, 6, 1, 6, 1, 6, 1, 6, 1, 6, 1, 6, 1, 6, 1, 6, 1, 6, 1, 6, 1,
+		6, 1, 6, 1, 6, 1, 6, 1, 6, 1, 6, 3, 6, 131, 8, 6, 1, 7, 1, 7, 1, 7, 1,
+		7, 1, 7, 1, 7, 1, 7, 1, 7, 4, 7, 141, 8, 7, 11, 7, 12, 7, 142, 1, 7, 3,
+		7, 146, 8, 7, 1, 7, 1, 7, 1, 8, 1, 8, 1, 8, 1, 8, 1, 9, 1, 9, 1, 9, 1,
+		9, 1, 9, 5, 9, 159, 8, 9, 10, 9, 12, 9, 162, 9, 9, 1, 9, 1, 9, 1, 9, 0,
+		1, 6, 10, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 0, 3, 1, 0, 5, 6, 2, 0, 2,
+		2, 7, 7, 1, 0, 8, 13, 186, 0, 20, 1, 0, 0, 0, 2, 26, 1, 0, 0, 0, 4, 38,
+		1, 0, 0, 0, 6, 54, 1, 0, 0, 0, 8, 108, 1, 0, 0, 0, 10, 110, 1, 0, 0, 0,
+		12, 130, 1, 0, 0, 0, 14, 132, 1, 0, 0, 0, 16, 149, 1, 0, 0, 0, 18, 153,
+		1, 0, 0, 0, 20, 21, 3, 2, 1, 0, 21, 22, 5, 0, 0, 1, 22, 1, 1, 0, 0, 0,
+		23, 25, 3, 4, 2, 0, 24, 23, 1, 0, 0, 0, 25, 28, 1, 0, 0, 0, 26, 24, 1,
+		0, 0, 0, 26, 27, 1, 0, 0, 0, 27, 3, 1, 0, 0, 0, 28, 26, 1, 0, 0, 0, 29,
+		39, 3, 12, 6, 0, 30, 39, 3, 14, 7, 0, 31, 39, 3, 8, 4, 0, 32, 33, 3, 8,
+		4, 0, 33, 34, 5, 1, 0, 0, 34, 35, 3, 6, 3, 0, 35, 39, 1, 0, 0, 0, 36, 39,
+		3, 18, 9, 0, 37, 39, 3, 6, 3, 0, 38, 29, 1, 0, 0, 0, 38, 30, 1, 0, 0, 0,
+		38, 31, 1, 0, 0, 0, 38, 32, 1, 0, 0, 0, 38, 36, 1, 0, 0, 0, 38, 37, 1,
+		0, 0, 0, 39, 5, 1, 0, 0, 0, 40, 41, 6, 3, -1, 0, 41, 42, 5, 2, 0, 0, 42,
+		55, 3, 6, 3, 17, 43, 44, 5, 3, 0, 0, 44, 55, 3, 6, 3, 16, 45, 46, 5, 14,
+		0, 0, 46, 47, 3, 6, 3, 0, 47, 48, 5, 15, 0, 0, 48, 55, 1, 0, 0, 0, 49,
+		55, 5, 53, 0, 0, 50, 55, 5, 55, 0, 0, 51, 55, 5, 54, 0, 0, 52, 55, 5, 52,
+		0, 0, 53, 55, 5, 56, 0, 0, 54, 40, 1, 0, 0, 0, 54, 43, 1, 0, 0, 0, 54,
+		45, 1, 0, 0, 0, 54, 49, 1, 0, 0, 0, 54, 50, 1, 0, 0, 0, 54, 51, 1, 0, 0,
+		0, 54, 52, 1, 0, 0, 0, 54, 53, 1, 0, 0, 0, 55, 85, 1, 0, 0, 0, 56, 57,
+		10, 15, 0, 0, 57, 58, 5, 4, 0, 0, 58, 84, 3, 6, 3, 16, 59, 60, 10, 14,
+		0, 0, 60, 61, 7, 0, 0, 0, 61, 84, 3, 6, 3, 15, 62, 63, 10, 13, 0, 0, 63,
+		64, 7, 1, 0, 0, 64, 84, 3, 6, 3, 14, 65, 66, 10, 12, 0, 0, 66, 67, 7, 2,
+		0, 0, 67, 84, 3, 6, 3, 13, 68, 69, 10, 10, 0, 0, 69, 70, 5, 16, 0, 0, 70,
+		84, 3, 6, 3, 11, 71, 72, 10, 9, 0, 0, 72, 73, 5, 17, 0, 0, 73, 84, 3, 6,
+		3, 10, 74, 75, 10, 8, 0, 0, 75, 76, 5, 1, 0, 0, 76, 84, 3, 6, 3, 8, 77,
+		78, 10, 7, 0, 0, 78, 79, 5, 18, 0, 0, 79, 84, 3, 6, 3, 7, 80, 81, 10, 6,
+		0, 0, 81, 82, 5, 19, 0, 0, 82, 84, 3, 6, 3, 6, 83, 56, 1, 0, 0, 0, 83,
+		59, 1, 0, 0, 0, 83, 62, 1, 0, 0, 0, 83, 65, 1, 0, 0, 0, 83, 68, 1, 0, 0,
+		0, 83, 71, 1, 0, 0, 0, 83, 74, 1, 0, 0, 0, 83, 77, 1, 0, 0, 0, 83, 80,
+		1, 0, 0, 0, 84, 87, 1, 0, 0, 0, 85, 83, 1, 0, 0, 0, 85, 86, 1, 0, 0, 0,
+		86, 7, 1, 0, 0, 0, 87, 85, 1, 0, 0, 0, 88, 89, 5, 26, 0, 0, 89, 90, 5,
+		56, 0, 0, 90, 91, 5, 20, 0, 0, 91, 109, 5, 29, 0, 0, 92, 93, 5, 26, 0,
+		0, 93, 94, 5, 56, 0, 0, 94, 95, 5, 20, 0, 0, 95, 109, 5, 30, 0, 0, 96,
+		97, 5, 26, 0, 0, 97, 98, 5, 56, 0, 0, 98, 99, 5, 20, 0, 0, 99, 109, 5,
+		31, 0, 0, 100, 101, 5, 26, 0, 0, 101, 102, 5, 56, 0, 0, 102, 103, 5, 20,
+		0, 0, 103, 109, 5, 32, 0, 0, 104, 105, 5, 26, 0, 0, 105, 106, 5, 56, 0,
+		0, 106, 107, 5, 20, 0, 0, 107, 109, 5, 33, 0, 0, 108, 88, 1, 0, 0, 0, 108,
+		92, 1, 0, 0, 0, 108, 96, 1, 0, 0, 0, 108, 100, 1, 0, 0, 0, 108, 104, 1,
+		0, 0, 0, 109, 9, 1, 0, 0, 0, 110, 111, 5, 21, 0, 0, 111, 112, 3, 2, 1,
+		0, 112, 113, 5, 22, 0, 0, 113, 11, 1, 0, 0, 0, 114, 115, 5, 34, 0, 0, 115,
+		116, 3, 6, 3, 0, 116, 117, 3, 10, 5, 0, 117, 131, 1, 0, 0, 0, 118, 119,
+		5, 34, 0, 0, 119, 120, 3, 6, 3, 0, 120, 121, 3, 10, 5, 0, 121, 122, 5,
+		35, 0, 0, 122, 123, 3, 10, 5, 0, 123, 131, 1, 0, 0, 0, 124, 125, 5, 34,
+		0, 0, 125, 126, 3, 6, 3, 0, 126, 127, 3, 10, 5, 0, 127, 128, 5, 35, 0,
+		0, 128, 129, 3, 12, 6, 0, 129, 131, 1, 0, 0, 0, 130, 114, 1, 0, 0, 0, 130,
+		118, 1, 0, 0, 0, 130, 124, 1, 0, 0, 0, 131, 13, 1, 0, 0, 0, 132, 133, 5,
+		36, 0, 0, 133, 134, 3, 6, 3, 0, 134, 140, 5, 21, 0, 0, 135, 136, 5, 38,
+		0, 0, 136, 137, 3, 6, 3, 0, 137, 138, 5, 20, 0, 0, 138, 139, 3, 2, 1, 0,
+		139, 141, 1, 0, 0, 0, 140, 135, 1, 0, 0, 0, 141, 142, 1, 0, 0, 0, 142,
+		140, 1, 0, 0, 0, 142, 143, 1, 0, 0, 0, 143, 145, 1, 0, 0, 0, 144, 146,
+		3, 16, 8, 0, 145, 144, 1, 0, 0, 0, 145, 146, 1, 0, 0, 0, 146, 147, 1, 0,
+		0, 0, 147, 148, 5, 22, 0, 0, 148, 15, 1, 0, 0, 0, 149, 150, 5, 37, 0, 0,
+		150, 151, 5, 20, 0, 0, 151, 152, 3, 2, 1, 0, 152, 17, 1, 0, 0, 0, 153,
+		154, 5, 46, 0, 0, 154, 155, 5, 14, 0, 0, 155, 160, 3, 6, 3, 0, 156, 157,
+		5, 23, 0, 0, 157, 159, 3, 6, 3, 0, 158, 156, 1, 0, 0, 0, 159, 162, 1, 0,
+		0, 0, 160, 158, 1, 0, 0, 0, 160, 161, 1, 0, 0, 0, 161, 163, 1, 0, 0, 0,
+		162, 160, 1, 0, 0, 0, 163, 164, 5, 15, 0, 0, 164, 19, 1, 0, 0, 0, 10, 26,
+		38, 54, 83, 85, 108, 130, 142, 145, 160,
 	}
 	deserializer := antlr.NewATNDeserializer(nil)
 	staticData.atn = deserializer.Deserialize(staticData.serializedATN)
@@ -154,49 +184,58 @@ const (
 	TSParser_rulesParserT__17      = 18
 	TSParser_rulesParserT__18      = 19
 	TSParser_rulesParserT__19      = 20
-	TSParser_rulesParserNL         = 21
-	TSParser_rulesParserWS         = 22
-	TSParser_rulesParserVAR        = 23
-	TSParser_rulesParserLET        = 24
-	TSParser_rulesParserNIL        = 25
-	TSParser_rulesParserSTRING     = 26
-	TSParser_rulesParserINT        = 27
-	TSParser_rulesParserFLOAT      = 28
-	TSParser_rulesParserBOOL       = 29
-	TSParser_rulesParserCHARACTER  = 30
-	TSParser_rulesParserIF         = 31
-	TSParser_rulesParserELSE       = 32
-	TSParser_rulesParserSWITCH     = 33
-	TSParser_rulesParserDEFAULT    = 34
-	TSParser_rulesParserCASE       = 35
-	TSParser_rulesParserWHILE      = 36
-	TSParser_rulesParserIN         = 37
-	TSParser_rulesParserFOR        = 38
-	TSParser_rulesParserGUARD      = 39
-	TSParser_rulesParserCONTINUE   = 40
-	TSParser_rulesParserBREAK      = 41
-	TSParser_rulesParserRETURN     = 42
-	TSParser_rulesParserSTRUCT     = 43
-	TSParser_rulesParserSELF       = 44
-	TSParser_rulesParserMUTATING   = 45
-	TSParser_rulesParserFUNC       = 46
-	TSParser_rulesParserINOUT      = 47
-	TSParser_rulesParserVBOOL      = 48
-	TSParser_rulesParserVSTRING    = 49
-	TSParser_rulesParserVFLOAT     = 50
-	TSParser_rulesParserVINTEGER   = 51
-	TSParser_rulesParserID         = 52
-	TSParser_rulesParserSL_COMMENT = 53
-	TSParser_rulesParserML_COMMENT = 54
+	TSParser_rulesParserT__20      = 21
+	TSParser_rulesParserT__21      = 22
+	TSParser_rulesParserT__22      = 23
+	TSParser_rulesParserNL         = 24
+	TSParser_rulesParserWS         = 25
+	TSParser_rulesParserVAR        = 26
+	TSParser_rulesParserLET        = 27
+	TSParser_rulesParserNIL        = 28
+	TSParser_rulesParserSTRING     = 29
+	TSParser_rulesParserINT        = 30
+	TSParser_rulesParserFLOAT      = 31
+	TSParser_rulesParserBOOL       = 32
+	TSParser_rulesParserCHARACTER  = 33
+	TSParser_rulesParserIF         = 34
+	TSParser_rulesParserELSE       = 35
+	TSParser_rulesParserSWITCH     = 36
+	TSParser_rulesParserDEFAULT    = 37
+	TSParser_rulesParserCASE       = 38
+	TSParser_rulesParserWHILE      = 39
+	TSParser_rulesParserIN         = 40
+	TSParser_rulesParserFOR        = 41
+	TSParser_rulesParserGUARD      = 42
+	TSParser_rulesParserCONTINUE   = 43
+	TSParser_rulesParserBREAK      = 44
+	TSParser_rulesParserRETURN     = 45
+	TSParser_rulesParserPRINT      = 46
+	TSParser_rulesParserSTRUCT     = 47
+	TSParser_rulesParserSELF       = 48
+	TSParser_rulesParserMUTATING   = 49
+	TSParser_rulesParserFUNC       = 50
+	TSParser_rulesParserINOUT      = 51
+	TSParser_rulesParserVBOOL      = 52
+	TSParser_rulesParserVSTRING    = 53
+	TSParser_rulesParserVFLOAT     = 54
+	TSParser_rulesParserVINTEGER   = 55
+	TSParser_rulesParserID         = 56
+	TSParser_rulesParserSL_COMMENT = 57
+	TSParser_rulesParserML_COMMENT = 58
 )
 
 // TSParser_rulesParser rules.
 const (
-	TSParser_rulesParserRULE_start  = 0
-	TSParser_rulesParserRULE_lsents = 1
-	TSParser_rulesParserRULE_sents  = 2
-	TSParser_rulesParserRULE_expr   = 3
-	TSParser_rulesParserRULE_declar = 4
+	TSParser_rulesParserRULE_start   = 0
+	TSParser_rulesParserRULE_lsents  = 1
+	TSParser_rulesParserRULE_sents   = 2
+	TSParser_rulesParserRULE_expr    = 3
+	TSParser_rulesParserRULE_declar  = 4
+	TSParser_rulesParserRULE_block   = 5
+	TSParser_rulesParserRULE_if      = 6
+	TSParser_rulesParserRULE_switch  = 7
+	TSParser_rulesParserRULE_default = 8
+	TSParser_rulesParserRULE_print   = 9
 )
 
 // IStartContext is an interface to support dynamic dispatch.
@@ -208,6 +247,7 @@ type IStartContext interface {
 
 	// Getter signatures
 	Lsents() ILsentsContext
+	EOF() antlr.TerminalNode
 
 	// IsStartContext differentiates from other interfaces.
 	IsStartContext()
@@ -261,6 +301,10 @@ func (s *StartContext) Lsents() ILsentsContext {
 	return t.(ILsentsContext)
 }
 
+func (s *StartContext) EOF() antlr.TerminalNode {
+	return s.GetToken(TSParser_rulesParserEOF, 0)
+}
+
 func (s *StartContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
@@ -284,8 +328,16 @@ func (p *TSParser_rulesParser) Start_() (localctx IStartContext) {
 	p.EnterRule(localctx, 0, TSParser_rulesParserRULE_start)
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(10)
+		p.SetState(20)
 		p.Lsents()
+	}
+	{
+		p.SetState(21)
+		p.Match(TSParser_rulesParserEOF)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 
 errorExit:
@@ -309,7 +361,6 @@ type ILsentsContext interface {
 	GetParser() antlr.Parser
 
 	// Getter signatures
-	EOF() antlr.TerminalNode
 	AllSents() []ISentsContext
 	Sents(i int) ISentsContext
 
@@ -348,10 +399,6 @@ func NewLsentsContext(parser antlr.Parser, parent antlr.ParserRuleContext, invok
 }
 
 func (s *LsentsContext) GetParser() antlr.Parser { return s.parser }
-
-func (s *LsentsContext) EOF() antlr.TerminalNode {
-	return s.GetToken(TSParser_rulesParserEOF, 0)
-}
 
 func (s *LsentsContext) AllSents() []ISentsContext {
 	children := s.GetChildren()
@@ -418,33 +465,25 @@ func (p *TSParser_rulesParser) Lsents() (localctx ILsentsContext) {
 	var _la int
 
 	p.EnterOuterAlt(localctx, 1)
-	p.SetState(13)
+	p.SetState(26)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
 	}
 	_la = p.GetTokenStream().LA(1)
 
-	for ok := true; ok; ok = ((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&8725724288532492) != 0) {
+	for (int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&139682043159134220) != 0 {
 		{
-			p.SetState(12)
+			p.SetState(23)
 			p.Sents()
 		}
 
-		p.SetState(15)
+		p.SetState(28)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
 		}
 		_la = p.GetTokenStream().LA(1)
-	}
-	{
-		p.SetState(17)
-		p.Match(TSParser_rulesParserEOF)
-		if p.HasError() {
-			// Recognition error - abort rule
-			goto errorExit
-		}
 	}
 
 errorExit:
@@ -514,6 +553,94 @@ func (s *SentsContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) 
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
+type SIfContext struct {
+	SentsContext
+}
+
+func NewSIfContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *SIfContext {
+	var p = new(SIfContext)
+
+	InitEmptySentsContext(&p.SentsContext)
+	p.parser = parser
+	p.CopyAll(ctx.(*SentsContext))
+
+	return p
+}
+
+func (s *SIfContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *SIfContext) If_() IIfContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IIfContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IIfContext)
+}
+
+func (s *SIfContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case TSParser_rulesVisitor:
+		return t.VisitSIf(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+type SSwitchContext struct {
+	SentsContext
+}
+
+func NewSSwitchContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *SSwitchContext {
+	var p = new(SSwitchContext)
+
+	InitEmptySentsContext(&p.SentsContext)
+	p.parser = parser
+	p.CopyAll(ctx.(*SentsContext))
+
+	return p
+}
+
+func (s *SSwitchContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *SSwitchContext) Switch_() ISwitchContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(ISwitchContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(ISwitchContext)
+}
+
+func (s *SSwitchContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case TSParser_rulesVisitor:
+		return t.VisitSSwitch(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
 type SentExprContext struct {
 	SentsContext
 }
@@ -548,10 +675,6 @@ func (s *SentExprContext) Expr() IExprContext {
 	return t.(IExprContext)
 }
 
-func (s *SentExprContext) NL() antlr.TerminalNode {
-	return s.GetToken(TSParser_rulesParserNL, 0)
-}
-
 func (s *SentExprContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case TSParser_rulesVisitor:
@@ -562,12 +685,12 @@ func (s *SentExprContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	}
 }
 
-type SentNLContext struct {
+type SPrintContext struct {
 	SentsContext
 }
 
-func NewSentNLContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *SentNLContext {
-	var p = new(SentNLContext)
+func NewSPrintContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *SPrintContext {
+	var p = new(SPrintContext)
 
 	InitEmptySentsContext(&p.SentsContext)
 	p.parser = parser
@@ -576,18 +699,30 @@ func NewSentNLContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *SentNLC
 	return p
 }
 
-func (s *SentNLContext) GetRuleContext() antlr.RuleContext {
+func (s *SPrintContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *SentNLContext) NL() antlr.TerminalNode {
-	return s.GetToken(TSParser_rulesParserNL, 0)
+func (s *SPrintContext) Print_() IPrintContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IPrintContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IPrintContext)
 }
 
-func (s *SentNLContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *SPrintContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case TSParser_rulesVisitor:
-		return t.VisitSentNL(s)
+		return t.VisitSPrint(s)
 
 	default:
 		return t.VisitChildren(s)
@@ -706,7 +841,7 @@ func (s *SDeclContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 func (p *TSParser_rulesParser) Sents() (localctx ISentsContext) {
 	localctx = NewSentsContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 4, TSParser_rulesParserRULE_sents)
-	p.SetState(28)
+	p.SetState(38)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -714,38 +849,26 @@ func (p *TSParser_rulesParser) Sents() (localctx ISentsContext) {
 
 	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 1, p.GetParserRuleContext()) {
 	case 1:
-		localctx = NewSentExprContext(p, localctx)
+		localctx = NewSIfContext(p, localctx)
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(19)
-			p.expr(0)
-		}
-		{
-			p.SetState(20)
-			p.Match(TSParser_rulesParserNL)
-			if p.HasError() {
-				// Recognition error - abort rule
-				goto errorExit
-			}
+			p.SetState(29)
+			p.If_()
 		}
 
 	case 2:
-		localctx = NewSentNLContext(p, localctx)
+		localctx = NewSSwitchContext(p, localctx)
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(22)
-			p.Match(TSParser_rulesParserNL)
-			if p.HasError() {
-				// Recognition error - abort rule
-				goto errorExit
-			}
+			p.SetState(30)
+			p.Switch_()
 		}
 
 	case 3:
 		localctx = NewSDeclContext(p, localctx)
 		p.EnterOuterAlt(localctx, 3)
 		{
-			p.SetState(23)
+			p.SetState(31)
 			p.Declar()
 		}
 
@@ -753,11 +876,11 @@ func (p *TSParser_rulesParser) Sents() (localctx ISentsContext) {
 		localctx = NewSDeclAsigContext(p, localctx)
 		p.EnterOuterAlt(localctx, 4)
 		{
-			p.SetState(24)
+			p.SetState(32)
 			p.Declar()
 		}
 		{
-			p.SetState(25)
+			p.SetState(33)
 
 			var _m = p.Match(TSParser_rulesParserT__0)
 
@@ -768,7 +891,23 @@ func (p *TSParser_rulesParser) Sents() (localctx ISentsContext) {
 			}
 		}
 		{
-			p.SetState(26)
+			p.SetState(34)
+			p.expr(0)
+		}
+
+	case 5:
+		localctx = NewSPrintContext(p, localctx)
+		p.EnterOuterAlt(localctx, 5)
+		{
+			p.SetState(36)
+			p.Print_()
+		}
+
+	case 6:
+		localctx = NewSentExprContext(p, localctx)
+		p.EnterOuterAlt(localctx, 6)
+		{
+			p.SetState(37)
 			p.expr(0)
 		}
 
@@ -1829,7 +1968,7 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 	var _alt int
 
 	p.EnterOuterAlt(localctx, 1)
-	p.SetState(44)
+	p.SetState(54)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -1842,7 +1981,7 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 		_prevctx = localctx
 
 		{
-			p.SetState(31)
+			p.SetState(41)
 
 			var _m = p.Match(TSParser_rulesParserT__1)
 
@@ -1853,7 +1992,7 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 			}
 		}
 		{
-			p.SetState(32)
+			p.SetState(42)
 			p.expr(17)
 		}
 
@@ -1862,7 +2001,7 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(33)
+			p.SetState(43)
 
 			var _m = p.Match(TSParser_rulesParserT__2)
 
@@ -1873,7 +2012,7 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 			}
 		}
 		{
-			p.SetState(34)
+			p.SetState(44)
 			p.expr(16)
 		}
 
@@ -1882,7 +2021,7 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(35)
+			p.SetState(45)
 			p.Match(TSParser_rulesParserT__13)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -1890,11 +2029,11 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 			}
 		}
 		{
-			p.SetState(36)
+			p.SetState(46)
 			p.expr(0)
 		}
 		{
-			p.SetState(37)
+			p.SetState(47)
 			p.Match(TSParser_rulesParserT__14)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -1907,7 +2046,7 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(39)
+			p.SetState(49)
 			p.Match(TSParser_rulesParserVSTRING)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -1920,7 +2059,7 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(40)
+			p.SetState(50)
 			p.Match(TSParser_rulesParserVINTEGER)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -1933,7 +2072,7 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(41)
+			p.SetState(51)
 			p.Match(TSParser_rulesParserVFLOAT)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -1946,7 +2085,7 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(42)
+			p.SetState(52)
 			p.Match(TSParser_rulesParserVBOOL)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -1959,7 +2098,7 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 		p.SetParserRuleContext(localctx)
 		_prevctx = localctx
 		{
-			p.SetState(43)
+			p.SetState(53)
 			p.Match(TSParser_rulesParserID)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -1972,7 +2111,7 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 		goto errorExit
 	}
 	p.GetParserRuleContext().SetStop(p.GetTokenStream().LT(-1))
-	p.SetState(75)
+	p.SetState(85)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -1987,7 +2126,7 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 				p.TriggerExitRuleEvent()
 			}
 			_prevctx = localctx
-			p.SetState(73)
+			p.SetState(83)
 			p.GetErrorHandler().Sync(p)
 			if p.HasError() {
 				goto errorExit
@@ -1997,14 +2136,14 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 			case 1:
 				localctx = NewEModuleContext(p, NewExprContext(p, _parentctx, _parentState))
 				p.PushNewRecursionContext(localctx, _startState, TSParser_rulesParserRULE_expr)
-				p.SetState(46)
+				p.SetState(56)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 15)) {
 					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 15)", ""))
 					goto errorExit
 				}
 				{
-					p.SetState(47)
+					p.SetState(57)
 
 					var _m = p.Match(TSParser_rulesParserT__3)
 
@@ -2015,21 +2154,21 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 					}
 				}
 				{
-					p.SetState(48)
+					p.SetState(58)
 					p.expr(16)
 				}
 
 			case 2:
 				localctx = NewEMulDivContext(p, NewExprContext(p, _parentctx, _parentState))
 				p.PushNewRecursionContext(localctx, _startState, TSParser_rulesParserRULE_expr)
-				p.SetState(49)
+				p.SetState(59)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 14)) {
 					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 14)", ""))
 					goto errorExit
 				}
 				{
-					p.SetState(50)
+					p.SetState(60)
 
 					var _lt = p.GetTokenStream().LT(1)
 
@@ -2047,21 +2186,21 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 					}
 				}
 				{
-					p.SetState(51)
+					p.SetState(61)
 					p.expr(15)
 				}
 
 			case 3:
 				localctx = NewEAddSubContext(p, NewExprContext(p, _parentctx, _parentState))
 				p.PushNewRecursionContext(localctx, _startState, TSParser_rulesParserRULE_expr)
-				p.SetState(52)
+				p.SetState(62)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 13)) {
 					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 13)", ""))
 					goto errorExit
 				}
 				{
-					p.SetState(53)
+					p.SetState(63)
 
 					var _lt = p.GetTokenStream().LT(1)
 
@@ -2079,21 +2218,21 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 					}
 				}
 				{
-					p.SetState(54)
+					p.SetState(64)
 					p.expr(14)
 				}
 
 			case 4:
 				localctx = NewERelContext(p, NewExprContext(p, _parentctx, _parentState))
 				p.PushNewRecursionContext(localctx, _startState, TSParser_rulesParserRULE_expr)
-				p.SetState(55)
+				p.SetState(65)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 12)) {
 					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 12)", ""))
 					goto errorExit
 				}
 				{
-					p.SetState(56)
+					p.SetState(66)
 
 					var _lt = p.GetTokenStream().LT(1)
 
@@ -2111,21 +2250,21 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 					}
 				}
 				{
-					p.SetState(57)
+					p.SetState(67)
 					p.expr(13)
 				}
 
 			case 5:
 				localctx = NewERelAndContext(p, NewExprContext(p, _parentctx, _parentState))
 				p.PushNewRecursionContext(localctx, _startState, TSParser_rulesParserRULE_expr)
-				p.SetState(58)
+				p.SetState(68)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 10)) {
 					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 10)", ""))
 					goto errorExit
 				}
 				{
-					p.SetState(59)
+					p.SetState(69)
 
 					var _m = p.Match(TSParser_rulesParserT__15)
 
@@ -2136,21 +2275,21 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 					}
 				}
 				{
-					p.SetState(60)
+					p.SetState(70)
 					p.expr(11)
 				}
 
 			case 6:
 				localctx = NewERelOrContext(p, NewExprContext(p, _parentctx, _parentState))
 				p.PushNewRecursionContext(localctx, _startState, TSParser_rulesParserRULE_expr)
-				p.SetState(61)
+				p.SetState(71)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 9)) {
 					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 9)", ""))
 					goto errorExit
 				}
 				{
-					p.SetState(62)
+					p.SetState(72)
 
 					var _m = p.Match(TSParser_rulesParserT__16)
 
@@ -2161,21 +2300,21 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 					}
 				}
 				{
-					p.SetState(63)
+					p.SetState(73)
 					p.expr(10)
 				}
 
 			case 7:
 				localctx = NewEAssignContext(p, NewExprContext(p, _parentctx, _parentState))
 				p.PushNewRecursionContext(localctx, _startState, TSParser_rulesParserRULE_expr)
-				p.SetState(64)
+				p.SetState(74)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 8)) {
 					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 8)", ""))
 					goto errorExit
 				}
 				{
-					p.SetState(65)
+					p.SetState(75)
 
 					var _m = p.Match(TSParser_rulesParserT__0)
 
@@ -2186,21 +2325,21 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 					}
 				}
 				{
-					p.SetState(66)
+					p.SetState(76)
 					p.expr(8)
 				}
 
 			case 8:
 				localctx = NewEAsAddContext(p, NewExprContext(p, _parentctx, _parentState))
 				p.PushNewRecursionContext(localctx, _startState, TSParser_rulesParserRULE_expr)
-				p.SetState(67)
+				p.SetState(77)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 7)) {
 					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 7)", ""))
 					goto errorExit
 				}
 				{
-					p.SetState(68)
+					p.SetState(78)
 
 					var _m = p.Match(TSParser_rulesParserT__17)
 
@@ -2211,21 +2350,21 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 					}
 				}
 				{
-					p.SetState(69)
+					p.SetState(79)
 					p.expr(7)
 				}
 
 			case 9:
 				localctx = NewESubAddContext(p, NewExprContext(p, _parentctx, _parentState))
 				p.PushNewRecursionContext(localctx, _startState, TSParser_rulesParserRULE_expr)
-				p.SetState(70)
+				p.SetState(80)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 6)) {
 					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 6)", ""))
 					goto errorExit
 				}
 				{
-					p.SetState(71)
+					p.SetState(81)
 
 					var _m = p.Match(TSParser_rulesParserT__18)
 
@@ -2236,7 +2375,7 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 					}
 				}
 				{
-					p.SetState(72)
+					p.SetState(82)
 					p.expr(6)
 				}
 
@@ -2245,7 +2384,7 @@ func (p *TSParser_rulesParser) expr(_p int) (localctx IExprContext) {
 			}
 
 		}
-		p.SetState(77)
+		p.SetState(87)
 		p.GetErrorHandler().Sync(p)
 		if p.HasError() {
 			goto errorExit
@@ -2526,7 +2665,7 @@ func (s *SDIntContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 func (p *TSParser_rulesParser) Declar() (localctx IDeclarContext) {
 	localctx = NewDeclarContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 8, TSParser_rulesParserRULE_declar)
-	p.SetState(98)
+	p.SetState(108)
 	p.GetErrorHandler().Sync(p)
 	if p.HasError() {
 		goto errorExit
@@ -2537,7 +2676,7 @@ func (p *TSParser_rulesParser) Declar() (localctx IDeclarContext) {
 		localctx = NewSDStrContext(p, localctx)
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(78)
+			p.SetState(88)
 			p.Match(TSParser_rulesParserVAR)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2545,7 +2684,7 @@ func (p *TSParser_rulesParser) Declar() (localctx IDeclarContext) {
 			}
 		}
 		{
-			p.SetState(79)
+			p.SetState(89)
 			p.Match(TSParser_rulesParserID)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2553,7 +2692,7 @@ func (p *TSParser_rulesParser) Declar() (localctx IDeclarContext) {
 			}
 		}
 		{
-			p.SetState(80)
+			p.SetState(90)
 			p.Match(TSParser_rulesParserT__19)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2561,7 +2700,7 @@ func (p *TSParser_rulesParser) Declar() (localctx IDeclarContext) {
 			}
 		}
 		{
-			p.SetState(81)
+			p.SetState(91)
 			p.Match(TSParser_rulesParserSTRING)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2573,7 +2712,7 @@ func (p *TSParser_rulesParser) Declar() (localctx IDeclarContext) {
 		localctx = NewSDIntContext(p, localctx)
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(82)
+			p.SetState(92)
 			p.Match(TSParser_rulesParserVAR)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2581,7 +2720,7 @@ func (p *TSParser_rulesParser) Declar() (localctx IDeclarContext) {
 			}
 		}
 		{
-			p.SetState(83)
+			p.SetState(93)
 			p.Match(TSParser_rulesParserID)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2589,7 +2728,7 @@ func (p *TSParser_rulesParser) Declar() (localctx IDeclarContext) {
 			}
 		}
 		{
-			p.SetState(84)
+			p.SetState(94)
 			p.Match(TSParser_rulesParserT__19)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2597,7 +2736,7 @@ func (p *TSParser_rulesParser) Declar() (localctx IDeclarContext) {
 			}
 		}
 		{
-			p.SetState(85)
+			p.SetState(95)
 			p.Match(TSParser_rulesParserINT)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2609,7 +2748,7 @@ func (p *TSParser_rulesParser) Declar() (localctx IDeclarContext) {
 		localctx = NewSDFltContext(p, localctx)
 		p.EnterOuterAlt(localctx, 3)
 		{
-			p.SetState(86)
+			p.SetState(96)
 			p.Match(TSParser_rulesParserVAR)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2617,7 +2756,7 @@ func (p *TSParser_rulesParser) Declar() (localctx IDeclarContext) {
 			}
 		}
 		{
-			p.SetState(87)
+			p.SetState(97)
 			p.Match(TSParser_rulesParserID)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2625,7 +2764,7 @@ func (p *TSParser_rulesParser) Declar() (localctx IDeclarContext) {
 			}
 		}
 		{
-			p.SetState(88)
+			p.SetState(98)
 			p.Match(TSParser_rulesParserT__19)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2633,7 +2772,7 @@ func (p *TSParser_rulesParser) Declar() (localctx IDeclarContext) {
 			}
 		}
 		{
-			p.SetState(89)
+			p.SetState(99)
 			p.Match(TSParser_rulesParserFLOAT)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2645,7 +2784,7 @@ func (p *TSParser_rulesParser) Declar() (localctx IDeclarContext) {
 		localctx = NewSDBoolContext(p, localctx)
 		p.EnterOuterAlt(localctx, 4)
 		{
-			p.SetState(90)
+			p.SetState(100)
 			p.Match(TSParser_rulesParserVAR)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2653,7 +2792,7 @@ func (p *TSParser_rulesParser) Declar() (localctx IDeclarContext) {
 			}
 		}
 		{
-			p.SetState(91)
+			p.SetState(101)
 			p.Match(TSParser_rulesParserID)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2661,7 +2800,7 @@ func (p *TSParser_rulesParser) Declar() (localctx IDeclarContext) {
 			}
 		}
 		{
-			p.SetState(92)
+			p.SetState(102)
 			p.Match(TSParser_rulesParserT__19)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2669,7 +2808,7 @@ func (p *TSParser_rulesParser) Declar() (localctx IDeclarContext) {
 			}
 		}
 		{
-			p.SetState(93)
+			p.SetState(103)
 			p.Match(TSParser_rulesParserBOOL)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2681,7 +2820,7 @@ func (p *TSParser_rulesParser) Declar() (localctx IDeclarContext) {
 		localctx = NewSDChrContext(p, localctx)
 		p.EnterOuterAlt(localctx, 5)
 		{
-			p.SetState(94)
+			p.SetState(104)
 			p.Match(TSParser_rulesParserVAR)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2689,7 +2828,7 @@ func (p *TSParser_rulesParser) Declar() (localctx IDeclarContext) {
 			}
 		}
 		{
-			p.SetState(95)
+			p.SetState(105)
 			p.Match(TSParser_rulesParserID)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2697,7 +2836,7 @@ func (p *TSParser_rulesParser) Declar() (localctx IDeclarContext) {
 			}
 		}
 		{
-			p.SetState(96)
+			p.SetState(106)
 			p.Match(TSParser_rulesParserT__19)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2705,7 +2844,7 @@ func (p *TSParser_rulesParser) Declar() (localctx IDeclarContext) {
 			}
 		}
 		{
-			p.SetState(97)
+			p.SetState(107)
 			p.Match(TSParser_rulesParserCHARACTER)
 			if p.HasError() {
 				// Recognition error - abort rule
@@ -2715,6 +2854,1151 @@ func (p *TSParser_rulesParser) Declar() (localctx IDeclarContext) {
 
 	case antlr.ATNInvalidAltNumber:
 		goto errorExit
+	}
+
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
+	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
+}
+
+// IBlockContext is an interface to support dynamic dispatch.
+type IBlockContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// GetTerm returns the term token.
+	GetTerm() antlr.Token
+
+	// SetTerm sets the term token.
+	SetTerm(antlr.Token)
+
+	// Getter signatures
+	Lsents() ILsentsContext
+
+	// IsBlockContext differentiates from other interfaces.
+	IsBlockContext()
+}
+
+type BlockContext struct {
+	antlr.BaseParserRuleContext
+	parser antlr.Parser
+	term   antlr.Token
+}
+
+func NewEmptyBlockContext() *BlockContext {
+	var p = new(BlockContext)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = TSParser_rulesParserRULE_block
+	return p
+}
+
+func InitEmptyBlockContext(p *BlockContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = TSParser_rulesParserRULE_block
+}
+
+func (*BlockContext) IsBlockContext() {}
+
+func NewBlockContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *BlockContext {
+	var p = new(BlockContext)
+
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = TSParser_rulesParserRULE_block
+
+	return p
+}
+
+func (s *BlockContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *BlockContext) GetTerm() antlr.Token { return s.term }
+
+func (s *BlockContext) SetTerm(v antlr.Token) { s.term = v }
+
+func (s *BlockContext) Lsents() ILsentsContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(ILsentsContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(ILsentsContext)
+}
+
+func (s *BlockContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *BlockContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *BlockContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case TSParser_rulesVisitor:
+		return t.VisitBlock(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+func (p *TSParser_rulesParser) Block() (localctx IBlockContext) {
+	localctx = NewBlockContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 10, TSParser_rulesParserRULE_block)
+	p.EnterOuterAlt(localctx, 1)
+	{
+		p.SetState(110)
+
+		var _m = p.Match(TSParser_rulesParserT__20)
+
+		localctx.(*BlockContext).term = _m
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	{
+		p.SetState(111)
+		p.Lsents()
+	}
+	{
+		p.SetState(112)
+		p.Match(TSParser_rulesParserT__21)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
+	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
+}
+
+// IIfContext is an interface to support dynamic dispatch.
+type IIfContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+	// IsIfContext differentiates from other interfaces.
+	IsIfContext()
+}
+
+type IfContext struct {
+	antlr.BaseParserRuleContext
+	parser antlr.Parser
+}
+
+func NewEmptyIfContext() *IfContext {
+	var p = new(IfContext)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = TSParser_rulesParserRULE_if
+	return p
+}
+
+func InitEmptyIfContext(p *IfContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = TSParser_rulesParserRULE_if
+}
+
+func (*IfContext) IsIfContext() {}
+
+func NewIfContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *IfContext {
+	var p = new(IfContext)
+
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = TSParser_rulesParserRULE_if
+
+	return p
+}
+
+func (s *IfContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *IfContext) CopyAll(ctx *IfContext) {
+	s.CopyFrom(&ctx.BaseParserRuleContext)
+}
+
+func (s *IfContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *IfContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+type RIfEIfContext struct {
+	IfContext
+}
+
+func NewRIfEIfContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *RIfEIfContext {
+	var p = new(RIfEIfContext)
+
+	InitEmptyIfContext(&p.IfContext)
+	p.parser = parser
+	p.CopyAll(ctx.(*IfContext))
+
+	return p
+}
+
+func (s *RIfEIfContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *RIfEIfContext) IF() antlr.TerminalNode {
+	return s.GetToken(TSParser_rulesParserIF, 0)
+}
+
+func (s *RIfEIfContext) Expr() IExprContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IExprContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IExprContext)
+}
+
+func (s *RIfEIfContext) Block() IBlockContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IBlockContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IBlockContext)
+}
+
+func (s *RIfEIfContext) ELSE() antlr.TerminalNode {
+	return s.GetToken(TSParser_rulesParserELSE, 0)
+}
+
+func (s *RIfEIfContext) If_() IIfContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IIfContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IIfContext)
+}
+
+func (s *RIfEIfContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case TSParser_rulesVisitor:
+		return t.VisitRIfEIf(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+type RIfElseContext struct {
+	IfContext
+}
+
+func NewRIfElseContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *RIfElseContext {
+	var p = new(RIfElseContext)
+
+	InitEmptyIfContext(&p.IfContext)
+	p.parser = parser
+	p.CopyAll(ctx.(*IfContext))
+
+	return p
+}
+
+func (s *RIfElseContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *RIfElseContext) IF() antlr.TerminalNode {
+	return s.GetToken(TSParser_rulesParserIF, 0)
+}
+
+func (s *RIfElseContext) Expr() IExprContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IExprContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IExprContext)
+}
+
+func (s *RIfElseContext) AllBlock() []IBlockContext {
+	children := s.GetChildren()
+	len := 0
+	for _, ctx := range children {
+		if _, ok := ctx.(IBlockContext); ok {
+			len++
+		}
+	}
+
+	tst := make([]IBlockContext, len)
+	i := 0
+	for _, ctx := range children {
+		if t, ok := ctx.(IBlockContext); ok {
+			tst[i] = t.(IBlockContext)
+			i++
+		}
+	}
+
+	return tst
+}
+
+func (s *RIfElseContext) Block(i int) IBlockContext {
+	var t antlr.RuleContext
+	j := 0
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IBlockContext); ok {
+			if j == i {
+				t = ctx.(antlr.RuleContext)
+				break
+			}
+			j++
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IBlockContext)
+}
+
+func (s *RIfElseContext) ELSE() antlr.TerminalNode {
+	return s.GetToken(TSParser_rulesParserELSE, 0)
+}
+
+func (s *RIfElseContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case TSParser_rulesVisitor:
+		return t.VisitRIfElse(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+type RIfContext struct {
+	IfContext
+}
+
+func NewRIfContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *RIfContext {
+	var p = new(RIfContext)
+
+	InitEmptyIfContext(&p.IfContext)
+	p.parser = parser
+	p.CopyAll(ctx.(*IfContext))
+
+	return p
+}
+
+func (s *RIfContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *RIfContext) IF() antlr.TerminalNode {
+	return s.GetToken(TSParser_rulesParserIF, 0)
+}
+
+func (s *RIfContext) Expr() IExprContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IExprContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IExprContext)
+}
+
+func (s *RIfContext) Block() IBlockContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IBlockContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IBlockContext)
+}
+
+func (s *RIfContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case TSParser_rulesVisitor:
+		return t.VisitRIf(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+func (p *TSParser_rulesParser) If_() (localctx IIfContext) {
+	localctx = NewIfContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 12, TSParser_rulesParserRULE_if)
+	p.SetState(130)
+	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
+
+	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 6, p.GetParserRuleContext()) {
+	case 1:
+		localctx = NewRIfContext(p, localctx)
+		p.EnterOuterAlt(localctx, 1)
+		{
+			p.SetState(114)
+			p.Match(TSParser_rulesParserIF)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(115)
+			p.expr(0)
+		}
+		{
+			p.SetState(116)
+			p.Block()
+		}
+
+	case 2:
+		localctx = NewRIfElseContext(p, localctx)
+		p.EnterOuterAlt(localctx, 2)
+		{
+			p.SetState(118)
+			p.Match(TSParser_rulesParserIF)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(119)
+			p.expr(0)
+		}
+		{
+			p.SetState(120)
+			p.Block()
+		}
+		{
+			p.SetState(121)
+			p.Match(TSParser_rulesParserELSE)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(122)
+			p.Block()
+		}
+
+	case 3:
+		localctx = NewRIfEIfContext(p, localctx)
+		p.EnterOuterAlt(localctx, 3)
+		{
+			p.SetState(124)
+			p.Match(TSParser_rulesParserIF)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(125)
+			p.expr(0)
+		}
+		{
+			p.SetState(126)
+			p.Block()
+		}
+		{
+			p.SetState(127)
+			p.Match(TSParser_rulesParserELSE)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(128)
+			p.If_()
+		}
+
+	case antlr.ATNInvalidAltNumber:
+		goto errorExit
+	}
+
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
+	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
+}
+
+// ISwitchContext is an interface to support dynamic dispatch.
+type ISwitchContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// GetInput returns the input rule contexts.
+	GetInput() IExprContext
+
+	// SetInput sets the input rule contexts.
+	SetInput(IExprContext)
+
+	// Getter signatures
+	SWITCH() antlr.TerminalNode
+	AllExpr() []IExprContext
+	Expr(i int) IExprContext
+	AllCASE() []antlr.TerminalNode
+	CASE(i int) antlr.TerminalNode
+	AllLsents() []ILsentsContext
+	Lsents(i int) ILsentsContext
+	Default_() IDefaultContext
+
+	// IsSwitchContext differentiates from other interfaces.
+	IsSwitchContext()
+}
+
+type SwitchContext struct {
+	antlr.BaseParserRuleContext
+	parser antlr.Parser
+	input  IExprContext
+}
+
+func NewEmptySwitchContext() *SwitchContext {
+	var p = new(SwitchContext)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = TSParser_rulesParserRULE_switch
+	return p
+}
+
+func InitEmptySwitchContext(p *SwitchContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = TSParser_rulesParserRULE_switch
+}
+
+func (*SwitchContext) IsSwitchContext() {}
+
+func NewSwitchContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *SwitchContext {
+	var p = new(SwitchContext)
+
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = TSParser_rulesParserRULE_switch
+
+	return p
+}
+
+func (s *SwitchContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *SwitchContext) GetInput() IExprContext { return s.input }
+
+func (s *SwitchContext) SetInput(v IExprContext) { s.input = v }
+
+func (s *SwitchContext) SWITCH() antlr.TerminalNode {
+	return s.GetToken(TSParser_rulesParserSWITCH, 0)
+}
+
+func (s *SwitchContext) AllExpr() []IExprContext {
+	children := s.GetChildren()
+	len := 0
+	for _, ctx := range children {
+		if _, ok := ctx.(IExprContext); ok {
+			len++
+		}
+	}
+
+	tst := make([]IExprContext, len)
+	i := 0
+	for _, ctx := range children {
+		if t, ok := ctx.(IExprContext); ok {
+			tst[i] = t.(IExprContext)
+			i++
+		}
+	}
+
+	return tst
+}
+
+func (s *SwitchContext) Expr(i int) IExprContext {
+	var t antlr.RuleContext
+	j := 0
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IExprContext); ok {
+			if j == i {
+				t = ctx.(antlr.RuleContext)
+				break
+			}
+			j++
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IExprContext)
+}
+
+func (s *SwitchContext) AllCASE() []antlr.TerminalNode {
+	return s.GetTokens(TSParser_rulesParserCASE)
+}
+
+func (s *SwitchContext) CASE(i int) antlr.TerminalNode {
+	return s.GetToken(TSParser_rulesParserCASE, i)
+}
+
+func (s *SwitchContext) AllLsents() []ILsentsContext {
+	children := s.GetChildren()
+	len := 0
+	for _, ctx := range children {
+		if _, ok := ctx.(ILsentsContext); ok {
+			len++
+		}
+	}
+
+	tst := make([]ILsentsContext, len)
+	i := 0
+	for _, ctx := range children {
+		if t, ok := ctx.(ILsentsContext); ok {
+			tst[i] = t.(ILsentsContext)
+			i++
+		}
+	}
+
+	return tst
+}
+
+func (s *SwitchContext) Lsents(i int) ILsentsContext {
+	var t antlr.RuleContext
+	j := 0
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(ILsentsContext); ok {
+			if j == i {
+				t = ctx.(antlr.RuleContext)
+				break
+			}
+			j++
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(ILsentsContext)
+}
+
+func (s *SwitchContext) Default_() IDefaultContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IDefaultContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IDefaultContext)
+}
+
+func (s *SwitchContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *SwitchContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *SwitchContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case TSParser_rulesVisitor:
+		return t.VisitSwitch(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+func (p *TSParser_rulesParser) Switch_() (localctx ISwitchContext) {
+	localctx = NewSwitchContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 14, TSParser_rulesParserRULE_switch)
+	var _la int
+
+	p.EnterOuterAlt(localctx, 1)
+	{
+		p.SetState(132)
+		p.Match(TSParser_rulesParserSWITCH)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	{
+		p.SetState(133)
+
+		var _x = p.expr(0)
+
+		localctx.(*SwitchContext).input = _x
+	}
+	{
+		p.SetState(134)
+		p.Match(TSParser_rulesParserT__20)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	p.SetState(140)
+	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
+	_la = p.GetTokenStream().LA(1)
+
+	for ok := true; ok; ok = _la == TSParser_rulesParserCASE {
+		{
+			p.SetState(135)
+			p.Match(TSParser_rulesParserCASE)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(136)
+			p.expr(0)
+		}
+		{
+			p.SetState(137)
+			p.Match(TSParser_rulesParserT__19)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(138)
+			p.Lsents()
+		}
+
+		p.SetState(142)
+		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
+		_la = p.GetTokenStream().LA(1)
+	}
+	p.SetState(145)
+	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
+	_la = p.GetTokenStream().LA(1)
+
+	if _la == TSParser_rulesParserDEFAULT {
+		{
+			p.SetState(144)
+			p.Default_()
+		}
+
+	}
+	{
+		p.SetState(147)
+		p.Match(TSParser_rulesParserT__21)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
+	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
+}
+
+// IDefaultContext is an interface to support dynamic dispatch.
+type IDefaultContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// Getter signatures
+	DEFAULT() antlr.TerminalNode
+	Lsents() ILsentsContext
+
+	// IsDefaultContext differentiates from other interfaces.
+	IsDefaultContext()
+}
+
+type DefaultContext struct {
+	antlr.BaseParserRuleContext
+	parser antlr.Parser
+}
+
+func NewEmptyDefaultContext() *DefaultContext {
+	var p = new(DefaultContext)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = TSParser_rulesParserRULE_default
+	return p
+}
+
+func InitEmptyDefaultContext(p *DefaultContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = TSParser_rulesParserRULE_default
+}
+
+func (*DefaultContext) IsDefaultContext() {}
+
+func NewDefaultContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *DefaultContext {
+	var p = new(DefaultContext)
+
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = TSParser_rulesParserRULE_default
+
+	return p
+}
+
+func (s *DefaultContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *DefaultContext) DEFAULT() antlr.TerminalNode {
+	return s.GetToken(TSParser_rulesParserDEFAULT, 0)
+}
+
+func (s *DefaultContext) Lsents() ILsentsContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(ILsentsContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(ILsentsContext)
+}
+
+func (s *DefaultContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *DefaultContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *DefaultContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case TSParser_rulesVisitor:
+		return t.VisitDefault(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+func (p *TSParser_rulesParser) Default_() (localctx IDefaultContext) {
+	localctx = NewDefaultContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 16, TSParser_rulesParserRULE_default)
+	p.EnterOuterAlt(localctx, 1)
+	{
+		p.SetState(149)
+		p.Match(TSParser_rulesParserDEFAULT)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	{
+		p.SetState(150)
+		p.Match(TSParser_rulesParserT__19)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	{
+		p.SetState(151)
+		p.Lsents()
+	}
+
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
+	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
+}
+
+// IPrintContext is an interface to support dynamic dispatch.
+type IPrintContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// Getter signatures
+	PRINT() antlr.TerminalNode
+	AllExpr() []IExprContext
+	Expr(i int) IExprContext
+
+	// IsPrintContext differentiates from other interfaces.
+	IsPrintContext()
+}
+
+type PrintContext struct {
+	antlr.BaseParserRuleContext
+	parser antlr.Parser
+}
+
+func NewEmptyPrintContext() *PrintContext {
+	var p = new(PrintContext)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = TSParser_rulesParserRULE_print
+	return p
+}
+
+func InitEmptyPrintContext(p *PrintContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = TSParser_rulesParserRULE_print
+}
+
+func (*PrintContext) IsPrintContext() {}
+
+func NewPrintContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *PrintContext {
+	var p = new(PrintContext)
+
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = TSParser_rulesParserRULE_print
+
+	return p
+}
+
+func (s *PrintContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *PrintContext) PRINT() antlr.TerminalNode {
+	return s.GetToken(TSParser_rulesParserPRINT, 0)
+}
+
+func (s *PrintContext) AllExpr() []IExprContext {
+	children := s.GetChildren()
+	len := 0
+	for _, ctx := range children {
+		if _, ok := ctx.(IExprContext); ok {
+			len++
+		}
+	}
+
+	tst := make([]IExprContext, len)
+	i := 0
+	for _, ctx := range children {
+		if t, ok := ctx.(IExprContext); ok {
+			tst[i] = t.(IExprContext)
+			i++
+		}
+	}
+
+	return tst
+}
+
+func (s *PrintContext) Expr(i int) IExprContext {
+	var t antlr.RuleContext
+	j := 0
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IExprContext); ok {
+			if j == i {
+				t = ctx.(antlr.RuleContext)
+				break
+			}
+			j++
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IExprContext)
+}
+
+func (s *PrintContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *PrintContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *PrintContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case TSParser_rulesVisitor:
+		return t.VisitPrint(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+func (p *TSParser_rulesParser) Print_() (localctx IPrintContext) {
+	localctx = NewPrintContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 18, TSParser_rulesParserRULE_print)
+	var _la int
+
+	p.EnterOuterAlt(localctx, 1)
+	{
+		p.SetState(153)
+		p.Match(TSParser_rulesParserPRINT)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	{
+		p.SetState(154)
+		p.Match(TSParser_rulesParserT__13)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
+	}
+	{
+		p.SetState(155)
+		p.expr(0)
+	}
+	p.SetState(160)
+	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
+	_la = p.GetTokenStream().LA(1)
+
+	for _la == TSParser_rulesParserT__22 {
+		{
+			p.SetState(156)
+			p.Match(TSParser_rulesParserT__22)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
+		}
+		{
+			p.SetState(157)
+			p.expr(0)
+		}
+
+		p.SetState(162)
+		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
+		_la = p.GetTokenStream().LA(1)
+	}
+	{
+		p.SetState(163)
+		p.Match(TSParser_rulesParserT__14)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 
 errorExit:

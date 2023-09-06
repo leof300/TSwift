@@ -59,27 +59,39 @@ type TSValue struct {
 }
 
 func (T TSValue) ToString() string {
-	var tvalue string
-	if T.IsBox {
-		tvalue = fmt.Sprintf("Tag: %s alue: ", T.BoxTag)
-	}
 	switch T.TSType {
 	case INTEGER:
-		tvalue += strconv.Itoa(T.Ivalue)
+		return strconv.Itoa(T.Ivalue)
 	case FLOAT:
-		tvalue += strconv.FormatFloat(T.Fvalue, 'g', -1, 64)
+		return strconv.FormatFloat(T.Fvalue, 'g', -1, 64)
 	case STRING:
-		tvalue += T.Svalue
+		return T.Svalue
+	case CHARACTER:
+		return T.Svalue
 	case BOOL:
-		tvalue += strconv.FormatBool(T.Bvalue)
+		return strconv.FormatBool(T.Bvalue)
 	case NIL:
-		tvalue += "nil"
-	case UNDEFINED:
-		tvalue += "undefined"
+		return "nil"
 	default:
-		return "UNDEFINED"
+		return ""
 	}
-	return fmt.Sprintf("type: %s value: %s", T.TSType.String(), tvalue)
+}
+
+func (T TSValue) ToComplexString() string {
+	svalue := ""
+
+	if T.IsBox {
+		svalue = fmt.Sprintf("{Tag: %s, Type: %s,Value: %s}", T.BoxTag, T.TSType.String(), T.ToString())
+	}
+
+	return svalue
+}
+
+func (T TSValue) IsUndefined() bool {
+	if T.TSType == NIL {
+		return true
+	}
+	return false
 }
 
 func NewTInt(value int) *TSValue {

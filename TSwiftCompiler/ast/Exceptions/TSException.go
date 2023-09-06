@@ -1,15 +1,21 @@
 package TSExceptions
 
+import "fmt"
+
 // intefaz en Go
 type TSException struct {
-	message  string
+	Message  string
 	value    string
-	line     int
+	Line     int
 	position int
 }
 
 func NewTSException(message string, line int, position int) *TSException {
-	return &TSException{line: line, position: position, message: message}
+	return &TSException{Line: line, position: position, Message: message}
+}
+
+func (T TSException) ToString() string {
+	return fmt.Sprintf("{Message: \"%s\", Line: %d, Position: %d}", T.Message, T.Line, T.position)
 }
 
 //type TSSemanticE struct {

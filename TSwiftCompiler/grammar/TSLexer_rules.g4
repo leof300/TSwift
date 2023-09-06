@@ -3,7 +3,7 @@
  */
 lexer grammar TSLexer_rules;
 
-NL: '\r'? '\n';
+NL: '\r'? '\n' -> skip;
 WS: [ \t]+ -> skip ;
 
 
@@ -30,6 +30,7 @@ GUARD:'guard';
 CONTINUE:'continue';
 BREAK:'break';
 RETURN:'return';
+PRINT: 'print';
 
 STRUCT:'struct';
 SELF:'self';

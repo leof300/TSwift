@@ -22,21 +22,6 @@ func (I IRelEqual) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
 	op1 := I.op1.Interpret(ctx)
 	op2 := I.op2.Interpret(ctx)
 
-	////valores invalidos
-	//if op1.IsNil || op2.IsNil {
-	//	ctx.AddException("Igualdad: valor NIL invalido para comparación.", I.Line, I.Position)
-	//	return TExpression.NewTNil()
-	//}
-	//
-	//op1Type := op1.TSType
-	//op2Type := op2.TSType
-	//
-	////error tipos no iguales
-	//if op1Type != op2Type {
-	//	ctx.AddException("Igualdad: tipos distintos para comparación.", I.Line, I.Position)
-	//	return TExpression.NewTNil()
-	//}
-
 	err := TSStructs.RelationalValidationsBefore("RelMenorQ", op1, op2)
 
 	if err != nil {

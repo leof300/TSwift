@@ -1,4 +1,4 @@
-// Code generated from TSParser_rules.g4 by ANTLR 4.13.0. DO NOT EDIT.
+// Code generated from TSParser_rules.g4 by ANTLR 4.13.1. DO NOT EDIT.
 
 package TSVisitor // TSParser_rules
 import "github.com/antlr4-go/antlr/v4"
@@ -15,11 +15,11 @@ func (v *BaseTSParser_rulesVisitor) VisitLsents(ctx *LsentsContext) interface{} 
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseTSParser_rulesVisitor) VisitSentExpr(ctx *SentExprContext) interface{} {
+func (v *BaseTSParser_rulesVisitor) VisitSIf(ctx *SIfContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseTSParser_rulesVisitor) VisitSentNL(ctx *SentNLContext) interface{} {
+func (v *BaseTSParser_rulesVisitor) VisitSSwitch(ctx *SSwitchContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -28,6 +28,14 @@ func (v *BaseTSParser_rulesVisitor) VisitSDecl(ctx *SDeclContext) interface{} {
 }
 
 func (v *BaseTSParser_rulesVisitor) VisitSDeclAsig(ctx *SDeclAsigContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitSPrint(ctx *SPrintContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitSentExpr(ctx *SentExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -116,5 +124,33 @@ func (v *BaseTSParser_rulesVisitor) VisitSDBool(ctx *SDBoolContext) interface{} 
 }
 
 func (v *BaseTSParser_rulesVisitor) VisitSDChr(ctx *SDChrContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitBlock(ctx *BlockContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitRIf(ctx *RIfContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitRIfElse(ctx *RIfElseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitRIfEIf(ctx *RIfEIfContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitSwitch(ctx *SwitchContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitDefault(ctx *DefaultContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitPrint(ctx *PrintContext) interface{} {
 	return v.VisitChildren(ctx)
 }

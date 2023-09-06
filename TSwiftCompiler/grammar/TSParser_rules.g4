@@ -1,16 +1,19 @@
 grammar TSParser_rules;
 import TSLexer_rules;
 
-start : lsents;
+start : lsents EOF;
 
-lsents : sents+ EOF
+lsents : sents*
         ;
 
-sents : expr NL         #SentExpr
-      |   NL            #SentNL
-      | declar          #SDecl
-      | declar op='=' expr #SDeclAsig
 
+sents : if                      #SIf
+        | switch                #SSwitch
+        | declar                #SDecl
+        | declar op='=' expr    #SDeclAsig
+        | print                 #SPrint
+        //| NL                    #SentNL
+        | expr                #SentExpr
      ;
 
 expr :      <assoc=right> op='-' expr  #ENeg
@@ -39,3 +42,16 @@ declar : 'var' ID ':' STRING    #SDStr
         |'var' ID ':' BOOL      #SDBool
         |'var' ID ':' CHARACTER #SDChr
        ;
+
+block : term='{' lsents '}';
+
+if :  IF  expr block            #RIf
+    | IF  expr block ELSE block #RIfElse
+    | IF  expr block ELSE if    #RIfEIf
+;
+
+switch: SWITCH input=expr '{' (CASE expr ':' lsents)+ default? '}';
+
+default: DEFAULT ':' lsents ;
+
+print: PRINT '(' expr (',' expr)* ')';

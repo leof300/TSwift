@@ -1,0 +1,25 @@
+var a : Int = 0
+
+if true {
+  var b : Int = 0
+  a = 3
+}
+
+if false {
+  var b : Int = 4
+} else {
+  var c : Int = 5
+  a+=c //5
+}
+
+
+if false {
+  var d : Int = 6
+  a+=d+2
+} else if false && false {
+  var e : Int = 7
+  a+=e+2
+} else if 1.0 > 0 || a > -1 {
+  var f : Int = 8
+  a+=f+2
+}

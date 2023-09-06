@@ -17,6 +17,7 @@ func NewILSentences() *ITSLSentences {
 func (I ITSLSentences) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
 
 	for _, sentence := range I.Sentences {
+		//TODO AQUI AGREGAR BREAK, RETURN, ETC
 		sentence.Interpret(ctx)
 	}
 
