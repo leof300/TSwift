@@ -30,17 +30,17 @@ func executeInterpreter(input antlr.CharStream) bool {
 
 	result := root.Interpret(ctx)
 
-	fmt.Print("\n Console: \n")
+	fmt.Println("Console:")
 	for _, msg := range ctx.Console {
-		fmt.Print(msg)
+		fmt.Println(msg)
 	}
-	fmt.Print("\n Exceptions: \n")
+	fmt.Println("Exceptions: ")
 
 	for _, msg := range ctx.Exceptions {
-		fmt.Print(msg.ToString())
+		fmt.Println(msg.ToString())
 	}
 
-	fmt.Print(result)
+	fmt.Println(result)
 
 	return true
 }

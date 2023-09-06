@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"github.com/antlr4-go/antlr/v4"
 	"strconv"
+	"strings"
 )
 
 type TSwiftVisitor struct {
@@ -16,6 +17,7 @@ type TSwiftVisitor struct {
 	Start TSStructs.TSExpressioner
 }
 
+/*-----------------------------------------------------------------------------------------------------*/
 func (T TSwiftVisitor) VisitBlock(ctx *TSVisitor.BlockContext) interface{} {
 	sentences := ctx.Lsents().Accept(T).(TSStructs.TSExpressioner)
 	return NTExpression.NewITSBlock(ctx.GetTerm().GetLine(), 0, sentences)
@@ -41,18 +43,15 @@ func (T TSwiftVisitor) VisitSentExpr(ctx *TSVisitor.SentExprContext) interface{}
 	return ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
 }
 
-//func (T TSwiftVisitor) VisitSentNL(ctx *TSVisitor.SentNLContext) interface{} {
-//	return nil
-//}
-
-// //////////////////////////////// START////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////// START////////////////////////////////////////////////////////////////////
 
 func (T TSwiftVisitor) VisitStart(ctx *TSVisitor.StartContext) interface{} {
 	T.Start = ctx.Lsents().Accept(T).(TSStructs.TSExpressioner)
 	return T.Start
 }
 
-/*//////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /************* VALUES *****************/
 // expr ->  VFLOAT
@@ -68,7 +67,7 @@ func (T TSwiftVisitor) VisitEVFloat(ctx *TSVisitor.EVFloatContext) interface{} {
 func (T TSwiftVisitor) VisitEVString(ctx *TSVisitor.EVStringContext) interface{} {
 	return NTExpression.NewIStringCreation(ctx.VSTRING().GetSymbol().GetLine(),
 		ctx.VSTRING().GetSymbol().GetColumn(),
-		ctx.VSTRING().GetText())
+		strings.Replace(ctx.VSTRING().GetText(), `"`, ``, -1))
 }
 
 // expr ->  VInteger
@@ -195,10 +194,11 @@ func (T TSwiftVisitor) VisitEModule(ctx *TSVisitor.EModuleContext) interface{} {
 	return NTExpression.NewIModulo(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), e1, e2)
 }
 
-/**
-************** OPERACIONES RELACIONALES ****************
- */
-
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%  OPERACIONES RELACIONALES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
 func (T TSwiftVisitor) VisitERel(ctx *TSVisitor.ERelContext) interface{} {
 	e1 := ctx.Expr(0).Accept(T).(TSStructs.TSExpressioner)
 	e2 := ctx.Expr(1).Accept(T).(TSStructs.TSExpressioner)
@@ -240,9 +240,14 @@ func (T TSwiftVisitor) VisitERelAnd(ctx *TSVisitor.ERelAndContext) interface{} {
 	return NTExpression.NewIBitAnd(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), e1, e2)
 }
 
-/**
-************** ESTRUCTURAS CONDICIONALES IF ****************
- */
+/***********************************************************************************************
+4.8 SENTENCIAS DE CONTROL DE FLUJO
+************************************************************************************************/
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%  Estructuras Condicionales:    IF    %%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
 
 func (T TSwiftVisitor) VisitSIf(ctx *TSVisitor.SIfContext) interface{} {
 	return ctx.If_().Accept(T).(TSStructs.TSExpressioner)
@@ -269,9 +274,11 @@ func (T TSwiftVisitor) VisitRIfEIf(ctx *TSVisitor.RIfEIfContext) interface{} {
 
 }
 
-/**
-************** ESTRUCTURAS CONDICIONALES SWITCH ****************
- */
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%  Estructuras Condicionales:    SWITCH    %%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
 func (T TSwiftVisitor) VisitSSwitch(ctx *TSVisitor.SSwitchContext) interface{} {
 	return ctx.Switch_().Accept(T).(TSStructs.TSExpressioner)
 }
@@ -309,10 +316,97 @@ func (T TSwiftVisitor) VisitDefault(ctx *TSVisitor.DefaultContext) interface{} {
 	return NTExpression.NewIDefault(ctx.DEFAULT().GetSymbol().GetLine(), ctx.DEFAULT().GetSymbol().GetColumn(), sentences)
 }
 
-/**
-************** FUNCIONES DE TSWIFT ****************
- */
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%  EEstructuras Condicionales:   WHILE   %%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
 
+func (T TSwiftVisitor) VisitSWhile(ctx *TSVisitor.SWhileContext) interface{} {
+	return ctx.While().Accept(T).(TSStructs.TSExpressioner)
+}
+
+func (T TSwiftVisitor) VisitWhile(ctx *TSVisitor.WhileContext) interface{} {
+	condition := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
+	block := ctx.Block().Accept(T).(TSStructs.TSExpressioner)
+	return NTExpression.NewISWhile(ctx.WHILE().GetSymbol().GetLine(), 0, condition, block)
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%  Estructuras Condicionales:  GUARD    %%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
+func (T TSwiftVisitor) VisitSGuard(ctx *TSVisitor.SGuardContext) interface{} {
+	return ctx.Guard().Accept(T).(TSStructs.TSExpressioner)
+}
+
+func (T TSwiftVisitor) VisitGuard(ctx *TSVisitor.GuardContext) interface{} {
+	expr := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
+	block := ctx.Block().Accept(T).(TSStructs.TSExpressioner)
+	return NTExpression.NewISGuard(ctx.GUARD().GetSymbol().GetLine(), ctx.GUARD().GetSymbol().GetColumn(), expr, block)
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%  Estructuras Condicionales:  FOR   %%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
+
+func (T TSwiftVisitor) VisitSFor(ctx *TSVisitor.SForContext) interface{} {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (T TSwiftVisitor) VisitFor(ctx *TSVisitor.ForContext) interface{} {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (T TSwiftVisitor) VisitRango(ctx *TSVisitor.RangoContext) interface{} {
+	//TODO implement me
+	panic("implement me")
+}
+
+/***********************************************************************************************
+4.9 SENTENCIAS DE TRANSFERENCIA
+************************************************************************************************/
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%  Estructuras TRANSICION:  CONTINUE, BREAK, RETURN   %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
+
+func (T TSwiftVisitor) VisitSentTrans(ctx *TSVisitor.SentTransContext) interface{} {
+	return ctx.Strans().Accept(T).(TSStructs.TSExpressioner)
+}
+
+func (T TSwiftVisitor) VisitStrans(ctx *TSVisitor.StransContext) interface{} {
+	if ctx.CONTINUE() != nil {
+		return NTExpression.NewIContinue(ctx.CONTINUE().GetSymbol().GetLine(), ctx.CONTINUE().GetSymbol().GetColumn())
+	}
+	if ctx.BREAK() != nil {
+		return NTExpression.NewIBreak(ctx.BREAK().GetSymbol().GetLine(), ctx.BREAK().GetSymbol().GetColumn())
+	}
+
+	if ctx.RETURN() != nil && ctx.Expr() != nil {
+		expr := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
+		return NTExpression.NewIReturn(ctx.RETURN().GetSymbol().GetLine(), ctx.RETURN().GetSymbol().GetColumn(), expr)
+	}
+
+	return NTExpression.NewINoReturn(ctx.RETURN().GetSymbol().GetLine(), ctx.RETURN().GetSymbol().GetColumn())
+}
+
+/***********************************************************************************************
+4.9 FUNCIONES EMBEBIDAS
+************************************************************************************************/
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%       PRINT             %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
 func (T TSwiftVisitor) VisitSPrint(ctx *TSVisitor.SPrintContext) interface{} {
 	return ctx.Print_().Accept(T).(TSStructs.TSExpressioner)
 }
@@ -327,7 +421,8 @@ func (T TSwiftVisitor) VisitPrint(ctx *TSVisitor.PrintContext) interface{} {
 	return sPrint
 }
 
-// ////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////// ////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////// ////////////////////////////////////////////////////////////////////////////////////
 func NewTSwiftVisitor() TSVisitor.TSParser_rulesVisitor {
 	return &TSwiftVisitor{ParseTreeVisitor: &TSVisitor.BaseTSParser_rulesVisitor{}}
 }
@@ -348,3 +443,6 @@ func (v TSwiftVisitor) Visit(tree antlr.ParseTree) interface{} {
 		return TSExceptions.NewTSException("ERROR NODO NO VALIDO", 0, 0)
 	}
 }
+
+// ////////////////////////////////////////////////////////////////////////////////////// ////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////////// ////////////////////////////////////////////////////////////////////////////////////

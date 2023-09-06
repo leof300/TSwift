@@ -19,6 +19,15 @@ type TSParser_rulesVisitor interface {
 	// Visit a parse tree produced by TSParser_rulesParser#SSwitch.
 	VisitSSwitch(ctx *SSwitchContext) interface{}
 
+	// Visit a parse tree produced by TSParser_rulesParser#SWhile.
+	VisitSWhile(ctx *SWhileContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#SGuard.
+	VisitSGuard(ctx *SGuardContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#SFor.
+	VisitSFor(ctx *SForContext) interface{}
+
 	// Visit a parse tree produced by TSParser_rulesParser#SDecl.
 	VisitSDecl(ctx *SDeclContext) interface{}
 
@@ -30,6 +39,9 @@ type TSParser_rulesVisitor interface {
 
 	// Visit a parse tree produced by TSParser_rulesParser#SentExpr.
 	VisitSentExpr(ctx *SentExprContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#SentTrans.
+	VisitSentTrans(ctx *SentTransContext) interface{}
 
 	// Visit a parse tree produced by TSParser_rulesParser#EVString.
 	VisitEVString(ctx *EVStringContext) interface{}
@@ -114,6 +126,21 @@ type TSParser_rulesVisitor interface {
 
 	// Visit a parse tree produced by TSParser_rulesParser#default.
 	VisitDefault(ctx *DefaultContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#while.
+	VisitWhile(ctx *WhileContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#guard.
+	VisitGuard(ctx *GuardContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#for.
+	VisitFor(ctx *ForContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#rango.
+	VisitRango(ctx *RangoContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#strans.
+	VisitStrans(ctx *StransContext) interface{}
 
 	// Visit a parse tree produced by TSParser_rulesParser#print.
 	VisitPrint(ctx *PrintContext) interface{}

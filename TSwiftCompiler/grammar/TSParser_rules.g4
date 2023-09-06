@@ -9,11 +9,14 @@ lsents : sents*
 
 sents : if                      #SIf
         | switch                #SSwitch
+        | while                 #SWhile
+        | guard                 #SGuard
+        | for                   #SFor
         | declar                #SDecl
         | declar op='=' expr    #SDeclAsig
         | print                 #SPrint
-        //| NL                    #SentNL
-        | expr                #SentExpr
+        | expr                  #SentExpr
+        | strans                #SentTrans
      ;
 
 expr :      <assoc=right> op='-' expr  #ENeg
@@ -53,5 +56,19 @@ if :  IF  expr block            #RIf
 switch: SWITCH input=expr '{' (CASE expr ':' lsents)+ default? '}';
 
 default: DEFAULT ':' lsents ;
+
+while: WHILE expr block;
+
+guard: GUARD expr ELSE block;
+
+for:    FOR ID IN (expr|rango) block;
+
+rango:  VINTEGER '..' VINTEGER;
+
+strans:   CONTINUE
+        | BREAK
+        | RETURN
+        | RETURN expr
+        ;
 
 print: PRINT '(' expr (',' expr)* ')';

@@ -17,15 +17,3 @@ func NewTSException(message string, line int, position int) *TSException {
 func (T TSException) ToString() string {
 	return fmt.Sprintf("{Message: \"%s\", Line: %d, Position: %d}", T.Message, T.Line, T.position)
 }
-
-//type TSSemanticE struct {
-//	TSException
-//}
-//
-//type TSSintacticE struct {
-//	TSException
-//}
-//
-//type TSLexicalE struct {
-//	TSException
-//}

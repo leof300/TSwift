@@ -1,4 +1,4 @@
-var numero:Int = 4
+var numero:Int = 4+6
 switch numero
 {
     case 1:
@@ -10,4 +10,11 @@ switch numero
     default:
         print("4 \n",numero)
 
+}
+
+numero = 10
+
+while numero != 0 {
+    numero -= 1
+    print(numero)
 }

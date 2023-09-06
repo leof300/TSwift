@@ -81,3 +81,17 @@ func NewIUndefinedCreation(Line int, Position int) *IUndefinedCreation {
 func (I IUndefinedCreation) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
 	return TExpression.NewTUndefined()
 }
+
+type INilCreation struct {
+	TSStructs.TSExpression
+}
+
+func NewINilCreation(Line int, Position int) *INilCreation {
+	return &INilCreation{
+		TSStructs.TSExpression{Line, Position, make([]string, 0)},
+	}
+}
+
+func (I INilCreation) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
+	return TExpression.NewTNil()
+}

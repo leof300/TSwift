@@ -21,9 +21,9 @@ func (I ITSBlock) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
 
 	ctx.AddScope()
 
-	I.sentences.Interpret(ctx)
+	result := I.sentences.Interpret(ctx)
 
 	ctx.RemoveScope()
 
-	return TExpression.NewTNil()
+	return result
 }

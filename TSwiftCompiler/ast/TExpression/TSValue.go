@@ -56,6 +56,10 @@ type TSValue struct {
 
 	IsBox  bool
 	BoxTag string
+
+	IsReturn   bool
+	IsBreak    bool
+	IsContinue bool
 }
 
 func (T TSValue) ToString() string {

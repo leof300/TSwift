@@ -54,7 +54,6 @@ func (I IFPrint) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
 		}
 
 		msg += expr.ToString() + " "
-
 	}
 
 	ctx.AddConsole(msg)

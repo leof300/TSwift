@@ -23,6 +23,18 @@ func (v *BaseTSParser_rulesVisitor) VisitSSwitch(ctx *SSwitchContext) interface{
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseTSParser_rulesVisitor) VisitSWhile(ctx *SWhileContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitSGuard(ctx *SGuardContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitSFor(ctx *SForContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseTSParser_rulesVisitor) VisitSDecl(ctx *SDeclContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -36,6 +48,10 @@ func (v *BaseTSParser_rulesVisitor) VisitSPrint(ctx *SPrintContext) interface{} 
 }
 
 func (v *BaseTSParser_rulesVisitor) VisitSentExpr(ctx *SentExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitSentTrans(ctx *SentTransContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -148,6 +164,26 @@ func (v *BaseTSParser_rulesVisitor) VisitSwitch(ctx *SwitchContext) interface{} 
 }
 
 func (v *BaseTSParser_rulesVisitor) VisitDefault(ctx *DefaultContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitWhile(ctx *WhileContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitGuard(ctx *GuardContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitFor(ctx *ForContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitRango(ctx *RangoContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitStrans(ctx *StransContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
