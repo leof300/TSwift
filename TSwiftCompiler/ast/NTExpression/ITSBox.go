@@ -1,7 +1,6 @@
 package NTExpression
 
 import (
-	"TSwiftCompiler/ast/TExpression"
 	"TSwiftCompiler/ast/TSStructs"
 	"fmt"
 )
@@ -10,31 +9,36 @@ type ITSBoxCreation struct {
 	TSStructs.TSExpression
 	BKey       string
 	BInitValue TSStructs.TSExpressioner
-	BType      TExpression.TSPTYPES
 }
 
-func NewIBoxCreation(Line int, Position int, initValue TSStructs.TSExpressioner, btype TExpression.TSPTYPES, key string) *ITSBoxCreation {
+func NewIBoxCreation(Line int, Position int, key string, initValue TSStructs.TSExpressioner) *ITSBoxCreation {
 	return &ITSBoxCreation{
 		TSStructs.TSExpression{Line, Position, make([]string, 0)},
-		key, initValue, btype,
+		key, initValue,
 	}
 }
 
-func (I ITSBoxCreation) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
+func (I ITSBoxCreation) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
 
-	ivalue := TExpression.NewTNil()
+	ivalue := TSStructs.NewTNil()
 
 	if I.BInitValue != nil {
 		ivalue = I.BInitValue.Interpret(ctx)
 	}
 
-	var box = TExpression.NewTBox(I.BKey, ivalue, I.BType)
+	var box = TSStructs.NewTBox(I.BKey, ivalue.TSType)
+	box.Svalue = ivalue.Svalue
+	box.Bvalue = ivalue.Bvalue
+	box.Ivalue = ivalue.Ivalue
+	box.Fvalue = ivalue.Fvalue
+	box.IsNil = ivalue.IsBox
 
 	ok := ctx.AddVariable(I.BKey, box, I.Line, I.Position)
 
 	if !ok {
-		ctx.AddException(fmt.Sprintf("No se puede agregar la variable %s", I.BKey), I.Line, I.Position)
+		ctx.AddException(fmt.Sprintf("BoxCreation: No se puede crear boxGetting.", I.BKey), I.Line, I.Position)
 	}
+
 	return box
 }
 
@@ -53,11 +57,41 @@ func NewIBoxGetting(Line int, Position int, key string) *IBoxGetting {
 	}
 }
 
-func (I IBoxGetting) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
+func (I IBoxGetting) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
 	box := ctx.GetVariable(I.key)
 
 	if box == nil {
-		ctx.AddException(fmt.Sprintf("No se encuentra la variable %s", I.key), I.Line, I.Position)
+		ctx.AddException(fmt.Sprintf("ObtenerBox: No se encuentra la box %s", I.key), I.Line, I.Position)
 	}
 	return box
+}
+
+// ////////////////////////////////////////////////////////////////
+// /// CONST
+// ////////////////////////////////////////////////////////////////
+type IConstCreation struct {
+	TSStructs.TSExpression
+	boxGetting  TSStructs.TSExpressioner
+	boxCreation TSStructs.TSExpressioner
+}
+
+func NewIConstCreation(Line int, Position int, boxGetting TSStructs.TSExpressioner, boxCreation TSStructs.TSExpressioner) *IConstCreation {
+	return &IConstCreation{
+		TSStructs.TSExpression{Line, Position, make([]string, 0)},
+		boxGetting, boxCreation,
+	}
+}
+
+func (I IConstCreation) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
+	I.boxCreation.Interpret(ctx)
+
+	var box *TSStructs.TSValue = I.boxGetting.Interpret(ctx)
+
+	if box.IsBox {
+		box.IsConstant = true
+	} else {
+		ctx.AddException("ConstantCreation: No se puede crear la constante.", I.Line, I.Position)
+	}
+
+	return TSStructs.NewTNil()
 }

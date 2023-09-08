@@ -1,7 +1,6 @@
 package NTExpression
 
 import (
-	"TSwiftCompiler/ast/TExpression"
 	"TSwiftCompiler/ast/TSStructs"
 )
 
@@ -36,7 +35,7 @@ func NewIFPrint(Line int, Position int) *IFPrint {
 	}
 }
 
-func (I IFPrint) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
+func (I IFPrint) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
 	expressions := I.Exprs
 
 	msg := ""
@@ -45,7 +44,7 @@ func (I IFPrint) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
 
 		if expr.IsUndefined() {
 			ctx.AddException("Print: La expresión no es válida.", I.Line, I.Position)
-			return TExpression.NewTNil()
+			return TSStructs.NewTNil()
 		}
 
 		if expr.IsNil {
@@ -58,5 +57,5 @@ func (I IFPrint) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
 
 	ctx.AddConsole(msg)
 
-	return TExpression.NewTNil()
+	return TSStructs.NewTNil()
 }

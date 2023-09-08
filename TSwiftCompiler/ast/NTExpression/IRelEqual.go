@@ -1,7 +1,6 @@
 package NTExpression
 
 import (
-	"TSwiftCompiler/ast/TExpression"
 	"TSwiftCompiler/ast/TSStructs"
 )
 
@@ -18,7 +17,7 @@ func NewIRelEqual(Line int, Position int, op1 TSStructs.TSExpressioner, op2 TSSt
 	}
 }
 
-func (I IRelEqual) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
+func (I IRelEqual) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
 	op1 := I.op1.Interpret(ctx)
 	op2 := I.op2.Interpret(ctx)
 
@@ -26,24 +25,24 @@ func (I IRelEqual) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
 
 	if err != nil {
 		ctx.AddException(err.Error(), I.Line, I.Position)
-		return TExpression.NewTNil()
+		return TSStructs.NewTNil()
 	}
 
 	switch op1.TSType {
-	case TExpression.INTEGER:
-		return TExpression.NewTBoolean(op1.Ivalue == op2.Ivalue)
-	case TExpression.FLOAT:
-		return TExpression.NewTBoolean(op1.Fvalue == op2.Fvalue)
-	case TExpression.BOOL:
-		return TExpression.NewTBoolean(op1.Bvalue == op2.Bvalue)
-	case TExpression.STRING:
-		return TExpression.NewTBoolean(op1.Svalue == op2.Svalue)
-	case TExpression.CHARACTER:
-		return TExpression.NewTBoolean(op1.Svalue == op2.Svalue)
+	case TSStructs.INTEGER:
+		return TSStructs.NewTBoolean(op1.Ivalue == op2.Ivalue)
+	case TSStructs.FLOAT:
+		return TSStructs.NewTBoolean(op1.Fvalue == op2.Fvalue)
+	case TSStructs.BOOL:
+		return TSStructs.NewTBoolean(op1.Bvalue == op2.Bvalue)
+	case TSStructs.STRING:
+		return TSStructs.NewTBoolean(op1.Svalue == op2.Svalue)
+	case TSStructs.CHARACTER:
+		return TSStructs.NewTBoolean(op1.Svalue == op2.Svalue)
 	}
 
 	ctx.AddException("Igualdad: no permitidos para esta operación.", I.Line, I.Position)
-	return TExpression.NewTNil()
+	return TSStructs.NewTNil()
 }
 
 // ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -61,7 +60,7 @@ func NewIRelNotEqual(Line int, Position int, op1 TSStructs.TSExpressioner, op2 T
 	}
 }
 
-func (I IRelNotEqual) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
+func (I IRelNotEqual) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
 	op1 := I.op1.Interpret(ctx)
 	op2 := I.op2.Interpret(ctx)
 
@@ -69,23 +68,23 @@ func (I IRelNotEqual) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
 
 	if err != nil {
 		ctx.AddException(err.Error(), I.Line, I.Position)
-		return TExpression.NewTNil()
+		return TSStructs.NewTNil()
 	}
 
 	switch op1.TSType {
-	case TExpression.INTEGER:
-		return TExpression.NewTBoolean(op1.Ivalue != op2.Ivalue)
-	case TExpression.FLOAT:
+	case TSStructs.INTEGER:
+		return TSStructs.NewTBoolean(op1.Ivalue != op2.Ivalue)
+	case TSStructs.FLOAT:
 		v := op1.Fvalue != op2.Fvalue
-		return TExpression.NewTBoolean(v)
-	case TExpression.BOOL:
-		return TExpression.NewTBoolean(op1.Bvalue != op2.Bvalue)
-	case TExpression.STRING:
-		return TExpression.NewTBoolean(op1.Svalue != op2.Svalue)
-	case TExpression.CHARACTER:
-		return TExpression.NewTBoolean(op1.Svalue != op2.Svalue)
+		return TSStructs.NewTBoolean(v)
+	case TSStructs.BOOL:
+		return TSStructs.NewTBoolean(op1.Bvalue != op2.Bvalue)
+	case TSStructs.STRING:
+		return TSStructs.NewTBoolean(op1.Svalue != op2.Svalue)
+	case TSStructs.CHARACTER:
+		return TSStructs.NewTBoolean(op1.Svalue != op2.Svalue)
 	}
 
 	ctx.AddException("Desigualdad: tipos no permitidos para esta operación.", I.Line, I.Position)
-	return TExpression.NewTNil()
+	return TSStructs.NewTNil()
 }

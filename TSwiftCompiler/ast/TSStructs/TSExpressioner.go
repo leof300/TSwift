@@ -1,10 +1,8 @@
 package TSStructs
 
-import "TSwiftCompiler/ast/TExpression"
-
 // intefaz en Go
 type TSExpressioner interface {
-	Interpret(ctx *TSContext) *TExpression.TSValue
+	Interpret(ctx *TSContext) *TSValue
 }
 
 type TSExpression struct {
@@ -23,6 +21,6 @@ type TSExpression struct {
 //	return a
 //}
 
-func (I TSExpression) Interpret(ctx *TSContext) *TExpression.TSValue {
+func (I TSExpression) Interpret(ctx *TSContext) *TSValue {
 	return nil
 }

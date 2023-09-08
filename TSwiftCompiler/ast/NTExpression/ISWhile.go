@@ -1,7 +1,6 @@
 package NTExpression
 
 import (
-	"TSwiftCompiler/ast/TExpression"
 	"TSwiftCompiler/ast/TSStructs"
 )
 
@@ -18,23 +17,25 @@ func NewISWhile(Line int, Position int, expr TSStructs.TSExpressioner, block TSS
 	}
 }
 
-func (I ISWhile) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
+func (I ISWhile) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
+	ereturn := TSStructs.NewTNil()
+
 	expr := I.expr.Interpret(ctx)
 
-	if expr.IsNil || expr.TSType != TExpression.BOOL {
+	if expr.IsNil || expr.TSType != TSStructs.BOOL {
 		ctx.AddException("WHILE: condición no se puede evaluar.", I.Line, I.Position)
-		return TExpression.NewTNil()
+		return TSStructs.NewTNil()
 	}
 
 	for expr.Bvalue {
-		finishCycle := I.block.Interpret(ctx)
+		ereturn := I.block.Interpret(ctx)
 
-		if finishCycle.Bvalue {
-			break
+		if ereturn.IsBreak || ereturn.IsReturn {
+			return ereturn
 		}
 
 		expr = I.expr.Interpret(ctx)
 	}
 
-	return TExpression.NewTNil()
+	return ereturn
 }

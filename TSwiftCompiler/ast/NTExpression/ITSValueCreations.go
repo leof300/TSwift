@@ -1,7 +1,6 @@
 package NTExpression
 
 import (
-	"TSwiftCompiler/ast/TExpression"
 	"TSwiftCompiler/ast/TSStructs"
 )
 
@@ -17,8 +16,8 @@ func NewIIntCreation(Line int, Position int, value int) *IIntCreation {
 	}
 }
 
-func (I IIntCreation) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
-	return TExpression.NewTInt(I.value)
+func (I IIntCreation) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
+	return TSStructs.NewTInt(I.value)
 }
 
 type IFloatCreation struct {
@@ -33,8 +32,8 @@ func NewIFloatCreation(Line int, Position int, value float64) *IFloatCreation {
 	}
 }
 
-func (I IFloatCreation) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
-	return TExpression.NewTFloat(I.value)
+func (I IFloatCreation) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
+	return TSStructs.NewTFloat(I.value)
 }
 
 type IBooleanCreation struct {
@@ -48,8 +47,8 @@ func NewIBooleanCreation(Line int, Position int, value bool) *IBooleanCreation {
 		value,
 	}
 }
-func (I IBooleanCreation) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
-	return TExpression.NewTBoolean(I.value)
+func (I IBooleanCreation) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
+	return TSStructs.NewTBoolean(I.value)
 }
 
 type IStringCreation struct {
@@ -64,8 +63,8 @@ func NewIStringCreation(Line int, Position int, value string) *IStringCreation {
 	}
 }
 
-func (I IStringCreation) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
-	return TExpression.NewTString(I.value)
+func (I IStringCreation) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
+	return TSStructs.NewTString(I.value)
 }
 
 type IUndefinedCreation struct {
@@ -78,8 +77,8 @@ func NewIUndefinedCreation(Line int, Position int) *IUndefinedCreation {
 	}
 }
 
-func (I IUndefinedCreation) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
-	return TExpression.NewTUndefined()
+func (I IUndefinedCreation) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
+	return TSStructs.NewTUndefined()
 }
 
 type INilCreation struct {
@@ -92,6 +91,27 @@ func NewINilCreation(Line int, Position int) *INilCreation {
 	}
 }
 
-func (I INilCreation) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
-	return TExpression.NewTNil()
+func (I INilCreation) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
+	return TSStructs.NewTNil()
+}
+
+/*
+&&&&&&&&&&&&&&&&&&&&&&&&&&         TYPES         &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+*/
+type ITSType struct {
+	TSStructs.TSExpression
+	tstype TSStructs.TSPTYPES
+}
+
+func NewITSType(Line int, Position int, etype TSStructs.TSPTYPES) *ITSType {
+	return &ITSType{
+		TSStructs.TSExpression{Line, Position, make([]string, 0)},
+		etype,
+	}
+}
+
+func (I ITSType) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
+	ereturn := TSStructs.NewTNil()
+	ereturn.TSType = I.tstype
+	return ereturn
 }

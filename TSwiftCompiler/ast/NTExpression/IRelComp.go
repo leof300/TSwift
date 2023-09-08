@@ -1,7 +1,6 @@
 package NTExpression
 
 import (
-	"TSwiftCompiler/ast/TExpression"
 	"TSwiftCompiler/ast/TSStructs"
 	"fmt"
 )
@@ -18,29 +17,29 @@ func NewIOpNegation(Line int, Position int, op TSStructs.TSExpressioner) *IOpNeg
 	}
 }
 
-func (I IOpNegation) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
+func (I IOpNegation) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
 	operand := I.op.Interpret(ctx)
 
 	//error, valor nulo
 	if operand.IsNil {
 		ctx.AddException("Negación: No se puede realizar negación, valor nulo.", I.Line, I.Position)
-		return TExpression.NewTNil()
+		return TSStructs.NewTNil()
 	}
 
 	operandType := operand.TSType
 
 	//error, solo valores permitidos
-	if operandType != TExpression.FLOAT && operandType != TExpression.INTEGER {
+	if operandType != TSStructs.FLOAT && operandType != TSStructs.INTEGER {
 		ctx.AddException(fmt.Sprintf("Negación: tipo invalido para operación  {%s}", operandType), I.Line, I.Position)
-		return TExpression.NewTNil()
+		return TSStructs.NewTNil()
 	}
 
 	switch operandType {
-	case TExpression.INTEGER:
-		return TExpression.NewTInt(operand.Ivalue * -1)
-	case TExpression.FLOAT:
-		return TExpression.NewTFloat(operand.Fvalue * -1)
+	case TSStructs.INTEGER:
+		return TSStructs.NewTInt(operand.Ivalue * -1)
+	case TSStructs.FLOAT:
+		return TSStructs.NewTFloat(operand.Fvalue * -1)
 	}
 
-	return TExpression.NewTNil()
+	return TSStructs.NewTNil()
 }

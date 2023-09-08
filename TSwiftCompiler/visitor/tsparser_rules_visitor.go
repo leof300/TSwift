@@ -10,6 +10,21 @@ type TSParser_rulesVisitor interface {
 	// Visit a parse tree produced by TSParser_rulesParser#start.
 	VisitStart(ctx *StartContext) interface{}
 
+	// Visit a parse tree produced by TSParser_rulesParser#lins.
+	VisitLins(ctx *LinsContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#IFunc.
+	VisitIFunc(ctx *IFuncContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#IDecl.
+	VisitIDecl(ctx *IDeclContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#ICons.
+	VisitICons(ctx *IConsContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#SCallFunction.
+	VisitSCallFunction(ctx *SCallFunctionContext) interface{}
+
 	// Visit a parse tree produced by TSParser_rulesParser#lsents.
 	VisitLsents(ctx *LsentsContext) interface{}
 
@@ -31,8 +46,8 @@ type TSParser_rulesVisitor interface {
 	// Visit a parse tree produced by TSParser_rulesParser#SDecl.
 	VisitSDecl(ctx *SDeclContext) interface{}
 
-	// Visit a parse tree produced by TSParser_rulesParser#SDeclAsig.
-	VisitSDeclAsig(ctx *SDeclAsigContext) interface{}
+	// Visit a parse tree produced by TSParser_rulesParser#SCons.
+	VisitSCons(ctx *SConsContext) interface{}
 
 	// Visit a parse tree produced by TSParser_rulesParser#SPrint.
 	VisitSPrint(ctx *SPrintContext) interface{}
@@ -55,6 +70,9 @@ type TSParser_rulesVisitor interface {
 	// Visit a parse tree produced by TSParser_rulesParser#EMulDiv.
 	VisitEMulDiv(ctx *EMulDivContext) interface{}
 
+	// Visit a parse tree produced by TSParser_rulesParser#EFunction.
+	VisitEFunction(ctx *EFunctionContext) interface{}
+
 	// Visit a parse tree produced by TSParser_rulesParser#ERelOr.
 	VisitERelOr(ctx *ERelOrContext) interface{}
 
@@ -66,6 +84,9 @@ type TSParser_rulesVisitor interface {
 
 	// Visit a parse tree produced by TSParser_rulesParser#ENeg.
 	VisitENeg(ctx *ENegContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#ENIL.
+	VisitENIL(ctx *ENILContext) interface{}
 
 	// Visit a parse tree produced by TSParser_rulesParser#EAddSub.
 	VisitEAddSub(ctx *EAddSubContext) interface{}
@@ -94,20 +115,23 @@ type TSParser_rulesVisitor interface {
 	// Visit a parse tree produced by TSParser_rulesParser#ERelAnd.
 	VisitERelAnd(ctx *ERelAndContext) interface{}
 
-	// Visit a parse tree produced by TSParser_rulesParser#SDStr.
-	VisitSDStr(ctx *SDStrContext) interface{}
+	// Visit a parse tree produced by TSParser_rulesParser#SDType.
+	VisitSDType(ctx *SDTypeContext) interface{}
 
-	// Visit a parse tree produced by TSParser_rulesParser#SDInt.
-	VisitSDInt(ctx *SDIntContext) interface{}
+	// Visit a parse tree produced by TSParser_rulesParser#SDecAssign.
+	VisitSDecAssign(ctx *SDecAssignContext) interface{}
 
-	// Visit a parse tree produced by TSParser_rulesParser#SDFlt.
-	VisitSDFlt(ctx *SDFltContext) interface{}
+	// Visit a parse tree produced by TSParser_rulesParser#SDecTAssign.
+	VisitSDecTAssign(ctx *SDecTAssignContext) interface{}
 
-	// Visit a parse tree produced by TSParser_rulesParser#SDBool.
-	VisitSDBool(ctx *SDBoolContext) interface{}
+	// Visit a parse tree produced by TSParser_rulesParser#SConsAss.
+	VisitSConsAss(ctx *SConsAssContext) interface{}
 
-	// Visit a parse tree produced by TSParser_rulesParser#SDChr.
-	VisitSDChr(ctx *SDChrContext) interface{}
+	// Visit a parse tree produced by TSParser_rulesParser#SConsTypeAss.
+	VisitSConsTypeAss(ctx *SConsTypeAssContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#tstypes.
+	VisitTstypes(ctx *TstypesContext) interface{}
 
 	// Visit a parse tree produced by TSParser_rulesParser#block.
 	VisitBlock(ctx *BlockContext) interface{}
@@ -144,4 +168,16 @@ type TSParser_rulesVisitor interface {
 
 	// Visit a parse tree produced by TSParser_rulesParser#print.
 	VisitPrint(ctx *PrintContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#functions.
+	VisitFunctions(ctx *FunctionsContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#parameter.
+	VisitParameter(ctx *ParameterContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#callFunction.
+	VisitCallFunction(ctx *CallFunctionContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#callParameter.
+	VisitCallParameter(ctx *CallParameterContext) interface{}
 }

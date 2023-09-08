@@ -3,7 +3,6 @@ package interpreter
 import (
 	TSExceptions "TSwiftCompiler/ast/Exceptions"
 	"TSwiftCompiler/ast/NTExpression"
-	"TSwiftCompiler/ast/TExpression"
 	"TSwiftCompiler/ast/TSStructs"
 	"TSwiftCompiler/visitor"
 	"fmt"
@@ -28,9 +27,7 @@ func (T TSwiftVisitor) VisitLsents(ctx *TSVisitor.LsentsContext) interface{} {
 	lsentences := NTExpression.NewILSentences()
 	sentences := ctx.AllSents()
 	for _, sentence := range sentences {
-		//fmt.Println(reflect.TypeOf(sentence).String())
-		//reflect.TypeOf(sentence).Key() != TSVisitor.T
-		//No vamos a visitar los nodos que vienen vacios NLContext
+
 		//if reflect.TypeOf(sentence).String() != "*TSVisitor.SentNLContext" {
 		nSentence := sentence.Accept(T).(TSStructs.TSExpressioner)
 		lsentences.Sentences = append(lsentences.Sentences, nSentence)
@@ -47,13 +44,32 @@ func (T TSwiftVisitor) VisitSentExpr(ctx *TSVisitor.SentExprContext) interface{}
 ////////////////////////////////// START////////////////////////////////////////////////////////////////////
 
 func (T TSwiftVisitor) VisitStart(ctx *TSVisitor.StartContext) interface{} {
-	T.Start = ctx.Lsents().Accept(T).(TSStructs.TSExpressioner)
+	T.Start = ctx.Lins().Accept(T).(TSStructs.TSExpressioner)
 	return T.Start
+}
+
+func (T TSwiftVisitor) VisitLins(ctx *TSVisitor.LinsContext) interface{} {
+	lsentences := NTExpression.NewILSentences()
+	sentences := ctx.AllIns()
+	for _, sentence := range sentences {
+		nSentence := sentence.Accept(T).(TSStructs.TSExpressioner)
+		lsentences.Sentences = append(lsentences.Sentences, nSentence)
+	}
+	return lsentences
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/************* VALUES *****************/
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      VALUES       %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
+
+func (T TSwiftVisitor) VisitEParent(ctx *TSVisitor.EParentContext) interface{} {
+	return ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
+}
+
 // expr ->  VFLOAT
 func (T TSwiftVisitor) VisitEVFloat(ctx *TSVisitor.EVFloatContext) interface{} {
 	//todo: errores de conversion de datos
@@ -94,50 +110,123 @@ func (T TSwiftVisitor) VisitEID(ctx *TSVisitor.EIDContext) interface{} {
 	return NTExpression.NewIBoxGetting(ctx.ID().GetSymbol().GetLine(), ctx.ID().GetSymbol().GetColumn(), ctx.ID().GetText())
 }
 
-func (T TSwiftVisitor) VisitEParent(ctx *TSVisitor.EParentContext) interface{} {
-	return ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
+func (T TSwiftVisitor) VisitENIL(ctx *TSVisitor.ENILContext) interface{} {
+	return NTExpression.NewINilCreation(ctx.NIL().GetSymbol().GetLine(), ctx.NIL().GetSymbol().GetColumn())
 }
 
 /*
-************ DECLARATIONS ******************
- */
-func (T TSwiftVisitor) VisitSDStr(ctx *TSVisitor.SDStrContext) interface{} {
-	return NTExpression.NewIBoxCreation(ctx.ID().GetSymbol().GetLine(), 0, nil, TExpression.STRING, ctx.ID().GetText())
-}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%      DECLARATIONS      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
 
-func (T TSwiftVisitor) VisitSDInt(ctx *TSVisitor.SDIntContext) interface{} {
-	return NTExpression.NewIBoxCreation(ctx.ID().GetSymbol().GetLine(), 0, nil, TExpression.INTEGER, ctx.ID().GetText())
-
-}
-
-func (T TSwiftVisitor) VisitSDFlt(ctx *TSVisitor.SDFltContext) interface{} {
-	return NTExpression.NewIBoxCreation(ctx.ID().GetSymbol().GetLine(), 0, nil, TExpression.FLOAT, ctx.ID().GetText())
-
-}
-
-func (T TSwiftVisitor) VisitSDBool(ctx *TSVisitor.SDBoolContext) interface{} {
-	return NTExpression.NewIBoxCreation(ctx.ID().GetSymbol().GetLine(), 0, nil, TExpression.BOOL, ctx.ID().GetText())
-
-}
-
-func (T TSwiftVisitor) VisitSDChr(ctx *TSVisitor.SDChrContext) interface{} {
-	//TODO CAMBIAR LO DEL CHAR, NO ES STRING
-	return NTExpression.NewIBoxCreation(ctx.ID().GetSymbol().GetLine(), 0, nil, TExpression.STRING, ctx.ID().GetText())
+func (T TSwiftVisitor) VisitIDecl(ctx *TSVisitor.IDeclContext) interface{} {
+	return ctx.Declar().Accept(T).(TSStructs.TSExpressioner)
 }
 
 func (T TSwiftVisitor) VisitSDecl(ctx *TSVisitor.SDeclContext) interface{} {
 	return ctx.Declar().Accept(T).(TSStructs.TSExpressioner)
 }
 
-func (T TSwiftVisitor) VisitSDeclAsig(ctx *TSVisitor.SDeclAsigContext) interface{} {
-	variable := ctx.Declar().Accept(T).(TSStructs.TSExpressioner)
-	content := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
-	return NTExpression.NewIAssignation(ctx.GetOp().GetLine(), 0, variable, content)
+func (T TSwiftVisitor) VisitSDType(ctx *TSVisitor.SDTypeContext) interface{} {
+	initValue := ctx.Tstypes().Accept(T).(TSStructs.TSExpressioner)
+	return NTExpression.NewIBoxCreation(ctx.VAR().GetSymbol().GetLine(), 0, ctx.ID().GetText(), initValue)
 }
 
-/************* ASIGNACION ****************
+func (T TSwiftVisitor) VisitSDecAssign(ctx *TSVisitor.SDecAssignContext) interface{} {
+	line := ctx.VAR().GetSymbol().GetLine()
+	position := ctx.VAR().GetSymbol().GetColumn()
 
- */
+	initValue := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
+
+	return NTExpression.NewIBoxCreation(line, position, ctx.ID().GetText(), initValue)
+
+}
+
+func (T TSwiftVisitor) VisitSDecTAssign(ctx *TSVisitor.SDecTAssignContext) interface{} {
+	tstype := ctx.Tstypes().Accept(T).(TSStructs.TSExpressioner)
+	initValue := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
+	variable := NTExpression.NewIBoxCreation(ctx.VAR().GetSymbol().GetLine(), ctx.VAR().GetSymbol().GetColumn(), ctx.ID().GetText(), tstype)
+	return NTExpression.NewIAssignation(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), variable, initValue)
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%        TYPES         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
+
+func (T TSwiftVisitor) VisitTstypes(ctx *TSVisitor.TstypesContext) interface{} {
+	etype := NTExpression.NewITSType(0, 0, TSStructs.UNDEFINED)
+
+	if ctx.STRING() != nil {
+		etype = NTExpression.NewITSType(ctx.STRING().GetSymbol().GetLine(), ctx.STRING().GetSymbol().GetColumn(), TSStructs.STRING)
+
+	}
+	if ctx.INT() != nil {
+		etype = NTExpression.NewITSType(ctx.INT().GetSymbol().GetLine(), ctx.INT().GetSymbol().GetColumn(), TSStructs.INTEGER)
+
+	}
+	if ctx.FLOAT() != nil {
+		etype = NTExpression.NewITSType(ctx.FLOAT().GetSymbol().GetLine(), ctx.FLOAT().GetSymbol().GetColumn(), TSStructs.FLOAT)
+
+	}
+	if ctx.BOOL() != nil {
+		etype = NTExpression.NewITSType(ctx.BOOL().GetSymbol().GetLine(), ctx.BOOL().GetSymbol().GetColumn(), TSStructs.BOOL)
+
+	}
+	if ctx.CHARACTER() != nil {
+		etype = NTExpression.NewITSType(ctx.CHARACTER().GetSymbol().GetLine(), ctx.CHARACTER().GetSymbol().GetColumn(), TSStructs.CHARACTER)
+
+	}
+
+	return etype
+
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      CONSTANTS      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
+
+func (T TSwiftVisitor) VisitICons(ctx *TSVisitor.IConsContext) interface{} {
+	return ctx.Decons().Accept(T).(TSStructs.TSExpressioner)
+}
+
+func (T TSwiftVisitor) VisitSCons(ctx *TSVisitor.SConsContext) interface{} {
+
+	return ctx.Decons().Accept(T).(TSStructs.TSExpressioner)
+
+}
+
+func (T TSwiftVisitor) VisitSConsAss(ctx *TSVisitor.SConsAssContext) interface{} {
+	line := ctx.LET().GetSymbol().GetLine()
+	position := ctx.LET().GetSymbol().GetColumn()
+
+	initValue := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
+
+	boxCreation := NTExpression.NewIBoxCreation(line, position, ctx.ID().GetText(), initValue)
+	boxGetting := NTExpression.NewIBoxGetting(ctx.ID().GetSymbol().GetLine(), ctx.ID().GetSymbol().GetColumn(), ctx.ID().GetText())
+
+	return NTExpression.NewIConstCreation(ctx.ID().GetSymbol().GetLine(), ctx.ID().GetSymbol().GetColumn(), boxGetting, boxCreation)
+}
+
+func (T TSwiftVisitor) VisitSConsTypeAss(ctx *TSVisitor.SConsTypeAssContext) interface{} {
+	tstype := ctx.Tstypes().Accept(T).(TSStructs.TSExpressioner)
+	initValue := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
+
+	variable := NTExpression.NewIBoxCreation(ctx.ID().GetSymbol().GetLine(), ctx.ID().GetSymbol().GetColumn(), ctx.ID().GetText(), tstype)
+	boxCreation := NTExpression.NewIAssignation(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), variable, initValue)
+	boxGetting := NTExpression.NewIBoxGetting(ctx.ID().GetSymbol().GetLine(), ctx.ID().GetSymbol().GetColumn(), ctx.ID().GetText())
+	return NTExpression.NewIConstCreation(ctx.ID().GetSymbol().GetLine(), ctx.ID().GetSymbol().GetColumn(), boxGetting, boxCreation)
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      ASIGNACION     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
 
 func (T TSwiftVisitor) VisitEAssign(ctx *TSVisitor.EAssignContext) interface{} {
 	variable := ctx.Expr(0).Accept(T).(TSStructs.TSExpressioner)
@@ -162,9 +251,14 @@ func (T TSwiftVisitor) VisitEAsAdd(ctx *TSVisitor.EAsAddContext) interface{} {
 	return NTExpression.NewIAssignAdd(ctx.GetOp().GetLine(), 0, variable, content)
 }
 
+/***********************************************************************************************
+4.5 Operadores Aritmeticos
+************************************************************************************************/
 /*
-************** OPERACIONES ****************
- */
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%  OPERACIONES ARITMETICAS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
 func (T TSwiftVisitor) VisitEMulDiv(ctx *TSVisitor.EMulDivContext) interface{} {
 
 	e1 := ctx.Expr(0).Accept(T).(TSStructs.TSExpressioner)
@@ -194,6 +288,9 @@ func (T TSwiftVisitor) VisitEModule(ctx *TSVisitor.EModuleContext) interface{} {
 	return NTExpression.NewIModulo(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), e1, e2)
 }
 
+/***********************************************************************************************
+4.6 Operaciones de Comparación
+************************************************************************************************/
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%  OPERACIONES RELACIONALES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -390,7 +487,9 @@ func (T TSwiftVisitor) VisitStrans(ctx *TSVisitor.StransContext) interface{} {
 		return NTExpression.NewIBreak(ctx.BREAK().GetSymbol().GetLine(), ctx.BREAK().GetSymbol().GetColumn())
 	}
 
-	if ctx.RETURN() != nil && ctx.Expr() != nil {
+	a := ctx.RETURN()
+	b := ctx.Expr()
+	if a != nil && b != nil {
 		expr := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
 		return NTExpression.NewIReturn(ctx.RETURN().GetSymbol().GetLine(), ctx.RETURN().GetSymbol().GetColumn(), expr)
 	}
@@ -419,6 +518,98 @@ func (T TSwiftVisitor) VisitPrint(ctx *TSVisitor.PrintContext) interface{} {
 		sPrint.Exprs = append(sPrint.Exprs, nExpr)
 	}
 	return sPrint
+}
+
+/***********************************************************************************************
+7.0 FUNCIONES
+************************************************************************************************/
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%       FUNCIONES         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
+func (T TSwiftVisitor) VisitIFunc(ctx *TSVisitor.IFuncContext) interface{} {
+	return ctx.Functions().Accept(T).(TSStructs.TSExpressioner)
+}
+
+func (T TSwiftVisitor) VisitFunctions(ctx *TSVisitor.FunctionsContext) interface{} {
+
+	line := ctx.FUNC().GetSymbol().GetLine()
+	position := ctx.FUNC().GetSymbol().GetColumn()
+
+	id := ctx.ID().GetText()
+	fbody := ctx.Lsents().Accept(T).(TSStructs.TSExpressioner)
+
+	var ftype TSStructs.TSExpressioner
+
+	if ctx.Tstypes() != nil {
+		ftype = ctx.Tstypes().Accept(T).(TSStructs.TSExpressioner)
+	}
+
+	function := NTExpression.NewIFunction(line, position, id, ftype, fbody)
+
+	for _, p := range ctx.AllParameter() {
+		fparameter := p.Accept(T).(TSStructs.TSExpressioner)
+		function.FParameters = append(function.FParameters, fparameter)
+	}
+
+	return function
+}
+
+func (T TSwiftVisitor) VisitParameter(ctx *TSVisitor.ParameterContext) interface{} {
+	alias := ""
+	id := ""
+	line := 0
+	position := 0
+
+	if len(ctx.AllID()) > 1 {
+		alias = ctx.ID(0).GetText()
+		id = ctx.ID(1).GetText()
+		line = ctx.ID(1).GetSymbol().GetLine()
+		position = ctx.ID(1).GetSymbol().GetLine()
+
+	} else {
+		id = ctx.ID(0).GetText()
+		alias = ctx.ID(0).GetText()
+		line = ctx.ID(0).GetSymbol().GetLine()
+		position = ctx.ID(0).GetSymbol().GetLine()
+	}
+	ftype := ctx.Tstypes().Accept(T).(TSStructs.TSExpressioner)
+
+	return NTExpression.NewIFParameter(line, position, alias, id, ftype, ctx.INOUT() != nil)
+
+}
+
+func (T TSwiftVisitor) VisitSCallFunction(ctx *TSVisitor.SCallFunctionContext) interface{} {
+	return ctx.CallFunction().Accept(T).(TSStructs.TSExpressioner)
+}
+
+func (T TSwiftVisitor) VisitEFunction(ctx *TSVisitor.EFunctionContext) interface{} {
+	return ctx.CallFunction().Accept(T).(TSStructs.TSExpressioner)
+}
+
+func (T TSwiftVisitor) VisitCallFunction(ctx *TSVisitor.CallFunctionContext) interface{} {
+	fcall := NTExpression.NewIFCallFunction(ctx.ID().GetSymbol().GetLine(), ctx.ID().GetSymbol().GetColumn(), ctx.ID().GetText())
+	for _, p := range ctx.AllCallParameter() {
+		parameter := p.Accept(T).(TSStructs.TSExpressioner)
+		fcall.Parameters = append(fcall.Parameters, parameter)
+	}
+
+	return fcall
+}
+
+func (T TSwiftVisitor) VisitCallParameter(ctx *TSVisitor.CallParameterContext) interface{} {
+	expr := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
+	isReference := false
+	if ctx.GetOp() != nil {
+		isReference = true
+	}
+	alias := ""
+	if ctx.ID() != nil {
+		alias = ctx.ID().GetText()
+	}
+
+	return NTExpression.NewIFCallParameter(0, 0, alias, expr, isReference)
 }
 
 // ////////////////////////////////////////////////////////////////////////////////////// ////////////////////////////////////////////////////////////////////////////////////

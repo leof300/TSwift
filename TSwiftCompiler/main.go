@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	fs, err := antlr.NewFileStream("./grammar/input4.txt")
+	fs, err := antlr.NewFileStream("./grammar/input5.swift")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -41,6 +41,8 @@ func executeInterpreter(input antlr.CharStream) bool {
 	}
 
 	fmt.Println(result)
+
+	ctx = nil
 
 	return true
 }

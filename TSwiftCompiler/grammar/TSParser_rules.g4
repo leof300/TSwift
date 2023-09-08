@@ -1,11 +1,17 @@
 grammar TSParser_rules;
 import TSLexer_rules;
 
-start : lsents EOF;
+start : lins EOF;
 
-lsents : sents*
-        ;
+lins : ins*;
 
+ins :   functions       #IFunc
+    |   declar          #IDecl
+    |   decons          #ICons
+    |   callFunction    #SCallFunction
+    ;
+
+lsents : sents*;
 
 sents : if                      #SIf
         | switch                #SSwitch
@@ -13,7 +19,7 @@ sents : if                      #SIf
         | guard                 #SGuard
         | for                   #SFor
         | declar                #SDecl
-        | declar op='=' expr    #SDeclAsig
+        | decons                #SCons
         | print                 #SPrint
         | expr                  #SentExpr
         | strans                #SentTrans
@@ -25,6 +31,7 @@ expr :      <assoc=right> op='-' expr  #ENeg
         |   expr op=('*'|'/')expr   #EMulDiv
         |   expr op=('+'|'-') expr  #EAddSub
         |   expr op=('=='|'!='|'>'|'<'|'>='|'<=') expr  #ERel
+        |   callFunction            #EFunction
         |   '(' expr ')'            #EParent
         |   expr op='&&' expr       #ERelAnd
         |   expr op='||' expr       #ERelOr
@@ -36,15 +43,21 @@ expr :      <assoc=right> op='-' expr  #ENeg
         |   VFLOAT                  #EVFloat
         |   VBOOL                   #EVBOOL
         |   ID                      #EID
+
+        |   NIL                     #ENIL
         ;
 
 
-declar : 'var' ID ':' STRING    #SDStr
-        |'var' ID ':' INT       #SDInt
-        |'var' ID ':' FLOAT     #SDFlt
-        |'var' ID ':' BOOL      #SDBool
-        |'var' ID ':' CHARACTER #SDChr
+declar :    VAR ID ':' tstypes  '?'             #SDType
+        |   VAR ID '=' expr                     #SDecAssign
+        |   VAR ID ':' tstypes op='='  expr     #SDecTAssign
        ;
+
+decons :    LET ID '=' expr                     #SConsAss
+        |   LET ID ':' tstypes op='='  expr     #SConsTypeAss
+        ;
+
+tstypes : STRING | INT | FLOAT | BOOL | CHARACTER ;
 
 block : term='{' lsents '}';
 
@@ -67,8 +80,15 @@ rango:  VINTEGER '..' VINTEGER;
 
 strans:   CONTINUE
         | BREAK
-        | RETURN
-        | RETURN expr
+        | RETURN expr?
         ;
 
 print: PRINT '(' expr (',' expr)* ')';
+
+functions: FUNC ID '(' ( parameter (',' parameter)* )? ')' ('->' tstypes)? '{' lsents '}' ;
+
+parameter:  alias=(ID|'_')?  ID ':' INOUT? tstypes;
+
+callFunction: ID '(' ( callParameter (','callParameter)* )? ')';
+
+callParameter: (ID':')? op='&'? expr ;

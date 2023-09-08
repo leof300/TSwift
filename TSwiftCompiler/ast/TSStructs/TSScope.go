@@ -1,17 +1,15 @@
 package TSStructs
 
-import "TSwiftCompiler/ast/TExpression"
-
 type Symbol struct {
 	Key      string
-	Value    *TExpression.TSValue
+	Value    *TSValue
 	Line     int
 	Position int
 
 	//puede tener un tipo asociado
 }
 
-func NewSymbol(key string, value *TExpression.TSValue, line int, position int) *Symbol {
+func NewSymbol(key string, value *TSValue, line int, position int) *Symbol {
 	return &Symbol{
 		key,
 		value,
@@ -32,7 +30,7 @@ func NewTSScope(parent *TSScope) *TSScope {
 	}
 }
 
-func (T *TSScope) AddSymbol(key string, value *TExpression.TSValue, line int, position int) bool {
+func (T *TSScope) AddSymbol(key string, value *TSValue, line int, position int) bool {
 	_, ok := T.variables[key]
 	if ok {
 		//ya existe la variable
@@ -42,7 +40,7 @@ func (T *TSScope) AddSymbol(key string, value *TExpression.TSValue, line int, po
 	return true
 }
 
-func (T *TSScope) UpdateSymbol(key string, value *TExpression.TSValue) bool {
+func (T *TSScope) UpdateSymbol(key string, value *TSValue) bool {
 	symbol, ok := T.variables[key]
 	if !ok {
 		// no existe la variable
@@ -57,7 +55,7 @@ func (T *TSScope) Exist(key string) bool {
 	return ok
 }
 
-func (T *TSScope) GetSymbolValue(key string) *TExpression.TSValue {
+func (T *TSScope) GetSymbolValue(key string) *TSValue {
 	symbol, ok := T.variables[key]
 	if ok {
 		return symbol.Value

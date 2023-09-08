@@ -1,7 +1,6 @@
 package NTExpression
 
 import (
-	"TSwiftCompiler/ast/TExpression"
 	"TSwiftCompiler/ast/TSStructs"
 )
 
@@ -17,7 +16,7 @@ func NewITSBlock(Line int, Position int, sentences TSStructs.TSExpressioner) *IT
 	}
 }
 
-func (I ITSBlock) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
+func (I ITSBlock) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
 
 	ctx.AddScope()
 

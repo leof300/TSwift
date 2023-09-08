@@ -1,10 +1,10 @@
 package NTExpression
 
 import (
-	"TSwiftCompiler/ast/TExpression"
 	"TSwiftCompiler/ast/TSStructs"
 )
 
+// *************************************
 type IContinue struct {
 	TSStructs.TSExpression
 }
@@ -15,10 +15,13 @@ func NewIContinue(Line int, Position int) *IContinue {
 	}
 }
 
-func (I IContinue) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
-	return TExpression.NewTNil()
+func (I IContinue) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
+	result := TSStructs.NewTNil()
+	result.IsContinue = true
+	return result
 }
 
+// *************************************
 type IBreak struct {
 	TSStructs.TSExpression
 }
@@ -29,10 +32,13 @@ func NewIBreak(Line int, Position int) *IBreak {
 	}
 }
 
-func (I IBreak) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
-	return TExpression.NewTNil()
+func (I IBreak) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
+	result := TSStructs.NewTNil()
+	result.IsBreak = true
+	return result
 }
 
+/***************************************/
 type IReturn struct {
 	TSStructs.TSExpression
 	expr TSStructs.TSExpressioner
@@ -45,24 +51,25 @@ func NewIReturn(Line int, Position int, expr TSStructs.TSExpressioner) *IReturn 
 	}
 }
 
-func (I IReturn) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
+func (I IReturn) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
+
 	expr := I.expr.Interpret(ctx)
 
-	var returnValue *TExpression.TSValue
+	var returnValue *TSStructs.TSValue
 
 	switch expr.TSType {
-	case TExpression.INTEGER:
-		returnValue = TExpression.NewTInt(expr.Ivalue)
-	case TExpression.FLOAT:
-		returnValue = TExpression.NewTFloat(expr.Fvalue)
-	case TExpression.STRING:
-		returnValue = TExpression.NewTString(expr.Svalue)
-	case TExpression.CHARACTER:
-		returnValue = TExpression.NewTString(expr.Svalue)
-	case TExpression.BOOL:
-		returnValue = TExpression.NewTBoolean(expr.Bvalue)
-	case TExpression.NIL:
-		returnValue = TExpression.NewTNil()
+	case TSStructs.INTEGER:
+		returnValue = TSStructs.NewTInt(expr.Ivalue)
+	case TSStructs.FLOAT:
+		returnValue = TSStructs.NewTFloat(expr.Fvalue)
+	case TSStructs.STRING:
+		returnValue = TSStructs.NewTString(expr.Svalue)
+	case TSStructs.CHARACTER:
+		returnValue = TSStructs.NewTString(expr.Svalue)
+	case TSStructs.BOOL:
+		returnValue = TSStructs.NewTBoolean(expr.Bvalue)
+	case TSStructs.NIL:
+		returnValue = TSStructs.NewTNil()
 	}
 
 	returnValue.IsReturn = true
@@ -70,6 +77,7 @@ func (I IReturn) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
 	return returnValue
 }
 
+/**************************************/
 type INoReturn struct {
 	TSStructs.TSExpression
 }
@@ -80,6 +88,8 @@ func NewINoReturn(Line int, Position int) *INoReturn {
 	}
 }
 
-func (I INoReturn) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
-	return TExpression.NewTNil()
+func (I INoReturn) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
+	result := TSStructs.NewTNil()
+	result.IsReturn = true
+	return result
 }

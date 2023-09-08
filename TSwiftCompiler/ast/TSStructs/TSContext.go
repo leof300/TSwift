@@ -2,7 +2,6 @@ package TSStructs
 
 import (
 	"TSwiftCompiler/ast/Exceptions"
-	"TSwiftCompiler/ast/TExpression"
 	"fmt"
 )
 
@@ -63,17 +62,30 @@ func (c *TSContext) AddConsole(msg string) bool {
 *
 Agregar una variable al contexto
 */
-func (c *TSContext) AddVariable(key string, value *TExpression.TSValue, line int, position int) bool {
-	//TODO AGREGAR A LA TABLA DE SIMBOLOS AQUI
+func (c *TSContext) AddVariable(key string, value *TSValue, line int, position int) bool {
+	//TODO AGREGAR A LA TABLA DE SIMBOLOS AQUI, reporte
 	ok := c.Scope.AddSymbol(key, value, line, position)
+	return ok
+}
 
+// esta constante es para el nombre de funciones
+const functionPrefix string = "F%"
+
+/*
+*
+Agregar una funcion al contexto
+*/
+func (c *TSContext) AddFunction(key string, value *TSValue, line int, position int) bool {
+	//TODO AGREGAR A LA TABLA DE SIMBOLOS AQUI, reporte
+	//agregamos el prefijo F%
+	ok := c.Scope.AddSymbol(functionPrefix+key, value, line, position)
 	return ok
 }
 
 /**
 *Buscar una variable
  */
-func (c *TSContext) GetVariable(key string) *TExpression.TSValue {
+func (c *TSContext) GetVariable(key string) *TSValue {
 	variable := c.Scope.GetSymbolValue(key)
 	if variable == nil {
 		scopeAux := c.Scope.ParentScope
@@ -88,4 +100,16 @@ func (c *TSContext) GetVariable(key string) *TExpression.TSValue {
 		return variable
 	}
 	return nil
+}
+
+/**
+*Buscar una variable
+ */
+func (c *TSContext) GetFunction(key string) *TSValue {
+	//eliminamos el prefijo F_
+	//key = key[2:]
+
+	//key = strings.TrimLeft(key, functionPrefix)
+
+	return c.GetVariable(functionPrefix + key)
 }

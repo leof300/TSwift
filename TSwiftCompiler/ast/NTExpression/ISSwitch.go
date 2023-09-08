@@ -1,7 +1,6 @@
 package NTExpression
 
 import (
-	"TSwiftCompiler/ast/TExpression"
 	"TSwiftCompiler/ast/TSStructs"
 )
 
@@ -19,13 +18,14 @@ func NewISwitch(Line int, Position int, expr TSStructs.TSExpressioner, idfault T
 	}
 }
 
-func (I ISwitch) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
+func (I ISwitch) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
+	ereturn := TSStructs.NewTNil()
 	expr := I.expr.Interpret(ctx)
 
 	if expr.IsUndefined() {
 		ctx.AddException("SWITCH: La expresión no es válida.", I.Line, I.Position)
 		//TODO: SI LA EXPRESION ES INVALIDA NO SE EJECUTA EL SWITCH
-		return TExpression.NewTNil()
+		return TSStructs.NewTNil()
 	}
 
 	wasEvaluated := false
@@ -37,33 +37,33 @@ func (I ISwitch) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
 
 		if err != nil {
 			ctx.AddException(err.Error(), icase.Line, icase.Position)
-			return TExpression.NewTNil()
+			return TSStructs.NewTNil()
 		}
 
 		switch expr.TSType {
-		case TExpression.INTEGER:
+		case TSStructs.INTEGER:
 			if expr.Ivalue == exprCase.Ivalue {
-				icase.lsents.Interpret(ctx)
+				ereturn = icase.lsents.Interpret(ctx)
 				wasEvaluated = true
 			}
-		case TExpression.FLOAT:
+		case TSStructs.FLOAT:
 			if expr.Fvalue == exprCase.Fvalue {
-				icase.lsents.Interpret(ctx)
+				ereturn = icase.lsents.Interpret(ctx)
 				wasEvaluated = true
 			}
-		case TExpression.BOOL:
+		case TSStructs.BOOL:
 			if expr.Bvalue == exprCase.Bvalue {
-				icase.lsents.Interpret(ctx)
+				ereturn = icase.lsents.Interpret(ctx)
 				wasEvaluated = true
 			}
-		case TExpression.STRING:
+		case TSStructs.STRING:
 			if expr.Svalue == exprCase.Svalue {
-				icase.lsents.Interpret(ctx)
+				ereturn = icase.lsents.Interpret(ctx)
 				wasEvaluated = true
 			}
-		case TExpression.CHARACTER:
+		case TSStructs.CHARACTER:
 			if expr.Svalue == exprCase.Svalue {
-				icase.lsents.Interpret(ctx)
+				ereturn = icase.lsents.Interpret(ctx)
 				wasEvaluated = true
 			}
 		}
@@ -75,9 +75,10 @@ func (I ISwitch) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
 
 	//si no hizo match con ninguno se pasa al default
 	if !wasEvaluated && I.Idfault != nil {
-		I.Idfault.Interpret(ctx)
+		ereturn = I.Idfault.Interpret(ctx)
 	}
-	return TExpression.NewTNil()
+
+	return ereturn
 }
 
 type ICase struct {
@@ -94,9 +95,9 @@ func NewICase(Line int, Position int, expr TSStructs.TSExpressioner, lsents TSSt
 	}
 }
 
-func (I ICase) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
+func (I ICase) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
 	I.lsents.Interpret(ctx)
-	return TExpression.NewTNil()
+	return TSStructs.NewTNil()
 }
 
 type IDefault struct {
@@ -111,7 +112,7 @@ func NewIDefault(Line int, Position int, lsents TSStructs.TSExpressioner) *IDefa
 	}
 }
 
-func (I IDefault) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
+func (I IDefault) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
 	I.lsents.Interpret(ctx)
-	return TExpression.NewTNil()
+	return TSStructs.NewTNil()
 }

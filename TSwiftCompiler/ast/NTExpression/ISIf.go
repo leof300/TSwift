@@ -1,7 +1,6 @@
 package NTExpression
 
 import (
-	"TSwiftCompiler/ast/TExpression"
 	"TSwiftCompiler/ast/TSStructs"
 )
 
@@ -18,19 +17,20 @@ func NewITSIf(Line int, Position int, expr TSStructs.TSExpressioner, block TSStr
 	}
 }
 
-func (I ITSIf) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
+func (I ITSIf) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
+	erturn := TSStructs.NewTNil()
 	expr := I.expr.Interpret(ctx)
 
-	if expr.IsNil || expr.TSType != TExpression.BOOL {
+	if expr.IsNil || expr.TSType != TSStructs.BOOL {
 		ctx.AddException("IF: condición no se puede evaluar.", I.Line, I.Position)
-		return TExpression.NewTNil()
+		return TSStructs.NewTNil()
 	}
 
 	if expr.Bvalue {
-		I.block.Interpret(ctx)
+		erturn = I.block.Interpret(ctx)
 	}
 
-	return TExpression.NewTNil()
+	return erturn
 }
 
 type ITSIfElse struct {
@@ -47,21 +47,22 @@ func NewITSIfElse(Line int, Position int, expr TSStructs.TSExpressioner, blockIf
 	}
 }
 
-func (I ITSIfElse) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
+func (I ITSIfElse) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
+	erturn := TSStructs.NewTNil()
 	expr := I.expr.Interpret(ctx)
 
-	if expr.IsNil || expr.TSType != TExpression.BOOL {
+	if expr.IsNil || expr.TSType != TSStructs.BOOL {
 		ctx.AddException("IF: condición no se puede evaluar.", I.Line, I.Position)
-		return TExpression.NewTNil()
+		return TSStructs.NewTNil()
 	}
 
 	if expr.Bvalue {
-		I.blockIf.Interpret(ctx)
+		erturn = I.blockIf.Interpret(ctx)
 	} else {
-		I.blockElse.Interpret(ctx)
+		erturn = I.blockElse.Interpret(ctx)
 	}
 
-	return TExpression.NewTNil()
+	return erturn
 }
 
 type ITSIfElseIf struct {
@@ -78,19 +79,20 @@ func NewITSIfElseIf(Line int, Position int, expr TSStructs.TSExpressioner, block
 	}
 }
 
-func (I ITSIfElseIf) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
+func (I ITSIfElseIf) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
+	erturn := TSStructs.NewTNil()
 	expr := I.expr.Interpret(ctx)
 
-	if expr.IsNil || expr.TSType != TExpression.BOOL {
+	if expr.IsNil || expr.TSType != TSStructs.BOOL {
 		ctx.AddException("IF: condición no se puede evaluar.", I.Line, I.Position)
-		return TExpression.NewTNil()
+		return TSStructs.NewTNil()
 	}
 
 	if expr.Bvalue {
-		I.blockIf.Interpret(ctx)
+		erturn = I.blockIf.Interpret(ctx)
 	} else {
-		I.blockElseIf.Interpret(ctx)
+		erturn = I.blockElseIf.Interpret(ctx)
 	}
 
-	return TExpression.NewTNil()
+	return erturn
 }

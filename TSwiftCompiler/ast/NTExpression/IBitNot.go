@@ -1,7 +1,6 @@
 package NTExpression
 
 import (
-	"TSwiftCompiler/ast/TExpression"
 	"TSwiftCompiler/ast/TSStructs"
 )
 
@@ -17,18 +16,18 @@ func NewIBitNot(Line int, Position int, op TSStructs.TSExpressioner) *IBitNot {
 	}
 }
 
-func (I IBitNot) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
+func (I IBitNot) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
 	op := I.op.Interpret(ctx)
 
 	if op.IsNil {
 		ctx.AddException("OperadorNot: no se puede operar, valor nulo", I.Line, I.Position)
-		return TExpression.NewTNil()
+		return TSStructs.NewTNil()
 	}
 
-	if op.TSType != TExpression.BOOL {
+	if op.TSType != TSStructs.BOOL {
 		ctx.AddException("OperadorNot: no se puede operar, valor distinto a bool.", I.Line, I.Position)
-		return TExpression.NewTNil()
+		return TSStructs.NewTNil()
 	}
 
-	return TExpression.NewTBoolean(!op.Bvalue)
+	return TSStructs.NewTBoolean(!op.Bvalue)
 }

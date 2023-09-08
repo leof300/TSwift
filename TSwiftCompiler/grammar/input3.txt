@@ -17,8 +17,8 @@ if false {
   var d : Int = 6
   a+=d+2
 } else if false && false {
-  var e : Int = 7
-  a+=e+2
+  var ereturn : Int = 7
+  a+=ereturn+2
 } else if 1.0 > 0 || a > -1 {
   var f : Int = 8
   a+=f+2

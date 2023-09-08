@@ -1,9 +1,7 @@
 package NTExpression
 
 import (
-	"TSwiftCompiler/ast/TExpression"
 	"TSwiftCompiler/ast/TSStructs"
-	"reflect"
 )
 
 type ITSLSentences struct {
@@ -15,38 +13,18 @@ func NewILSentences() *ITSLSentences {
 	return &ITSLSentences{Sentences: make([]TSStructs.TSExpressioner, 0)}
 }
 
-func (I ITSLSentences) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
+func (I ITSLSentences) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
 
 	for _, sentence := range I.Sentences {
 		//TODO AQUI AGREGAR BREAK, RETURN, ETC
 
-		if reflect.TypeOf(sentence).String() == "*NTExpression.IContinue" {
-			returnValue := TExpression.NewTNil()
-			returnValue.IsContinue = true
+		returnValue := sentence.Interpret(ctx)
+
+		if returnValue.IsReturn || returnValue.IsBreak || returnValue.IsContinue {
 			return returnValue
 		}
-
-		if reflect.TypeOf(sentence).String() == "*NTExpression.IBreak" {
-			returnValue := TExpression.NewTNil()
-			returnValue.IsBreak = true
-			return returnValue
-		}
-
-		if reflect.TypeOf(sentence).String() == "*NTExpression.INoReturn" {
-			returnValue := TExpression.NewTNil()
-			returnValue.IsReturn = true
-			return returnValue
-		}
-
-		if reflect.TypeOf(sentence).String() == "*NTExpression.IReturn" {
-			returnValue := sentence.Interpret(ctx)
-			returnValue.IsReturn = true
-			return returnValue
-		}
-
-		sentence.Interpret(ctx)
 
 	}
 
-	return TExpression.NewTNil()
+	return TSStructs.NewTNil()
 }

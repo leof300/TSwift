@@ -1,4 +1,4 @@
-package TExpression
+package TSStructs
 
 import (
 	"fmt"
@@ -60,6 +60,13 @@ type TSValue struct {
 	IsReturn   bool
 	IsBreak    bool
 	IsContinue bool
+
+	IsConstant bool
+
+	IsFunction         bool
+	FuncValue          TSExpressioner
+	FuncParameters     map[string]*TSValue //apuntado a los parametros, o variables creadas en el ámbito
+	FuncParameterAlias string
 }
 
 func (T TSValue) ToString() string {
@@ -140,11 +147,31 @@ func NewTUndefined() *TSValue {
 	}
 }
 
-func NewTBox(tag string, content *TSValue, tstype TSPTYPES) *TSValue {
+func NewTBox(tag string, tstype TSPTYPES) *TSValue {
 	return &TSValue{
 		TSType: tstype,
 		BoxTag: tag,
 		IsBox:  true,
 		IsNil:  true,
+	}
+}
+
+func NewFunction(tag string, tstype TSPTYPES) *TSValue {
+	return &TSValue{
+		TSType:         tstype,
+		BoxTag:         tag,
+		IsBox:          true,
+		IsNil:          true,
+		IsFunction:     true,
+		FuncParameters: make(map[string]*TSValue),
+	}
+}
+
+func NewConstant(tag string, tstype TSPTYPES) *TSValue {
+	return &TSValue{
+		TSType:     tstype,
+		BoxTag:     tag,
+		IsConstant: true,
+		IsNil:      true,
 	}
 }

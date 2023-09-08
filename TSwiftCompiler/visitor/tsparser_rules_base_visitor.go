@@ -11,6 +11,26 @@ func (v *BaseTSParser_rulesVisitor) VisitStart(ctx *StartContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseTSParser_rulesVisitor) VisitLins(ctx *LinsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitIFunc(ctx *IFuncContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitIDecl(ctx *IDeclContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitICons(ctx *IConsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitSCallFunction(ctx *SCallFunctionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseTSParser_rulesVisitor) VisitLsents(ctx *LsentsContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -39,7 +59,7 @@ func (v *BaseTSParser_rulesVisitor) VisitSDecl(ctx *SDeclContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseTSParser_rulesVisitor) VisitSDeclAsig(ctx *SDeclAsigContext) interface{} {
+func (v *BaseTSParser_rulesVisitor) VisitSCons(ctx *SConsContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -71,6 +91,10 @@ func (v *BaseTSParser_rulesVisitor) VisitEMulDiv(ctx *EMulDivContext) interface{
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseTSParser_rulesVisitor) VisitEFunction(ctx *EFunctionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseTSParser_rulesVisitor) VisitERelOr(ctx *ERelOrContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -84,6 +108,10 @@ func (v *BaseTSParser_rulesVisitor) VisitESubAdd(ctx *ESubAddContext) interface{
 }
 
 func (v *BaseTSParser_rulesVisitor) VisitENeg(ctx *ENegContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitENIL(ctx *ENILContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -123,23 +151,27 @@ func (v *BaseTSParser_rulesVisitor) VisitERelAnd(ctx *ERelAndContext) interface{
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseTSParser_rulesVisitor) VisitSDStr(ctx *SDStrContext) interface{} {
+func (v *BaseTSParser_rulesVisitor) VisitSDType(ctx *SDTypeContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseTSParser_rulesVisitor) VisitSDInt(ctx *SDIntContext) interface{} {
+func (v *BaseTSParser_rulesVisitor) VisitSDecAssign(ctx *SDecAssignContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseTSParser_rulesVisitor) VisitSDFlt(ctx *SDFltContext) interface{} {
+func (v *BaseTSParser_rulesVisitor) VisitSDecTAssign(ctx *SDecTAssignContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseTSParser_rulesVisitor) VisitSDBool(ctx *SDBoolContext) interface{} {
+func (v *BaseTSParser_rulesVisitor) VisitSConsAss(ctx *SConsAssContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseTSParser_rulesVisitor) VisitSDChr(ctx *SDChrContext) interface{} {
+func (v *BaseTSParser_rulesVisitor) VisitSConsTypeAss(ctx *SConsTypeAssContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitTstypes(ctx *TstypesContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -188,5 +220,21 @@ func (v *BaseTSParser_rulesVisitor) VisitStrans(ctx *StransContext) interface{} 
 }
 
 func (v *BaseTSParser_rulesVisitor) VisitPrint(ctx *PrintContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitFunctions(ctx *FunctionsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitParameter(ctx *ParameterContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitCallFunction(ctx *CallFunctionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitCallParameter(ctx *CallParameterContext) interface{} {
 	return v.VisitChildren(ctx)
 }

@@ -8,13 +8,22 @@ switch numero
     case 3:
         print("Tres")
     default:
-        print("4 \n",numero)
+        print("default \n",numero)
 
 }
 
-numero = 10
+var i : Int = 2
+while (i <= 10) {
+    // la sentencia guard verifica si i es impar
+    guard i % 2 == 0 else {
+        i = i + 1
+        continue
+    }
+    print(i)
+    i = i + 1
+}
 
-while numero != 0 {
-    numero -= 1
-    print(numero)
+while true {
+    print(i)
+    break //finaliza el bucle en este punto
 }

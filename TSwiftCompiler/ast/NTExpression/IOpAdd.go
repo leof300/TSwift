@@ -1,7 +1,6 @@
 package NTExpression
 
 import (
-	"TSwiftCompiler/ast/TExpression"
 	"TSwiftCompiler/ast/TSStructs"
 )
 
@@ -18,7 +17,7 @@ func NewIAdd(Line int, Position int, op1 TSStructs.TSExpressioner, op2 TSStructs
 	}
 }
 
-func (I IOpAdd) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
+func (I IOpAdd) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
 	addend1 := I.op1.Interpret(ctx)
 	addend2 := I.op2.Interpret(ctx)
 
@@ -27,30 +26,30 @@ func (I IOpAdd) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
 
 	if addend1.IsNil || addend2.IsNil {
 		ctx.AddException("Suma: No se puede realizar suma, tipos incompatibles.", I.Line, I.Position)
-		return TExpression.NewTNil()
+		return TSStructs.NewTNil()
 	}
 
 	switch addend1.TSType {
-	case TExpression.INTEGER:
+	case TSStructs.INTEGER:
 		switch addend2.TSType {
-		case TExpression.INTEGER:
-			return TExpression.NewTInt(addend1.Ivalue + addend2.Ivalue)
-		case TExpression.FLOAT:
-			return TExpression.NewTFloat(float64(addend1.Ivalue) + addend2.Fvalue)
+		case TSStructs.INTEGER:
+			return TSStructs.NewTInt(addend1.Ivalue + addend2.Ivalue)
+		case TSStructs.FLOAT:
+			return TSStructs.NewTFloat(float64(addend1.Ivalue) + addend2.Fvalue)
 		}
-	case TExpression.FLOAT:
+	case TSStructs.FLOAT:
 		switch addend2.TSType {
-		case TExpression.INTEGER:
-			return TExpression.NewTFloat(addend1.Fvalue + float64(addend2.Ivalue))
-		case TExpression.FLOAT:
-			return TExpression.NewTFloat(addend1.Fvalue + addend2.Fvalue)
+		case TSStructs.INTEGER:
+			return TSStructs.NewTFloat(addend1.Fvalue + float64(addend2.Ivalue))
+		case TSStructs.FLOAT:
+			return TSStructs.NewTFloat(addend1.Fvalue + addend2.Fvalue)
 		}
-	case TExpression.STRING:
-		if addend2.TSType == TExpression.STRING {
-			return TExpression.NewTString(addend1.Svalue + addend2.Svalue)
+	case TSStructs.STRING:
+		if addend2.TSType == TSStructs.STRING {
+			return TSStructs.NewTString(addend1.Svalue + addend2.Svalue)
 		}
 	}
 
 	ctx.AddException("Suma: No se puede realizar suma, tipos incompatibles.", I.Line, I.Position)
-	return TExpression.NewTNil()
+	return TSStructs.NewTNil()
 }

@@ -1,7 +1,6 @@
 package NTExpression
 
 import (
-	"TSwiftCompiler/ast/TExpression"
 	"TSwiftCompiler/ast/TSStructs"
 )
 
@@ -18,7 +17,7 @@ func NewISubtraction(Line int, Position int, op1 TSStructs.TSExpressioner, op2 T
 	}
 }
 
-func (I IOpSubtraction) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
+func (I IOpSubtraction) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
 	minuend := I.op1.Interpret(ctx)
 	subtrahend := I.op2.Interpret(ctx)
 
@@ -27,26 +26,26 @@ func (I IOpSubtraction) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue
 
 	if minuend.IsNil || subtrahend.IsNil {
 		ctx.AddException("No se puede realizar resta, tipos incompatibles.", I.Line, I.Position)
-		return TExpression.NewTNil()
+		return TSStructs.NewTNil()
 	}
 
 	switch minuend.TSType {
-	case TExpression.INTEGER:
+	case TSStructs.INTEGER:
 		switch subtrahend.TSType {
-		case TExpression.INTEGER:
-			return TExpression.NewTInt(minuend.Ivalue - subtrahend.Ivalue)
-		case TExpression.FLOAT:
-			return TExpression.NewTFloat(float64(minuend.Ivalue) - subtrahend.Fvalue)
+		case TSStructs.INTEGER:
+			return TSStructs.NewTInt(minuend.Ivalue - subtrahend.Ivalue)
+		case TSStructs.FLOAT:
+			return TSStructs.NewTFloat(float64(minuend.Ivalue) - subtrahend.Fvalue)
 		}
-	case TExpression.FLOAT:
+	case TSStructs.FLOAT:
 		switch subtrahend.TSType {
-		case TExpression.INTEGER:
-			return TExpression.NewTFloat(minuend.Fvalue - float64(subtrahend.Ivalue))
-		case TExpression.FLOAT:
-			return TExpression.NewTFloat(minuend.Fvalue - subtrahend.Fvalue)
+		case TSStructs.INTEGER:
+			return TSStructs.NewTFloat(minuend.Fvalue - float64(subtrahend.Ivalue))
+		case TSStructs.FLOAT:
+			return TSStructs.NewTFloat(minuend.Fvalue - subtrahend.Fvalue)
 		}
 	}
 
 	ctx.AddException("No se puede realizar resta, tipos incompatibles.", I.Line, I.Position)
-	return TExpression.NewTNil()
+	return TSStructs.NewTNil()
 }

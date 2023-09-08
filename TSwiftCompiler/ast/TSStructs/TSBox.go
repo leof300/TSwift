@@ -1,4 +1,4 @@
-package TExpression
+package TSStructs
 
 import (
 	"fmt"

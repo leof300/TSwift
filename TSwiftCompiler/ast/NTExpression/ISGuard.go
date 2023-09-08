@@ -1,7 +1,6 @@
 package NTExpression
 
 import (
-	"TSwiftCompiler/ast/TExpression"
 	"TSwiftCompiler/ast/TSStructs"
 )
 
@@ -18,14 +17,14 @@ func NewISGuard(Line int, Position int, expr TSStructs.TSExpressioner, block TSS
 	}
 }
 
-func (I ISGuard) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
-	result := TExpression.NewTNil()
+func (I ISGuard) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
+	result := TSStructs.NewTNil()
 
 	expr := I.expr.Interpret(ctx)
 
-	if expr.IsNil || expr.TSType != TExpression.BOOL {
+	if expr.IsNil || expr.TSType != TSStructs.BOOL {
 		ctx.AddException("GUARD: condición no se puede evaluar.", I.Line, I.Position)
-		return TExpression.NewTNil()
+		return TSStructs.NewTNil()
 	}
 
 	for !expr.Bvalue {

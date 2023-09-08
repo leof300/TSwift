@@ -13,16 +13,16 @@ var d:Bool = true
 var d1:Bool
 var d2:Bool
 
-var e:Int = 48-8
-e = e / 20 //2
+var ereturn:Int = 48-8
+ereturn = ereturn / 20 //2
 
 var f:Float
 f = 5 % -2 - 1 + 10 * 2 //20
 f += 5--1 //26
-e -= 5*0+1  //1
+ereturn -= 5*0+1  //1
 
 d= !d
-d1 = e < 1 || true || f!=0
+d1 = ereturn < 1 || true || f!=0
 
 var g1:Int = 10
 var g2:Int = 5

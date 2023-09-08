@@ -1,7 +1,6 @@
 package NTExpression
 
 import (
-	"TSwiftCompiler/ast/TExpression"
 	"TSwiftCompiler/ast/TSStructs"
 	"fmt"
 )
@@ -19,60 +18,65 @@ func NewIAssignSub(Line int, Position int, box TSStructs.TSExpressioner, content
 	}
 }
 
-func (I IAssignSub) Interpret(ctx *TSStructs.TSContext) *TExpression.TSValue {
-	var box *TExpression.TSValue = I.box.Interpret(ctx)
+func (I IAssignSub) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
+	var box *TSStructs.TSValue = I.box.Interpret(ctx)
 	content := I.content.Interpret(ctx)
 
 	//error, no era una variable
 	if !box.IsBox {
 		ctx.AddException(fmt.Sprintf("AsignaciónResta: esta no es una variable valida {%s}", box.ToString()), I.Line, I.Position)
-		return TExpression.NewTNil()
+		return TSStructs.NewTNil()
+	}
+
+	if box.IsConstant {
+		ctx.AddException(fmt.Sprintf("AsignaciónResta: este valor no se puede modificar %s", box.BoxTag), I.Line, I.Position)
+		return TSStructs.NewTNil()
 	}
 
 	boxType := box.TSType
 
 	//error, solo valores permitidos
-	if boxType != TExpression.FLOAT && boxType != TExpression.INTEGER {
+	if boxType != TSStructs.FLOAT && boxType != TSStructs.INTEGER {
 		ctx.AddException(fmt.Sprintf("AsignaciónResta: tipo invalido para operación  {%s}", boxType), I.Line, I.Position)
-		return TExpression.NewTNil()
+		return TSStructs.NewTNil()
 	}
 
 	//TODO: error no se puede asignar nil
 	if content.IsBox && content.IsNil {
 		ctx.AddException(fmt.Sprintf("AsignaciónResta: la variable no ha sido inicializada  {%s}", content.ToString()), I.Line, I.Position)
-		return TExpression.NewTNil()
+		return TSStructs.NewTNil()
 	}
 
 	//si el contenido es nulo
 	if content.IsNil {
-		return TExpression.NewTNil()
+		return TSStructs.NewTNil()
 	}
 
 	contentType := content.TSType
 
 	//conversion de INT a FLOAT si se asigna a un FLOAT
-	if boxType == TExpression.FLOAT && contentType == TExpression.INTEGER {
+	if boxType == TSStructs.FLOAT && contentType == TSStructs.INTEGER {
 		box.IsNil = false
 		box.Fvalue -= float64(content.Ivalue)
-		return TExpression.NewTNil()
+		return TSStructs.NewTNil()
 	}
 
 	if boxType != contentType {
 		msg := fmt.Sprintf("AsignaciónResta: valores incompatibles {%s} != {%s}", boxType, contentType)
 		ctx.AddException(msg, I.Line, I.Position)
-		return TExpression.NewTNil()
+		return TSStructs.NewTNil()
 
 	}
 
 	box.IsNil = false
 
 	switch boxType {
-	case TExpression.INTEGER:
+	case TSStructs.INTEGER:
 		box.Ivalue -= content.Ivalue
-	case TExpression.FLOAT:
+	case TSStructs.FLOAT:
 		box.Fvalue -= content.Fvalue
 
 	}
 
-	return TExpression.NewTNil()
+	return TSStructs.NewTNil()
 }
