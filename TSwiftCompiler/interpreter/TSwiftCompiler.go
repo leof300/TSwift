@@ -9,7 +9,7 @@ import (
 )
 
 func ProcessInputText(input string) *TSStructs.TSContext {
-	fmt.Println(input)
+
 	stream := antlr.NewInputStream(input)
 	return ExecuteInterpreter(stream)
 }
