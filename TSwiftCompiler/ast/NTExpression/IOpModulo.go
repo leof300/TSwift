@@ -21,8 +21,6 @@ func (I IOpModulo) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
 	dividend := I.op1.Interpret(ctx)
 	divisor := I.op2.Interpret(ctx)
 
-	ctx.Log += "MULTX: {" + dividend.ToString() + "} + {" + divisor.ToString() + "}\n"
-
 	//nil no se puede operar
 	if dividend.IsNil || divisor.IsNil {
 		ctx.AddException("No se puede realizar division, tipos Nil.", I.Line, I.Position)

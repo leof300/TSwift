@@ -5,16 +5,16 @@ var valor2:Float = 10.2 // correcto
 
 var valor2_1:Float = 10 + 1 // correcto será 11.0
 
-var valor3 = "esto es una variable" //correcto variable tipo String
+var valor3 = "esto es una function" //correcto function tipo String
 
-var char:Character = "A" //correcto variable tipo Character
+var char:Character = "A" //correcto function tipo Character
 
 var valor4:Bool = true //correcto
 
 
 let cons = 10
 let cons2:Float = 10.2 // correcto
-let cons3 = "esto es una variable"; //correcto constante tipo String
+let cons3 = "esto es una function"; //correcto constante tipo String
 let cons4:Bool = true //correcto
 
 cons3 = "nuevo valor"

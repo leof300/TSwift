@@ -9,12 +9,13 @@ type ITSBoxCreation struct {
 	TSStructs.TSExpression
 	BKey       string
 	BInitValue TSStructs.TSExpressioner
+	IsArray    bool
 }
 
-func NewIBoxCreation(Line int, Position int, key string, initValue TSStructs.TSExpressioner) *ITSBoxCreation {
+func NewIBoxCreation(Line int, Position int, key string, initValue TSStructs.TSExpressioner, IsArray bool) *ITSBoxCreation {
 	return &ITSBoxCreation{
 		TSStructs.TSExpression{Line, Position, make([]string, 0)},
-		key, initValue,
+		key, initValue, IsArray,
 	}
 }
 
@@ -26,12 +27,21 @@ func (I ITSBoxCreation) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
 		ivalue = I.BInitValue.Interpret(ctx)
 	}
 
-	var box = TSStructs.NewTBox(I.BKey, ivalue.TSType)
-	box.Svalue = ivalue.Svalue
-	box.Bvalue = ivalue.Bvalue
-	box.Ivalue = ivalue.Ivalue
-	box.Fvalue = ivalue.Fvalue
-	box.IsNil = ivalue.IsBox
+	var box *TSStructs.TSValue
+
+	if I.IsArray {
+
+		box = TSStructs.NewArray(I.BKey, ivalue.TSType)
+		box.ArrayContent = ivalue.ArrayContent
+
+	} else {
+		box = TSStructs.NewTBox(I.BKey, ivalue.TSType)
+		box.Svalue = ivalue.Svalue
+		box.Bvalue = ivalue.Bvalue
+		box.Ivalue = ivalue.Ivalue
+		box.Fvalue = ivalue.Fvalue
+		box.IsNil = ivalue.IsBox
+	}
 
 	ok := ctx.AddVariable(I.BKey, box, I.Line, I.Position)
 
@@ -62,6 +72,7 @@ func (I IBoxGetting) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
 
 	if box == nil {
 		ctx.AddException(fmt.Sprintf("ObtenerBox: No se encuentra la box %s", I.key), I.Line, I.Position)
+		return TSStructs.NewTNil()
 	}
 	return box
 }

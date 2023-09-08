@@ -4,16 +4,36 @@ import "fmt"
 
 // intefaz en Go
 type TSException struct {
-	Message  string
-	value    string
-	Line     int
-	position int
+	Message  string    `json:"Message"`
+	EType    TSEXTYPES `json:"Type"`
+	Line     int       `json:"Line"`
+	Position int       `json:"Position"`
 }
 
 func NewTSException(message string, line int, position int) *TSException {
-	return &TSException{Line: line, position: position, Message: message}
+	return &TSException{Line: line, Position: position, Message: message}
 }
 
 func (T TSException) ToString() string {
-	return fmt.Sprintf("{Message: \"%s\", Line: %d, Position: %d}", T.Message, T.Line, T.position)
+	return fmt.Sprintf("{Message: \"%s\", Line: %d, Position: %d}", T.Message, T.Line, T.Position)
+}
+
+type TSEXTYPES uint
+
+const (
+	LEXICAL  TSEXTYPES = 0
+	SYNTAX   TSEXTYPES = 1
+	SEMANTIC TSEXTYPES = 2
+)
+
+func (t TSEXTYPES) String() string {
+	switch t {
+	case LEXICAL:
+		return "Lexical"
+	case SYNTAX:
+		return "Syntax"
+	case SEMANTIC:
+		return "Semantic"
+	}
+	return "Unknown"
 }

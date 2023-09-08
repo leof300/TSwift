@@ -31,6 +31,10 @@ func (v *BaseTSParser_rulesVisitor) VisitSCallFunction(ctx *SCallFunctionContext
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseTSParser_rulesVisitor) VisitIPrint(ctx *IPrintContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseTSParser_rulesVisitor) VisitLsents(ctx *LsentsContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -147,6 +151,10 @@ func (v *BaseTSParser_rulesVisitor) VisitEAssign(ctx *EAssignContext) interface{
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseTSParser_rulesVisitor) VisitETSFunctions(ctx *ETSFunctionsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseTSParser_rulesVisitor) VisitERelAnd(ctx *ERelAndContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -219,7 +227,7 @@ func (v *BaseTSParser_rulesVisitor) VisitStrans(ctx *StransContext) interface{} 
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseTSParser_rulesVisitor) VisitPrint(ctx *PrintContext) interface{} {
+func (v *BaseTSParser_rulesVisitor) VisitTsprint(ctx *TsprintContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -236,5 +244,17 @@ func (v *BaseTSParser_rulesVisitor) VisitCallFunction(ctx *CallFunctionContext) 
 }
 
 func (v *BaseTSParser_rulesVisitor) VisitCallParameter(ctx *CallParameterContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitConvertString(ctx *ConvertStringContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitConvertInt(ctx *ConvertIntContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitConvertFloat(ctx *ConvertFloatContext) interface{} {
 	return v.VisitChildren(ctx)
 }

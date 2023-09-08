@@ -21,8 +21,6 @@ func (I IOpAdd) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
 	addend1 := I.op1.Interpret(ctx)
 	addend2 := I.op2.Interpret(ctx)
 
-	//ctx.Console += fmt.Sprint("Suma: " + fmt.Sprint(addend1) + "+" + fmt.Sprint(addend2) + "\n")
-	ctx.Log += "SUMA: {" + addend1.ToString() + "} + {" + addend2.ToString() + "}\n"
 
 	if addend1.IsNil || addend2.IsNil {
 		ctx.AddException("Suma: No se puede realizar suma, tipos incompatibles.", I.Line, I.Position)

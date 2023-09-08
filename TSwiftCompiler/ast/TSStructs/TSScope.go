@@ -2,9 +2,9 @@ package TSStructs
 
 type Symbol struct {
 	Key      string
-	Value    *TSValue
-	Line     int
-	Position int
+	Value    *TSValue `json:"Value"`
+	Line     int      `json:"Line"`
+	Position int      `json:"Position"`
 
 	//puede tener un tipo asociado
 }
@@ -19,8 +19,9 @@ func NewSymbol(key string, value *TSValue, line int, position int) *Symbol {
 }
 
 type TSScope struct {
-	variables   map[string]*Symbol //map / diccionario
+	variables   map[string]*Symbol //map
 	ParentScope *TSScope           //anterior
+
 }
 
 func NewTSScope(parent *TSScope) *TSScope {

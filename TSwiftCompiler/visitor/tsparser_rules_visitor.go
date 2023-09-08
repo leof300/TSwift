@@ -25,6 +25,9 @@ type TSParser_rulesVisitor interface {
 	// Visit a parse tree produced by TSParser_rulesParser#SCallFunction.
 	VisitSCallFunction(ctx *SCallFunctionContext) interface{}
 
+	// Visit a parse tree produced by TSParser_rulesParser#IPrint.
+	VisitIPrint(ctx *IPrintContext) interface{}
+
 	// Visit a parse tree produced by TSParser_rulesParser#lsents.
 	VisitLsents(ctx *LsentsContext) interface{}
 
@@ -112,6 +115,9 @@ type TSParser_rulesVisitor interface {
 	// Visit a parse tree produced by TSParser_rulesParser#EAssign.
 	VisitEAssign(ctx *EAssignContext) interface{}
 
+	// Visit a parse tree produced by TSParser_rulesParser#ETSFunctions.
+	VisitETSFunctions(ctx *ETSFunctionsContext) interface{}
+
 	// Visit a parse tree produced by TSParser_rulesParser#ERelAnd.
 	VisitERelAnd(ctx *ERelAndContext) interface{}
 
@@ -166,8 +172,8 @@ type TSParser_rulesVisitor interface {
 	// Visit a parse tree produced by TSParser_rulesParser#strans.
 	VisitStrans(ctx *StransContext) interface{}
 
-	// Visit a parse tree produced by TSParser_rulesParser#print.
-	VisitPrint(ctx *PrintContext) interface{}
+	// Visit a parse tree produced by TSParser_rulesParser#tsprint.
+	VisitTsprint(ctx *TsprintContext) interface{}
 
 	// Visit a parse tree produced by TSParser_rulesParser#functions.
 	VisitFunctions(ctx *FunctionsContext) interface{}
@@ -180,4 +186,13 @@ type TSParser_rulesVisitor interface {
 
 	// Visit a parse tree produced by TSParser_rulesParser#callParameter.
 	VisitCallParameter(ctx *CallParameterContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#ConvertString.
+	VisitConvertString(ctx *ConvertStringContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#ConvertInt.
+	VisitConvertInt(ctx *ConvertIntContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#ConvertFloat.
+	VisitConvertFloat(ctx *ConvertFloatContext) interface{}
 }

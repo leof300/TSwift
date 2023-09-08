@@ -9,6 +9,7 @@ ins :   functions       #IFunc
     |   declar          #IDecl
     |   decons          #ICons
     |   callFunction    #SCallFunction
+    |   tsprint           #IPrint
     ;
 
 lsents : sents*;
@@ -20,7 +21,7 @@ sents : if                      #SIf
         | for                   #SFor
         | declar                #SDecl
         | decons                #SCons
-        | print                 #SPrint
+        | tsprint                 #SPrint
         | expr                  #SentExpr
         | strans                #SentTrans
      ;
@@ -31,7 +32,9 @@ expr :      <assoc=right> op='-' expr  #ENeg
         |   expr op=('*'|'/')expr   #EMulDiv
         |   expr op=('+'|'-') expr  #EAddSub
         |   expr op=('=='|'!='|'>'|'<'|'>='|'<=') expr  #ERel
+        |   tsfunctions             #ETSFunctions
         |   callFunction            #EFunction
+//        |   arrayDef                #EVArray
         |   '(' expr ')'            #EParent
         |   expr op='&&' expr       #ERelAnd
         |   expr op='||' expr       #ERelOr
@@ -43,15 +46,19 @@ expr :      <assoc=right> op='-' expr  #ENeg
         |   VFLOAT                  #EVFloat
         |   VBOOL                   #EVBOOL
         |   ID                      #EID
-
         |   NIL                     #ENIL
+
         ;
 
 
-declar :    VAR ID ':' tstypes  '?'             #SDType
-        |   VAR ID '=' expr                     #SDecAssign
-        |   VAR ID ':' tstypes op='='  expr     #SDecTAssign
+declar :    VAR ID ':' (tstypes | arr='[' tstypes ']')  '?'             #SDType
+        |   VAR ID '=' expr                                             #SDecAssign
+        |   VAR ID ':' (tstypes | arr='[' tstypes ']')  op='='  expr     #SDecTAssign
        ;
+
+//arrayDef : '[' (ID (','ID)* )? ']';
+//
+//getArray : ID '[' expr ']';
 
 decons :    LET ID '=' expr                     #SConsAss
         |   LET ID ':' tstypes op='='  expr     #SConsTypeAss
@@ -83,12 +90,18 @@ strans:   CONTINUE
         | RETURN expr?
         ;
 
-print: PRINT '(' expr (',' expr)* ')';
+tsprint: PRINT '(' expr (',' expr)* ')';
 
 functions: FUNC ID '(' ( parameter (',' parameter)* )? ')' ('->' tstypes)? '{' lsents '}' ;
 
-parameter:  alias=(ID|'_')?  ID ':' INOUT? tstypes;
+parameter:  alias=(ID|'_')?  ID ':' INOUT? (tstypes | arr='[' tstypes ']') ;
 
 callFunction: ID '(' ( callParameter (','callParameter)* )? ')';
 
 callParameter: (ID':')? op='&'? expr ;
+
+tsfunctions:  STRING '(' expr ')'       #ConvertString
+            | INT '(' expr ')'          #ConvertInt
+            | FLOAT '(' expr ')'        #ConvertFloat
+            ;
+

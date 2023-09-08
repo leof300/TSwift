@@ -45,11 +45,15 @@ type TSValuer interface {
 	ToString()
 }
 
+/*&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&*/
+/*&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&         VALUE        &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&*/
+/*&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&*/
 type TSValue struct {
 	Fvalue float64
 	Svalue string
 	Bvalue bool
 	Ivalue int
+
 	TSType TSPTYPES
 
 	IsNil bool
@@ -67,6 +71,9 @@ type TSValue struct {
 	FuncValue          TSExpressioner
 	FuncParameters     map[string]*TSValue //apuntado a los parametros, o variables creadas en el ámbito
 	FuncParameterAlias string
+
+	IsArray      bool
+	ArrayContent []TSValue
 }
 
 func (T TSValue) ToString() string {
@@ -173,5 +180,16 @@ func NewConstant(tag string, tstype TSPTYPES) *TSValue {
 		BoxTag:     tag,
 		IsConstant: true,
 		IsNil:      true,
+	}
+}
+
+func NewArray(tag string, tstype TSPTYPES) *TSValue {
+	return &TSValue{
+		TSType:       tstype,
+		BoxTag:       tag,
+		IsNil:        true,
+		IsArray:      true,
+		IsBox:        true,
+		ArrayContent: make([]TSValue, 0),
 	}
 }

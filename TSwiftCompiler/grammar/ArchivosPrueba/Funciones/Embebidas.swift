@@ -17,7 +17,7 @@ print("valor true: ", String(true))
 print("valor false: ", String(false))
 print("valor nulo: ", nil)
 print(String(10) + String(3.5))
-print("valor cadena: ", cadena);
+print("valor cadena: ", cadena)
 
 /*
 --------------------------

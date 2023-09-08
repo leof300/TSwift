@@ -34,21 +34,22 @@
 
 // main()
 
-func func1 () -> Int {
-    return 3
-}
-
-func suma( num1 x : Int, num2 y: Int) -> Int {
-    x+=1
-    return x + y
-}
+// func func1 () -> Int {
+//     return 3
+// }
+//
+// func suma( num1 x : Int, num2 y: Int) -> Int {
+//     x+=1
+//     return x + y
+// }
 
 func main(){
-    var i:Int = 1
-    print("************************")
-    print(func1 ())
-    print(suma(&i,3))
-    print(i)
+//     var i:Int = 1
+//     print("************************")
+//     print(func1 ())
+//     print(suma(&i,3))
+//     print(i)
+    var x = Float("10.001")
 }
 
 main()

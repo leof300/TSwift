@@ -130,7 +130,13 @@ func (T TSwiftVisitor) VisitSDecl(ctx *TSVisitor.SDeclContext) interface{} {
 
 func (T TSwiftVisitor) VisitSDType(ctx *TSVisitor.SDTypeContext) interface{} {
 	initValue := ctx.Tstypes().Accept(T).(TSStructs.TSExpressioner)
-	return NTExpression.NewIBoxCreation(ctx.VAR().GetSymbol().GetLine(), 0, ctx.ID().GetText(), initValue)
+	isArray := false
+
+	if ctx.GetArr() != nil && ctx.GetArr().GetText() != "" {
+		isArray = true
+	}
+
+	return NTExpression.NewIBoxCreation(ctx.VAR().GetSymbol().GetLine(), 0, ctx.ID().GetText(), initValue, isArray)
 }
 
 func (T TSwiftVisitor) VisitSDecAssign(ctx *TSVisitor.SDecAssignContext) interface{} {
@@ -139,14 +145,20 @@ func (T TSwiftVisitor) VisitSDecAssign(ctx *TSVisitor.SDecAssignContext) interfa
 
 	initValue := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
 
-	return NTExpression.NewIBoxCreation(line, position, ctx.ID().GetText(), initValue)
+	return NTExpression.NewIBoxCreation(line, position, ctx.ID().GetText(), initValue, false)
 
 }
 
 func (T TSwiftVisitor) VisitSDecTAssign(ctx *TSVisitor.SDecTAssignContext) interface{} {
 	tstype := ctx.Tstypes().Accept(T).(TSStructs.TSExpressioner)
 	initValue := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
-	variable := NTExpression.NewIBoxCreation(ctx.VAR().GetSymbol().GetLine(), ctx.VAR().GetSymbol().GetColumn(), ctx.ID().GetText(), tstype)
+
+	isArray := false
+	if ctx.GetArr() != nil && ctx.GetArr().GetText() != "" {
+		isArray = true
+	}
+
+	variable := NTExpression.NewIBoxCreation(ctx.VAR().GetSymbol().GetLine(), ctx.VAR().GetSymbol().GetColumn(), ctx.ID().GetText(), tstype, isArray)
 	return NTExpression.NewIAssignation(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), variable, initValue)
 }
 
@@ -206,7 +218,7 @@ func (T TSwiftVisitor) VisitSConsAss(ctx *TSVisitor.SConsAssContext) interface{}
 
 	initValue := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
 
-	boxCreation := NTExpression.NewIBoxCreation(line, position, ctx.ID().GetText(), initValue)
+	boxCreation := NTExpression.NewIBoxCreation(line, position, ctx.ID().GetText(), initValue, false)
 	boxGetting := NTExpression.NewIBoxGetting(ctx.ID().GetSymbol().GetLine(), ctx.ID().GetSymbol().GetColumn(), ctx.ID().GetText())
 
 	return NTExpression.NewIConstCreation(ctx.ID().GetSymbol().GetLine(), ctx.ID().GetSymbol().GetColumn(), boxGetting, boxCreation)
@@ -216,7 +228,7 @@ func (T TSwiftVisitor) VisitSConsTypeAss(ctx *TSVisitor.SConsTypeAssContext) int
 	tstype := ctx.Tstypes().Accept(T).(TSStructs.TSExpressioner)
 	initValue := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
 
-	variable := NTExpression.NewIBoxCreation(ctx.ID().GetSymbol().GetLine(), ctx.ID().GetSymbol().GetColumn(), ctx.ID().GetText(), tstype)
+	variable := NTExpression.NewIBoxCreation(ctx.ID().GetSymbol().GetLine(), ctx.ID().GetSymbol().GetColumn(), ctx.ID().GetText(), tstype, false)
 	boxCreation := NTExpression.NewIAssignation(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn(), variable, initValue)
 	boxGetting := NTExpression.NewIBoxGetting(ctx.ID().GetSymbol().GetLine(), ctx.ID().GetSymbol().GetColumn(), ctx.ID().GetText())
 	return NTExpression.NewIConstCreation(ctx.ID().GetSymbol().GetLine(), ctx.ID().GetSymbol().GetColumn(), boxGetting, boxCreation)
@@ -507,10 +519,14 @@ func (T TSwiftVisitor) VisitStrans(ctx *TSVisitor.StransContext) interface{} {
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
 func (T TSwiftVisitor) VisitSPrint(ctx *TSVisitor.SPrintContext) interface{} {
-	return ctx.Print_().Accept(T).(TSStructs.TSExpressioner)
+	return ctx.Tsprint().Accept(T).(TSStructs.TSExpressioner)
 }
 
-func (T TSwiftVisitor) VisitPrint(ctx *TSVisitor.PrintContext) interface{} {
+func (T TSwiftVisitor) VisitIPrint(ctx *TSVisitor.IPrintContext) interface{} {
+	return ctx.Tsprint().Accept(T).(TSStructs.TSExpressioner)
+}
+
+func (T TSwiftVisitor) VisitTsprint(ctx *TSVisitor.TsprintContext) interface{} {
 	expressions := ctx.AllExpr()
 	sPrint := NTExpression.NewIFPrint(ctx.PRINT().GetSymbol().GetLine(), ctx.PRINT().GetSymbol().GetColumn())
 	for _, expr := range expressions {
@@ -518,6 +534,32 @@ func (T TSwiftVisitor) VisitPrint(ctx *TSVisitor.PrintContext) interface{} {
 		sPrint.Exprs = append(sPrint.Exprs, nExpr)
 	}
 	return sPrint
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%       CONVERT           %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
+func (T TSwiftVisitor) VisitETSFunctions(ctx *TSVisitor.ETSFunctionsContext) interface{} {
+	return ctx.Tsfunctions().Accept(T).(TSStructs.TSExpressioner)
+}
+
+func (T TSwiftVisitor) VisitConvertString(ctx *TSVisitor.ConvertStringContext) interface{} {
+	expr := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
+	return NTExpression.NewIFString(ctx.STRING().GetSymbol().GetLine(), ctx.STRING().GetSymbol().GetColumn(), expr)
+}
+
+func (T TSwiftVisitor) VisitConvertInt(ctx *TSVisitor.ConvertIntContext) interface{} {
+	expr := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
+	return NTExpression.NewIFInt(ctx.INT().GetSymbol().GetLine(), ctx.INT().GetSymbol().GetColumn(), expr)
+
+}
+
+func (T TSwiftVisitor) VisitConvertFloat(ctx *TSVisitor.ConvertFloatContext) interface{} {
+	expr := ctx.Expr().Accept(T).(TSStructs.TSExpressioner)
+	return NTExpression.NewIFFloat(ctx.FLOAT().GetSymbol().GetLine(), ctx.FLOAT().GetSymbol().GetColumn(), expr)
+
 }
 
 /***********************************************************************************************
