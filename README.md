@@ -23,8 +23,9 @@ Es útil tener conocimientos previos de programación y comprensión de concepto
 ## Instalación <a name="i2"></a>
 
 ### ANTLR
-[ANTLR4](https://www.github.com](https://github.com/antlr/antlr4/blob/master/doc/getting-started.md#windows-specific-issues)
-[Prblemas con Windows](https://www.github.com](https://github.com/antlr/antlr4/blob/master/doc/getting-started.md#windows-specific-issues)
+-[ANTLR4](https://github.com/antlr/antlr4/blob/master/doc/getting-started.md#windows-specific-issues)
+-[Problemas con Windows](https://github.com/antlr/antlr4/blob/master/doc/getting-started.md#windows-specific-issues)
+
 
 *NOTA* válida que la versión de java sea la correcta, este instalada y concuerde con la última aceptada por antlr4.
 
