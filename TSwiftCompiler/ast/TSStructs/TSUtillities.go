@@ -56,3 +56,22 @@ func CopyTSValue(original *TSValue) TSValue {
 	copia := original
 	return *copia
 }
+
+func CopyTSValueNew(original *TSValue) *TSValue {
+	return &TSValue{
+		Fvalue: original.Fvalue,
+		Bvalue: original.Bvalue,
+		Svalue: original.Svalue,
+		Ivalue: original.Ivalue,
+		TSType: original.TSType,
+	}
+}
+
+func CopyTSArrayNew(original []TSValue) *[]TSValue {
+	result := make([]TSValue, 0)
+	for _, e := range original {
+		n := e
+		result = append(result, n)
+	}
+	return &result
+}

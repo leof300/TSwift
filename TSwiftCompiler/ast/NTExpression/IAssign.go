@@ -82,6 +82,10 @@ func (I IAssignation) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
 		box.Svalue = content.Svalue
 	}
 
+	if box.IsArray && content.IsArray {
+		box.ArrayContent = *TSStructs.CopyTSArrayNew(content.ArrayContent)
+	}
+
 	return TSStructs.NewTNil()
 }
 

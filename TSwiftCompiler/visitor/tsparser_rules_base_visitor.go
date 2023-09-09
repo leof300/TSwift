@@ -135,6 +135,10 @@ func (v *BaseTSParser_rulesVisitor) VisitEModule(ctx *EModuleContext) interface{
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseTSParser_rulesVisitor) VisitEVArray(ctx *EVArrayContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseTSParser_rulesVisitor) VisitEVFloat(ctx *EVFloatContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -168,6 +172,10 @@ func (v *BaseTSParser_rulesVisitor) VisitSDecAssign(ctx *SDecAssignContext) inte
 }
 
 func (v *BaseTSParser_rulesVisitor) VisitSDecTAssign(ctx *SDecTAssignContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTSParser_rulesVisitor) VisitArrayValue(ctx *ArrayValueContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

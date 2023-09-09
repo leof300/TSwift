@@ -18,9 +18,18 @@ const TEMP_FILE_PATH = "services\\tempfiles\\temp.swift"
 
 // Manejador para obtener todos los elementos
 func TSRun(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		return
+	}
+	enableCors(&w)
+
 	var tsinput TSRequest
+
 	err := json.NewDecoder(r.Body).Decode(&tsinput)
+
 	if err != nil {
+
+		fmt.Println(err)
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
@@ -34,13 +43,18 @@ func TSRun(w http.ResponseWriter, r *http.Request) {
 	}
 
 	response := interpreter.ProcessInputText(programa)
-
+	//response := "perro"
+	//
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)
 }
 
 func TSOpenTree(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		return
+	}
 	//path actual
+	enableCors(&w)
 	absPath, err := os.Getwd()
 	if err != nil {
 		fmt.Println("Error al obtener el directorio actual:", err)
@@ -61,7 +75,6 @@ func TSOpenTree(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(erre.Error())
 		http.Error(w, erre.Error(), http.StatusBadRequest)
 	}
-
 	response := Response{Message: "Arbol generado exitosamente"}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)
@@ -98,4 +111,12 @@ func WriteText(path string, content string) error {
 
 type Response struct {
 	Message string `json:"message"`
+}
+
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Methods", "POST")
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+	(*w).Header().Set("Access-Control-Allow-Origin", "http://localhost:8080")
+	(*w).Header().Set("Access-Control-Allow-Origin", "http://localhost:59372")
+	(*w).Header().Set("Access-Control-Allow-Origin", "http://localhost:4200")
 }

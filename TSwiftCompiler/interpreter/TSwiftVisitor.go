@@ -1,7 +1,6 @@
 package interpreter
 
 import (
-	TSExceptions "TSwiftCompiler/ast/Exceptions"
 	"TSwiftCompiler/ast/NTExpression"
 	"TSwiftCompiler/ast/TSStructs"
 	"TSwiftCompiler/visitor"
@@ -194,6 +193,27 @@ func (T TSwiftVisitor) VisitTstypes(ctx *TSVisitor.TstypesContext) interface{} {
 
 	return etype
 
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      ARREGLOS       %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
+func (T TSwiftVisitor) VisitEVArray(ctx *TSVisitor.EVArrayContext) interface{} {
+	return ctx.ArrayValue().Accept(T).(TSStructs.TSExpressioner)
+}
+
+func (T TSwiftVisitor) VisitArrayValue(ctx *TSVisitor.ArrayValueContext) interface{} {
+	exprList := ctx.AllExpr()
+
+	arrayDef := NTExpression.NewIArrayCreation(ctx.GetOp().GetLine(), ctx.GetOp().GetColumn())
+	for _, e := range exprList {
+		expr := e.Accept(T).(TSStructs.TSExpressioner)
+		arrayDef.ExprValues = append(arrayDef.ExprValues, expr)
+	}
+
+	return arrayDef
 }
 
 /*
@@ -664,17 +684,22 @@ func (v TSwiftVisitor) Visit(tree antlr.ParseTree) interface{} {
 	switch val := tree.(type) {
 	case *antlr.ErrorNodeImpl:
 		//log.Fatal(val.GetText())
-		return TSExceptions.NewTSException(val.GetText(), 0, 0)
+		return TSStructs.NewTSSyntaxError(0, 0, val.GetText()) //TSExceptions.NewTSException(val.GetText(), 0, 0)
 	default:
 		//comprobamos el el nodo sea valido
-		//TODO
 		nodoIntepreter, ok := tree.Accept(v).(TSStructs.TSExpressioner)
 		if ok {
 			return nodoIntepreter
 		}
 		fmt.Print("nodo desconocido")
-		return TSExceptions.NewTSException("ERROR NODO NO VALIDO", 0, 0)
+		return TSStructs.NewTSSyntaxError(0, 0, "No se reconoce el nodo")
+		//return TSExceptions.NewTSException("ERROR NODO NO VALIDO", 0, 0)
 	}
+}
+
+func (v TSwiftVisitor) VisitErrorNode(node antlr.ErrorNode) interface{} {
+	fmt.Print(node.GetText())
+	return TSStructs.NewTSSyntaxError(0, 0, node.GetText())
 }
 
 // ////////////////////////////////////////////////////////////////////////////////////// ////////////////////////////////////////////////////////////////////////////////////

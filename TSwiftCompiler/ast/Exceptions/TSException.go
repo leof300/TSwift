@@ -11,11 +11,11 @@ type TSException struct {
 }
 
 func NewTSException(message string, line int, position int) *TSException {
-	return &TSException{Line: line, Position: position, Message: message}
+	return &TSException{Line: line, Position: position, Message: message, EType: SEMANTIC}
 }
 
 func (T TSException) ToString() string {
-	return fmt.Sprintf("{Message: \"%s\", Line: %d, Position: %d}", T.Message, T.Line, T.Position)
+	return fmt.Sprintf("{Tipo: %s Message: \"%s\", Line: %d, Position: %d}", T.EType, T.Message, T.Line, T.Position)
 }
 
 type TSEXTYPES uint

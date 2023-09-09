@@ -34,7 +34,7 @@ expr :      <assoc=right> op='-' expr  #ENeg
         |   expr op=('=='|'!='|'>'|'<'|'>='|'<=') expr  #ERel
         |   tsfunctions             #ETSFunctions
         |   callFunction            #EFunction
-//        |   arrayDef                #EVArray
+        |   arrayValue                #EVArray
         |   '(' expr ')'            #EParent
         |   expr op='&&' expr       #ERelAnd
         |   expr op='||' expr       #ERelOr
@@ -56,8 +56,8 @@ declar :    VAR ID ':' (tstypes | arr='[' tstypes ']')  '?'             #SDType
         |   VAR ID ':' (tstypes | arr='[' tstypes ']')  op='='  expr     #SDecTAssign
        ;
 
-//arrayDef : '[' (ID (','ID)* )? ']';
-//
+arrayValue : op='[' (expr (','expr)* )? ']';
+
 //getArray : ID '[' expr ']';
 
 decons :    LET ID '=' expr                     #SConsAss

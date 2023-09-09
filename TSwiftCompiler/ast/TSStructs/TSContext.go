@@ -34,6 +34,26 @@ func (c *TSContext) AddException(s string, line int, position int) bool {
 }
 
 /*
+* Agregar un error o excepción
+ */
+func (c *TSContext) AddLexicalException(s string, line int, position int) bool {
+	ex := TSExceptions.NewTSException(s, line, position)
+	ex.EType = TSExceptions.LEXICAL
+	c.Exceptions = append(c.Exceptions, ex)
+	return true
+}
+
+/*
+* Agregar un error o excepción
+ */
+func (c *TSContext) AddSyntaxException(s string, line int, position int) bool {
+	ex := TSExceptions.NewTSException(s, line, position)
+	ex.EType = TSExceptions.SYNTAX
+	c.Exceptions = append(c.Exceptions, ex)
+	return true
+}
+
+/*
 * crea un nuevo ámbito
  */
 func (c *TSContext) AddScope() {
@@ -57,6 +77,11 @@ func (c *TSContext) RemoveScope() {
 Agregar una variable al contexto
 */
 func (c *TSContext) AddConsole(msg string) bool {
+	//if len(c.Console) == 0 {
+	//	c.Console = append(c.Console, msg)
+	//	return true
+	//}
+	//c.Console[0] += msg + "\n"
 	c.Console = append(c.Console, msg)
 	return true
 }
@@ -92,7 +117,7 @@ func (c *TSContext) GetVariable(key string) *TSValue {
 	variable := c.Scope.GetSymbolValue(key)
 	if variable == nil {
 		scopeAux := c.Scope.ParentScope
-		for scopeAux != nil && !variable.IsFunction && !variable.IsArray {
+		for scopeAux != nil {
 			variable = scopeAux.GetSymbolValue(key)
 			if variable != nil {
 				return variable
@@ -115,7 +140,7 @@ func (c *TSContext) GetFunction(key string) *TSValue {
 		scopeAux := c.Scope.ParentScope
 		for scopeAux != nil {
 			function = scopeAux.GetSymbolValue(key)
-			if function != nil && function.IsFunction {
+			if function != nil {
 				return function
 			}
 			scopeAux = scopeAux.ParentScope

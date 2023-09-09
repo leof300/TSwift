@@ -1,0 +1,93 @@
+<div class="container">
+  <div class="editor">
+    <ngs-code-editor
+      style="height: 500px;"
+      [theme]="theme"
+      [codeModel]="codeModel"
+      [options]="options"
+      (valueChanged)="onCodeChanged($event)">
+    </ngs-code-editor>
+  </div>
+  <div class="buttons">
+    <button mat-button color="primary" (click)="sendText()">Ejecutar</button>
+    <button mat-button (click)="ast()">AST</button>
+  </div>
+ 
+</div>
+
+<div class="tabs">
+  <mat-tab-group>
+    <mat-tab label="Consola">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let value of consoleValues">
+            <td>{{value}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </mat-tab>
+    <mat-tab label="Simbolos">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Scope</th>
+              <th scope="col">Key</th>
+              <th scope="col">Type</th>
+              <th scope="col">Value</th>
+              <th scope="col">Box</th>
+              <th scope="col">Constant</th>
+              <th scope="col">Array</th>
+              <th scope="col">Function</th>
+              <th scope="col">FParameters</th>
+              <th scope="col">Alias</th>
+              <th scope="col">Line</th>
+              <th scope="col">Position</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let value of simbolValues">
+              <td>{{value.Scope}}</td>
+              <td>{{value.Key}}</td>
+              <td>{{value.Type}}</td>
+              <td>{{value.Value}}</td>
+              <td>{{value.Box}}</td>
+              <td>{{value.Constant}}</td>
+              <td>{{value.Array}}</td>
+              <td>{{value.Function}}</td>
+              <td>{{value.FParameters | json }}</td>
+              <td>{{value.Alias}}</td>
+              <td>{{value.Line}}</td>
+              <td>{{value.Position}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-tab>
+    <mat-tab label="Errores">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Message</th>
+            <th scope="col">Type</th>
+            <th scope="col">Line</th>
+            <th scope="col">Position</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let value of errorValues">
+            <td>{{value.Message}}</td>
+            <td>{{value.Type}}</td>
+            <td>{{value.Line}}</td>
+            <td>{{value.Position}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </mat-tab>
+  </mat-tab-group>
+</div>

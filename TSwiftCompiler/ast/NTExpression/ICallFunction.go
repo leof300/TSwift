@@ -53,7 +53,7 @@ func (I IFCallFunction) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
 		return result
 	}
 
-	//generamos los parametros, como un listado de values
+	//generamos los parametros, como un listado de ExprValues
 	var paramValueList []*TSStructs.TSValue
 	areParamsWithName := false
 

@@ -20,6 +20,11 @@ func (I IFPrint) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
 	expressions := I.Exprs
 
 	msg := ""
+	add := ""
+	if len(expressions) > 0 {
+		add = " "
+	}
+
 	for _, e := range expressions {
 		expr := e.Interpret(ctx)
 
@@ -33,7 +38,7 @@ func (I IFPrint) Interpret(ctx *TSStructs.TSContext) *TSStructs.TSValue {
 			return TSStructs.NewTNil()
 		}
 
-		msg += expr.ToString() + " "
+		msg += expr.ToString() + add
 	}
 
 	ctx.AddConsole(msg)

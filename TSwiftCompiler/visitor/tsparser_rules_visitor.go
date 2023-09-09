@@ -103,6 +103,9 @@ type TSParser_rulesVisitor interface {
 	// Visit a parse tree produced by TSParser_rulesParser#EModule.
 	VisitEModule(ctx *EModuleContext) interface{}
 
+	// Visit a parse tree produced by TSParser_rulesParser#EVArray.
+	VisitEVArray(ctx *EVArrayContext) interface{}
+
 	// Visit a parse tree produced by TSParser_rulesParser#EVFloat.
 	VisitEVFloat(ctx *EVFloatContext) interface{}
 
@@ -129,6 +132,9 @@ type TSParser_rulesVisitor interface {
 
 	// Visit a parse tree produced by TSParser_rulesParser#SDecTAssign.
 	VisitSDecTAssign(ctx *SDecTAssignContext) interface{}
+
+	// Visit a parse tree produced by TSParser_rulesParser#arrayValue.
+	VisitArrayValue(ctx *ArrayValueContext) interface{}
 
 	// Visit a parse tree produced by TSParser_rulesParser#SConsAss.
 	VisitSConsAss(ctx *SConsAssContext) interface{}
