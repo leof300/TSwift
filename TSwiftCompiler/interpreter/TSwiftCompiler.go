@@ -32,7 +32,7 @@ func ExecuteInterpreter(input antlr.CharStream) *TSStructs.TSContext {
 	/******************************************************************/
 
 	//lexer.RemoveErrorListeners()
-	//lexer.AddErrorListener(&LexicalErrorListener{ctx: ctx})
+	lexer.AddErrorListener(&LexicalErrorListener{ctx: ctx})
 	//
 	/******************************************************************/
 	tokens := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
@@ -40,7 +40,7 @@ func ExecuteInterpreter(input antlr.CharStream) *TSStructs.TSContext {
 
 	/******************************************************************/
 	//parser.RemoveErrorListeners()
-	//parser.AddErrorListener(&SyntaxErrorListener{ctx: ctx})
+	parser.AddErrorListener(&SyntaxErrorListener{ctx: ctx})
 	/******************************************************************/
 
 	tree := parser.Start_()
